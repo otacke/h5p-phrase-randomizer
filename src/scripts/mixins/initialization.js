@@ -27,10 +27,10 @@ export default class Initialization {
       segments: [],
       solution: 'H5P',
       behaviour: {
+        enforceHorizontalDisplay: false,
         enableRetry: true,
         enableSolutionsButton: true,
-        enableCheckButton: true,
-        column: false
+        enableCheckButton: true
       },
       l10n: {
         check: 'Check',

@@ -51,9 +51,9 @@ export default class RandomizerSegment {
     );
     this.dom.appendChild(this.wheel.getDOM());
 
-    const buttons = document.createElement('div');
-    buttons.classList.add('h5p-phrase-randomizer-segment-buttons');
-    this.dom.append(buttons);
+    this.buttons = document.createElement('div');
+    this.buttons.classList.add('h5p-phrase-randomizer-segment-buttons');
+    this.dom.append(this.buttons);
 
     this.buttonNext = new Button(
       { id: 'next', label: '\u25b2', classes: ['next'] },
@@ -69,7 +69,7 @@ export default class RandomizerSegment {
       this.params.dictionary.get('a11y.nextSymbol'),
       this.params.dictionary.get('a11y.currentText').replace(/@text/g, currentText)
     ]);
-    buttons.append(this.buttonNext.getDOM());
+    this.buttons.append(this.buttonNext.getDOM());
 
     this.buttonPrevious = new Button(
       { id: 'previous', label: '\u25bc', classes: ['previous'] },
@@ -85,7 +85,7 @@ export default class RandomizerSegment {
       this.params.dictionary
         .get('a11y.currentText').replace(/@text/g, currentText)
     ]);
-    buttons.append(this.buttonPrevious.getDOM());
+    this.buttons.append(this.buttonPrevious.getDOM());
 
     this.buttonSpin = new Button(
       { id: 'spin', label: '\uf021', classes: ['spin'] },
@@ -101,25 +101,11 @@ export default class RandomizerSegment {
       this.params.dictionary
         .get('a11y.currentText').replace(/@text/g, currentText)
     ]);
-    buttons.append(this.buttonSpin.getDOM());
+    this.buttons.append(this.buttonSpin.getDOM());
 
-    // iOS is behind ... Again ...
-    const callback = window.requestIdleCallback ?
-      window.requestIdleCallback :
-      window.requestAnimationFrame;
-
-    callback(() => {
-      // Get started once visible and ready
-      this.observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          this.observer.unobserve(this.dom);
-          this.setPosition(this.position);
-          this.wheel.uncloak();
-        }
-      }, {
-        threshold: 0
-      });
-      this.observer.observe(this.dom);
+    Util.callOnceVisible(this.dom, () => {
+      this.setPosition(this.position);
+      this.wheel.uncloak();
     });
   }
 
@@ -129,6 +115,23 @@ export default class RandomizerSegment {
    */
   getDOM() {
     return this.dom;
+  }
+
+  /**
+   * Get minimum width if all buttons should be placed horizontally.
+   * @returns {number} Minimum width if all buttons placed horizontally.
+   */
+  getMinWidthHorizontal() {
+    const buttons = [this.buttonNext, this.buttonPrevious, this.buttonSpin];
+
+    const gap = parseFloat(
+      window.getComputedStyle(this.buttons).getPropertyValue('gap')
+    );
+
+    return (
+      buttons.reduce((total, button) => total += button.getWidth(), 0) +
+      (buttons.length - 1) * gap
+    );
   }
 
   /**

@@ -48,6 +48,14 @@ export default class Button {
   }
 
   /**
+   * Get current width.
+   * @returns {number} Current width in px.
+   */
+  getWidth() {
+    return this.dom.getBoundingClientRect().width;
+  }
+
+  /**
    * Handle button clicked.
    */
   handleClicked() {

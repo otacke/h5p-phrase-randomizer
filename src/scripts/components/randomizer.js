@@ -62,21 +62,20 @@ export default class Randomizer {
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-phrase-randomizer-case');
 
-    const lock = document.createElement('div');
-    lock.classList.add('h5p-phrase-randomizer-elements');
-    this.dom.appendChild(lock);
+    this.lockDOM = document.createElement('div');
+    this.lockDOM.classList.add('h5p-phrase-randomizer-elements');
+    this.dom.appendChild(this.lockDOM);
 
     const groupLabelId = H5P.createUUID();
     const configurationId = H5P.createUUID();
 
     this.segmentsDOM = document.createElement('div');
     this.segmentsDOM.classList.add('h5p-phrase-randomizer-segments');
-    this.segmentsDOM.classList.toggle('column', !!this.params.column);
     this.segmentsDOM.setAttribute('role', 'group');
     this.segmentsDOM.setAttribute(
       'aria-labelledby', `${groupLabelId} ${configurationId}`
     );
-    lock.appendChild(this.segmentsDOM);
+    this.lockDOM.appendChild(this.segmentsDOM);
 
     this.groupLabel = document.createElement('div');
     this.groupLabel.classList.add('h5p-phrase-randomizer-group-label');
@@ -97,7 +96,7 @@ export default class Randomizer {
     });
 
     this.messageDisplay = new MessageDisplay();
-    lock.appendChild(this.messageDisplay.getDOM());
+    this.lockDOM.appendChild(this.messageDisplay.getDOM());
   }
 
   /**
@@ -110,11 +109,65 @@ export default class Randomizer {
 
   /**
    * Resize.
+   * @param {number|undefined} containerWidth H5P container width.
    */
-  resize() {
+  resize(containerWidth) {
     this.messageDisplay.setWidth(
       this.segmentsDOM.getBoundingClientRect().width
     );
+
+    if (!containerWidth) {
+      return;
+    }
+
+    /*
+     * This could be done much nicer with CSS container queries, but guess what
+     * fruit vendor does not support it well ...
+     */
+    if (typeof containerWidth === 'number') {
+      this.segmentsDOM.classList.toggle(
+        'column', containerWidth < this.getMinWidthHorizontal()
+      );
+    }
+  }
+
+  /**
+   * Get minimum width required to display case horizontally.
+   * @returns {number} Minimum width required to display case horizontally in px.
+   */
+  getMinWidthHorizontal() {
+    if (this.minWidthHorizontal) {
+      return this.minWidthHorizontal;
+    }
+
+    const segmentMinWidthHorizontal = this.segments[0].getMinWidthHorizontal();
+
+    const gap = parseFloat(
+      window.getComputedStyle(this.segmentsDOM).getPropertyValue('gap')
+    );
+
+    const segmentsMinWidthHorizontal =
+      this.segments.length * segmentMinWidthHorizontal +
+      (this.segments.length - 1) * gap;
+
+    const totalPaddingHorizontal =
+      parseFloat(
+        window.getComputedStyle(this.lockDOM).getPropertyValue('padding-left')
+      ) +
+      parseFloat(
+        window.getComputedStyle(this.lockDOM).getPropertyValue('padding-right')
+      ) +
+      parseFloat(
+        window.getComputedStyle(this.dom).getPropertyValue('padding-left')
+      ) +
+      parseFloat(
+        window.getComputedStyle(this.dom).getPropertyValue('padding-right')
+      );
+
+    this.minWidthHorizontal =
+      segmentsMinWidthHorizontal + totalPaddingHorizontal;
+
+    return this.minWidthHorizontal;
   }
 
   /**

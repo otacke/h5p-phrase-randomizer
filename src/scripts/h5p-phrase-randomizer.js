@@ -43,6 +43,35 @@ export default class PhraseRandomizer extends H5P.Question {
   registerDomElements() {
     // Register content
     this.setContent(this.dom);
+
+    // Retrieve root h5p container - unfortunately not accessible via H5P core
+    Util.callOnceVisible(this.dom, () => {
+      this.h5pContainer = this.dom.closest('.h5p-content .h5p-container');
+
+      this.on('resize', () => {
+        this.resize();
+      });
+
+      this.resize();
+    });
+  }
+
+  /**
+   * Resize content.
+   */
+  resize() {
+    if (!this.h5pContainer) {
+      return;
+    }
+
+    this.horizontalMargin = this.horizontalMargin ?? (
+      this.h5pContainer.getBoundingClientRect().width -
+      this.dom.getBoundingClientRect().width
+    );
+
+    this.randomizer.resize(
+      this.h5pContainer.getBoundingClientRect().width - this.horizontalMargin
+    );
   }
 
   /**
