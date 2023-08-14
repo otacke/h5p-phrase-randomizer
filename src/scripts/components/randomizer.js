@@ -42,6 +42,9 @@ export default class Randomizer {
           },
           onSpinningStateChanged: (id, state) => {
             this.handleSpinningStateChanged(id, state);
+          },
+          onVisible: () => {
+            this.callbacks.onResized();
           }
         }
       );

@@ -16,12 +16,14 @@ export default class RandomizerSegment {
    * @param {object} callbacks Callbacks.
    * @param {function} callbacks.onChanged Called when position changed.
    * @param {function} callbacks.onSpinningStateChanged Called when spinning is started/stopped.
+   * @param {function} callbacks.onVisible Called when segment got visible.
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({}, params);
     this.callbacks = Util.extend({
       onChanged: () => {},
-      onSpinningStateChanged: () => {}
+      onSpinningStateChanged: () => {},
+      onVisible: () => {}
     }, callbacks);
 
     this.position = this.params.position ??
@@ -106,6 +108,7 @@ export default class RandomizerSegment {
     Util.callOnceVisible(this.dom, () => {
       this.setPosition(this.position);
       this.wheel.uncloak();
+      this.callbacks.onVisible();
     });
   }
 
