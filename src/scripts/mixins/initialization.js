@@ -75,6 +75,11 @@ export default class Initialization {
           );
         }
 
+        segment.options = segment.options.map((option) => {
+          option = Util.purifyHTML(option);
+          return option;
+        });
+
         return segment;
       });
 
