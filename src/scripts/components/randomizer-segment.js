@@ -34,6 +34,17 @@ export default class RandomizerSegment {
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-phrase-randomizer-segment');
 
+    if (this.params.title) {
+      const title = document.createElement('div');
+      title.classList.add('h5p-phrase-randomizer-segment-title');
+      title.innerHTML = this.params.title;
+      this.dom.append(title);
+    }
+
+    const main = document.createElement('div');
+    main.classList.add('h5p-phrase-randomizer-segment-main');
+    this.dom.append(main);
+
     this.wheel = new Wheel(
       {
         dictionary: this.params.dictionary,
@@ -52,11 +63,11 @@ export default class RandomizerSegment {
         }
       }
     );
-    this.dom.appendChild(this.wheel.getDOM());
+    main.appendChild(this.wheel.getDOM());
 
     this.buttons = document.createElement('div');
     this.buttons.classList.add('h5p-phrase-randomizer-segment-buttons');
-    this.dom.append(this.buttons);
+    main.append(this.buttons);
 
     this.buttonNext = new Button(
       { id: 'next', label: '\u25b2', classes: ['next'] },

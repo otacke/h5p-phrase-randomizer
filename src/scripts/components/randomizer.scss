@@ -29,8 +29,9 @@
 
       &.column {
         flex-direction: column;
+        gap: 1.5rem;
 
-        .h5p-phrase-randomizer-segment {
+        .h5p-phrase-randomizer-main {
           flex-direction: row;
 
           .h5p-phrase-randomizer-segment-buttons {

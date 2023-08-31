@@ -62,6 +62,12 @@
       "label": "Segments",
       "fields": [
         {
+          "name": "title",
+          "type": "text",
+          "label": "Segment title",
+          "optional": true
+        },
+        {
           "name": "options",
           "type": "list",
           "label": "Options",

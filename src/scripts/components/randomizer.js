@@ -26,6 +26,7 @@ export default class Randomizer {
 
     this.spinningSegments = {};
 
+    // TODO: All segment options in on parameter
     this.segments = this.params.segments.map((segment, index) => {
       return new RandomizerSegment(
         {
@@ -35,7 +36,8 @@ export default class Randomizer {
           solution: segment.options[0], // TODO: Implement alternate solutions
           alphabet: segment.options,
           position: this.params.previousState?.positions[index] ?? null,
-          colorBackground: segment.colorBackground
+          colorBackground: segment.colorBackground,
+          title: segment.title
         },
         {
           onChanged: () => {
