@@ -3,7 +3,8 @@
 .h5p-phrase-randomizer-wheel {
   --wheel-font-size: 1.5rem;
 
-  background:
+  background: var(
+    --wheel-color-background,
     linear-gradient(
       to bottom,
       #767893 0%,
@@ -13,8 +14,10 @@
       #d0d3dc 82%,
       #b3b7c6 91%,
       #767893 100%
-    );
+    )
+  );
   box-shadow: 0 0 10px rgb(0 0 0 / 60%);
+  color: var(--wheel-color-text, #4c4452);
   font-size: var(--wheel-font-size);
   height: calc($minimum-a11y-size * 3 + 0.5rem);
   overflow: hidden;

@@ -40,7 +40,8 @@ export default class RandomizerSegment {
         alphabet: this.params.alphabet,
         position: this.position,
         index: this.params.index,
-        total: this.params.total
+        total: this.params.total,
+        colorBackground: this.params.colorBackground
       },
       {
         onChanged: (key) => {

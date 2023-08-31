@@ -77,12 +77,14 @@
           "name": "colorBackground",
           "type": "text",
           "label": "Background color",
-          "optional": true,
+          "default": "rgb(255, 255, 255)",
           "widget": "colorSelector",
+          "optional": true,
           "spectrum": {
             "showInput": true,
             "showInitial": true,
             "showPalette": true,
+            "preferredFormat": "rgb",
             "palette": [
               [
                 "#96ceb4",
@@ -123,13 +125,15 @@
     "type": "text",
     "label": "Solution",
     "description": "Enter the desired solution for the lock. Please note that using long solutions may be suboptimal on small devices.",
-    "default": "0123"
+    "default": "0123",
+    "widget": "none"
   },
   {
     "name": "behaviour",
     "type": "group",
     "importance": "low",
     "label": "Behavioural settings",
+    "widget": "none",
     "fields": [
       {
         "name": "enableRetry",

@@ -34,7 +34,8 @@ export default class Randomizer {
           total: this.params.solution.length,
           solution: segment.options[0], // TODO: Implement alternate solutions
           alphabet: segment.options,
-          position: this.params.previousState?.positions[index] ?? null
+          position: this.params.previousState?.positions[index] ?? null,
+          colorBackground: segment.colorBackground
         },
         {
           onChanged: () => {

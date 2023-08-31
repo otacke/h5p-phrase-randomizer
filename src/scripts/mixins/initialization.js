@@ -114,7 +114,7 @@ export default class Initialization {
       PhraseRandomizer.VIEW_STATES['task'];
     this.wasAnswerGiven = this.previousState.wasAnswerGiven ?? false;
 
-    // Lock instance
+    // Randomizer instance
     this.randomizer = new Randomizer(
       {
         dictionary: this.dictionary,

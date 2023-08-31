@@ -1,3 +1,4 @@
+import UtilColor from '@services/util-color.js';
 import Util from '@services/util.js';
 import './wheel.scss';
 
@@ -24,8 +25,20 @@ export default class Wheel {
 
     this.oldIndex = this.params.position ?? 0;
 
+    const colorBackground = UtilColor.createColorGradient(
+      this.params.colorBackground
+    );
+
+    const colorText = UtilColor.getColorText(this.params.colorBackground);
+
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-phrase-randomizer-wheel');
+    if (colorBackground) {
+      this.dom.style.setProperty('--wheel-color-background', colorBackground);
+    }
+    if (colorText) {
+      this.dom.style.setProperty('--wheel-color-text', colorText);
+    }
 
     this.list = document.createElement('div');
     this.list.classList.add('h5p-phrase-randomizer-wheel-list');
