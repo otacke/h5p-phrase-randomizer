@@ -68,6 +68,8 @@ export default class Initialization {
       .splice(0, Initialization.MAX_SEGMENTS)
       .map((segment) => {
         segment.options = segment.options || [];
+        segment.colorBackground =
+          segment.colorBackground ?? 'rgb(255, 255, 255)';
 
         while (segment.options.length < Initialization.MIN_OPTIONS) {
           segment.options.push(
