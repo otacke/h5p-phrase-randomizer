@@ -167,6 +167,10 @@ export default class RandomizerSegment {
     return this.position;
   }
 
+  /**
+   * Set Jukebox.
+   * @param {object} jukebox Jukebox.
+   */
   setJukebox(jukebox) {
     this.params.jukebox = jukebox;
   }
