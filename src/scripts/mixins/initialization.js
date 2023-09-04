@@ -171,7 +171,7 @@ export default class Initialization {
     const buttons = [];
     if (
       this.params.audio.useDefaultClickPreviousNext ||
-      this.params.jukebox.getAudioIds().length
+      this.jukebox.getAudioIds().length
     ) {
       buttons.push({
         id: 'audio',
