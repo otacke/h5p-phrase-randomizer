@@ -28,13 +28,13 @@ $button-pseudo-offset: 0.575rem;
       color: $color-joubelui-button-hover;
       position: relative;
 
-      &.toolbar-button-active {
-        color: $color-background;
-      }
+      // &.toolbar-button-active {
+      //   color: $color-background;
+      // }
 
       &.toolbar-button-audio {
         &::before {
-          color: #1768c4;
+          // color: $color-joubelui-button-hover;
           content: "\f026";
           font-family: "H5PFontAwesome4", sans-serif;
           font-size: 1.15em;
@@ -49,11 +49,17 @@ $button-pseudo-offset: 0.575rem;
 
         &.toolbar-button-active {
           &:not(.toolbar-button-disabled) {
-            background-color: rgba(26,115,217,.05);
+            background-color: $color-primary-10;
           }
 
           &::before {
             content: "\f028";
+          }
+        }
+
+        &:active {
+          &:not(.toolbar-button-disabled) {
+            background-color: $color-primary-25;
           }
         }
       }
