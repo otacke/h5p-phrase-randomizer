@@ -54,6 +54,10 @@
       {
         "name": "VerticalTabs",
         "label": "Default"
+      },
+      {
+        "name": "PhraseRandomizerTextualEditor",
+        "label": "Textual"
       }
     ],
     "field": {
