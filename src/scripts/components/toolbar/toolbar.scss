@@ -32,6 +32,32 @@ $button-pseudo-offset: 0.575rem;
         color: $color-background;
       }
 
+      &.toolbar-button-audio {
+        &::before {
+          color: #1768c4;
+          content: "\f026";
+          font-family: "H5PFontAwesome4", sans-serif;
+          font-size: 1.15em;
+          height: 1.15em;
+          left: 50%;
+          margin-left: -0.575em;
+          margin-top: -0.575em;
+          position: absolute;
+          top: 50%;
+          width: 1.15em;
+        }
+
+        &.toolbar-button-active {
+          &:not(.toolbar-button-disabled) {
+            background-color: rgba(26,115,217,.05);
+          }
+
+          &::before {
+            content: "\f028";
+          }
+        }
+      }
+
       &.toolbar-button-randomize {
         &.toolbar-button-disabled {
           background-color: $color-background;

@@ -62,7 +62,9 @@ export default class Initialization {
         wrongCombination: 'Wrong combination',
         disabled: 'disabled',
         combinationLock: 'combination lock',
-        segment: 'Segment @number of @total'
+        segment: 'Segment @number of @total',
+        buttonAudioActive: 'Mute audio. Currently unmuted.',
+        buttonAudioInactive: 'Unmute audio. Currently muted.'
       }
     }, this.params);
 
@@ -109,18 +111,6 @@ export default class Initialization {
   }
 
   /**
-   * Initialize sound.
-   */
-  async initSound() {
-    await this.setInbuiltSound();
-
-    this.jukebox = new Jukebox();
-    this.fillJukebox();
-
-    this.randomizer.setJukebox(this.jukebox);
-  }
-
-  /**
    * Initialize.
    */
   initialize() {
@@ -130,6 +120,10 @@ export default class Initialization {
     // Fill dictionary
     this.dictionary = new Dictionary();
     this.dictionary.fill({ l10n: this.params.l10n, a11y: this.params.a11y });
+
+    this.setInbuiltSound();
+    this.jukebox = new Jukebox();
+    this.fillJukebox();
 
     // Retrieve previous state
     this.previousState = this.extras?.previousState || {};
@@ -141,6 +135,7 @@ export default class Initialization {
     this.randomizer = new Randomizer(
       {
         dictionary: this.dictionary,
+        jukebox: this.jukebox,
         solution: this.params.solution.match(charRegex()),
         segments: this.params.segments,
         previousState: this.previousState.lock,
@@ -174,8 +169,27 @@ export default class Initialization {
     dom.classList.add('h5p-phrase-randomizer-main');
 
     const buttons = [];
+    if (
+      this.params.audio.useDefaultClickPreviousNext ||
+      this.params.jukebox.getAudioIds().length
+    ) {
+      buttons.push({
+        id: 'audio',
+        active: true,
+        type: 'toggle',
+        a11y: {
+          active: this.dictionary.get('a11y.buttonAudioActive'),
+          inactive: this.dictionary.get('a11y.buttonAudioInactive')
+        },
+        onClick: (ignore, params) => {
+          this.toggleAudio(params.active);
+        }
+      });
+    }
+
+
     if (this.params.behaviour.enableRetry) {
-      buttons.push(      {
+      buttons.push({
         id: 'randomize',
         type: 'pulse',
         a11y: {
@@ -286,7 +300,7 @@ export default class Initialization {
     };
 
     if (this.params.audio.useDefaultClickPreviousNext) {
-      const audioClickPath = await Util.getAssetPath(
+      const audioClickPath = Util.getAssetPath(
         AudioClick, this.contentId, 'H5P.PhraseRandomizer'
       );
 

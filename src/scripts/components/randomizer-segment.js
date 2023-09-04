@@ -48,6 +48,7 @@ export default class RandomizerSegment {
     this.wheel = new Wheel(
       {
         dictionary: this.params.dictionary,
+        jukebox: this.params.jukebox,
         alphabet: this.params.alphabet,
         position: this.position,
         index: this.params.index,
@@ -165,14 +166,6 @@ export default class RandomizerSegment {
    */
   getPosition() {
     return this.position;
-  }
-
-  /**
-   * Set Jukebox.
-   * @param {object} jukebox Jukebox.
-   */
-  setJukebox(jukebox) {
-    this.params.jukebox = jukebox;
   }
 
   /**

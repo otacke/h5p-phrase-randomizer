@@ -359,6 +359,18 @@
         "type": "text",
         "label": "Assistive technology description for toolbar",
         "default": "Toolbar"
+      },
+      {
+        "name": "buttonAudioActive",
+        "type": "text",
+        "label": "Audio button (unmuted)",
+        "default": "Mute audio. Currently unmuted."
+      },
+      {
+        "name": "buttonAudioInactive",
+        "type": "text",
+        "label": "Audio button (muted)",
+        "default": "Unmute audio. Currently muted."
       }
     ]
   }

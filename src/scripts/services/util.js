@@ -140,7 +140,7 @@ export default class Util {
    * @param {string} [distPath] Path to distribution files.
    * @returns {string|null} Path that H5P can use. Null if some problem.
    */
-  static async getAssetPath(
+  static getAssetPath(
     truePath, contentId, machineName, distPath = 'dist/'
   ) {
     /*

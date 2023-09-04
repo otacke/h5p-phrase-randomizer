@@ -35,8 +35,6 @@ export default class PhraseRandomizer extends H5P.Question {
     this.initialize();
     this.dom = this.buildDOM();
     this.recreateViewState();
-
-    this.initSound();
   }
 
   /**
@@ -220,6 +218,22 @@ export default class PhraseRandomizer extends H5P.Question {
       this.content.setViewState(
         PhraseRandomizer.VIEW_STATES.find((value) => value === state).keys[0]
       );
+    }
+  }
+
+  /**
+   * Toggle audio.
+   * @param {boolean} [state] State to set audio to.
+   */
+  async toggleAudio(state) {
+    this.isAudioOn = (typeof state === 'boolean') ? state : !this.isAudioOn;
+
+    if (!this.isAudioOn) {
+      this.jukebox.muteAll();
+    }
+    else {
+      await this.jukebox.resumeAudioContext();
+      this.jukebox.unmuteAll();
     }
   }
 
