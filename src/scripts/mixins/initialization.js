@@ -7,6 +7,8 @@ import Toolbar from '@components/toolbar/toolbar';
 import Randomizer from '@components/randomizer';
 import he from 'he';
 
+import AudioClick from '@audio/click.mp3';
+
 /**
  * Mixin containing methods for initializing the content.
  */
@@ -27,6 +29,9 @@ export default class Initialization {
     this.params = Util.extend({
       segments: [],
       solution: 'H5P',
+      audio: {
+        useDefaultClickPreviousNext: true
+      },
       behaviour: {
         enforceHorizontalDisplay: false,
         enableRetry: true,
@@ -103,6 +108,21 @@ export default class Initialization {
     }
   }
 
+  /**
+   * Initialize sound.
+   */
+  async initSound() {
+    await this.setInbuiltSound();
+
+    this.jukebox = new Jukebox();
+    this.fillJukebox();
+
+    this.randomizer.setJukebox(this.jukebox);
+  }
+
+  /**
+   * Initialize.
+   */
   initialize() {
     const defaultLanguage = this.extras?.metadata?.defaultLanguage || 'en';
     this.languageTag = Util.formatLanguageCode(defaultLanguage);
@@ -110,9 +130,6 @@ export default class Initialization {
     // Fill dictionary
     this.dictionary = new Dictionary();
     this.dictionary.fill({ l10n: this.params.l10n, a11y: this.params.a11y });
-
-    this.jukebox = new Jukebox();
-    this.fillJukebox();
 
     // Retrieve previous state
     this.previousState = this.extras?.previousState || {};
@@ -124,7 +141,6 @@ export default class Initialization {
     this.randomizer = new Randomizer(
       {
         dictionary: this.dictionary,
-        jukebox: this.jukebox,
         solution: this.params.solution.match(charRegex()),
         segments: this.params.segments,
         previousState: this.previousState.lock,
@@ -248,6 +264,51 @@ export default class Initialization {
     }
     else if (this.viewState === PhraseRandomizer.VIEW_STATES['solutions']) {
       this.showSolutions({ showRetry: true });
+    }
+  }
+
+  /**
+   * Set inbuilt sound.
+   */
+  async setInbuiltSound() {
+    const copyright = {
+      author: 'Oliver Tacke',
+      license: 'PD',
+      version: 'CC0 1.0',
+      year: '2023'
+    };
+
+    const mimeTypes = {
+      webm: ['webm'],
+      mpeg: ['mp3', 'mp4'],
+      ogg: ['ogg'],
+      wav: ['wav']
+    };
+
+    if (this.params.audio.useDefaultClickPreviousNext) {
+      const audioClickPath = await Util.getAssetPath(
+        AudioClick, this.contentId, 'H5P.PhraseRandomizer'
+      );
+
+      if (audioClickPath) {
+        const fileExtension = audioClickPath.split('.').pop();
+        let mime = null;
+        Object.keys(mimeTypes).forEach((key) => {
+          if (mime) {
+            return;
+          }
+
+          if (mimeTypes[key].includes(fileExtension)) {
+            mime = `audio/${key}`;
+          }
+        });
+
+        this.params.audio.clickPreviousNext = [{
+          path: audioClickPath,
+          ...(mime && { mime: mime }),
+          copyright: { ...copyright, title: 'Click' }
+        }];
+      }
     }
   }
 

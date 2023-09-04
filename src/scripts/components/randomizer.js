@@ -213,6 +213,16 @@ export default class Randomizer {
   }
 
   /**
+   * Set Jukebox.
+   * @param {object} jukebox Jukebox.
+   */
+  setJukebox(jukebox) {
+    this.segments.forEach((segment) => {
+      segment.setJukebox(jukebox);
+    });
+  }
+
+  /**
    * Set text.
    * @param {string} text Text to display.
    */

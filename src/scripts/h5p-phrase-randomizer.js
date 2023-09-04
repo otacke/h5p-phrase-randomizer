@@ -35,6 +35,8 @@ export default class PhraseRandomizer extends H5P.Question {
     this.initialize();
     this.dom = this.buildDOM();
     this.recreateViewState();
+
+    this.initSound();
   }
 
   /**

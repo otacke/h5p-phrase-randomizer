@@ -145,18 +145,28 @@
     "label": "Audio settings",
     "fields": [
       {
+        "name": "useDefaultClickPreviousNext",
+        "type": "boolean",
+        "label": "Use inbuilt sound for click on next button or previous button",
+        "optional": false,
+        "default": true
+      },
+      {
         "name": "clickPreviousNext",
         "type": "audio",
         "label": "Click on next button or previous button",
         "description": "Will be played when the user clicks on the previous button or next button.",
         "importance": "low",
-        "optional": true
-      },
-      {
-        "name": "dummy",
-        "type": "boolean",
-        "label": "Dummy",
-        "widget": "none"
+        "optional": true,
+        "widget": "showWhen",
+        "showWhen": {
+          "rules": [
+            {
+              "field": "useDefaultClickPreviousNext",
+              "equals": false
+            }
+          ]
+        }
       }
     ]
   },
