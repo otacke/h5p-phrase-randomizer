@@ -1,5 +1,6 @@
 import Util from '@services/util';
 import Dictionary from '@services/dictionary';
+import Jukebox from '@services/jukebox';
 import charRegex from 'char-regex';
 import PhraseRandomizer from '@scripts/h5p-phrase-randomizer';
 import Toolbar from '@components/toolbar/toolbar';
@@ -110,6 +111,9 @@ export default class Initialization {
     this.dictionary = new Dictionary();
     this.dictionary.fill({ l10n: this.params.l10n, a11y: this.params.a11y });
 
+    this.jukebox = new Jukebox();
+    this.fillJukebox();
+
     // Retrieve previous state
     this.previousState = this.extras?.previousState || {};
     this.viewState = this.previousState.viewState ??
@@ -120,6 +124,7 @@ export default class Initialization {
     this.randomizer = new Randomizer(
       {
         dictionary: this.dictionary,
+        jukebox: this.jukebox,
         solution: this.params.solution.match(charRegex()),
         segments: this.params.segments,
         previousState: this.previousState.lock,
@@ -244,6 +249,34 @@ export default class Initialization {
     else if (this.viewState === PhraseRandomizer.VIEW_STATES['solutions']) {
       this.showSolutions({ showRetry: true });
     }
+  }
+
+  /**
+   * Fill jukebox with audios.
+   */
+  fillJukebox() {
+    const audios = {};
+
+    for (const key in this.params.audio) {
+      if (!this.params.audio[key]?.[0]?.path) {
+        continue;
+      }
+
+      const src = H5P.getPath(
+        this.params.audio[key][0].path, this.contentId
+      );
+
+      const crossOrigin =
+        H5P.getCrossOrigin?.(this.params.audio[key][0]) ??
+        'Anonymous';
+
+      audios[key] = {
+        src: src,
+        crossOrigin: crossOrigin
+      };
+    }
+
+    this.jukebox.fill(audios);
   }
 }
 

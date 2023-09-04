@@ -26,11 +26,12 @@ export default class Randomizer {
 
     this.spinningSegments = {};
 
-    // TODO: All segment options in on parameter
+    // TODO: All segment options in one parameter
     this.segments = this.params.segments.map((segment, index) => {
       return new RandomizerSegment(
         {
           dictionary: this.params.dictionary,
+          jukebox: this.params.jukebox,
           index: index,
           total: this.params.solution.length,
           solution: segment.options[0], // TODO: Implement alternate solutions

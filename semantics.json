@@ -139,6 +139,28 @@
     "widget": "none"
   },
   {
+    "name": "audio",
+    "type": "group",
+    "importance": "low",
+    "label": "Audio settings",
+    "fields": [
+      {
+        "name": "clickPreviousNext",
+        "type": "audio",
+        "label": "Click on next button or previous button",
+        "description": "Will be played when the user clicks on the previous button or next button.",
+        "importance": "low",
+        "optional": true
+      },
+      {
+        "name": "dummy",
+        "type": "boolean",
+        "label": "Dummy",
+        "widget": "none"
+      }
+    ]
+  },
+  {
     "name": "behaviour",
     "type": "group",
     "importance": "low",

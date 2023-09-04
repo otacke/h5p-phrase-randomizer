@@ -73,6 +73,7 @@ export default class RandomizerSegment {
       { id: 'next', label: '\u25b2', classes: ['next'] },
       {
         onClicked: () => {
+          this.params.jukebox.play('clickPreviousNext');
           this.changeSymbol((this.position + this.params.alphabet.length - 1) %
             this.params.alphabet.length
           );
@@ -89,6 +90,7 @@ export default class RandomizerSegment {
       { id: 'previous', label: '\u25bc', classes: ['previous'] },
       {
         onClicked: () => {
+          this.params.jukebox.play('clickPreviousNext');
           this.changeSymbol((this.position + 1) % this.params.alphabet.length);
         }
       }
