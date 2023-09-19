@@ -131,6 +131,32 @@
     }
   },
   {
+    "name": "solutions",
+    "type": "group",
+    "label": "Solutions",
+    "widget": "PhraseRandomizerSolutionsList",
+    "fields": [
+      {
+        "name": "solutions",
+        "type": "list",
+        "label": "Solutions",
+        "entity": "solution",
+        "field": {
+          "name": "solutionSelector",
+          "type": "text",
+          "label": "Solution",
+          "widget": "PhraseRandomizerSolutionSelector"
+        }
+      },
+      {
+        "name": "dummy",
+        "type": "boolean",
+        "label": "Dummy",
+        "widget": "none"
+      }
+    ]
+  },
+  {
     "name": "solution",
     "type": "text",
     "label": "Solution",
