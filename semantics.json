@@ -140,8 +140,8 @@
         "label": "Free"
       },
       {
-        "value": "predetermined",
-        "label": "Predetermined solutions"
+        "value": "quiz",
+        "label": "Quiz"
       }
     ],
     "default": "free"
