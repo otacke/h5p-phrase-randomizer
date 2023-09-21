@@ -33,8 +33,7 @@ export default class Randomizer {
           dictionary: this.params.dictionary,
           jukebox: this.params.jukebox,
           index: index,
-          total: this.params.solution.length,
-          solution: segment.options[0], // TODO: Implement alternate solutions
+          total: this.params.segments.length,
           alphabet: segment.options,
           position: this.params.previousState?.positions[index] ?? null,
           colorBackground: segment.colorBackground,
@@ -101,6 +100,10 @@ export default class Randomizer {
     this.segments.forEach((segment) => {
       this.segmentsDOM.appendChild(segment.getDOM());
     });
+
+    // TODO: Check solution button
+
+    // TODO: Found solutions list
 
     this.messageDisplay = new MessageDisplay();
     this.lockDOM.appendChild(this.messageDisplay.getDOM());
@@ -257,6 +260,7 @@ export default class Randomizer {
    * Update combination aria.
    */
   updateConfigurationAria() {
+    // TODO: Make work with solutions
     const symbolString = this.segments
       .map((segment) => segment.getResponse())
       .join(', ');
@@ -275,9 +279,7 @@ export default class Randomizer {
    * Show solutions.
    */
   showSolutions() {
-    this.segments.forEach((segment) => {
-      segment.showSolutions();
-    });
+    // TODO: Extra DOM
 
     this.updateConfigurationAria();
   }

@@ -1,6 +1,7 @@
 import Util from '@services/util';
-import ToolbarButton from '@components/toolbar/toolbar-button';
-import ToolbarHeadline from '@components/toolbar/toolbar-headline';
+import ToolbarButton from '@components/toolbar/toolbar-button.js';
+import ToolbarHeadline from '@components/toolbar/toolbar-headline.js';
+import StatusContainers from '@components/toolbar/status-containers/status-containers.js';
 import './toolbar.scss';
 
 /** Class representing the button bar */
@@ -43,14 +44,29 @@ export default class Toolbar {
     }
 
     if (this.params.headline) {
+      const headlineWrapper = document.createElement('div');
+      headlineWrapper.classList.add('tool-bar-headline');
+      this.dom.append(headlineWrapper);
+
       const headline = new ToolbarHeadline({ text: this.params.headline });
-      this.dom.append(headline.getDOM());
+      headlineWrapper.append(headline.getDOM());
     }
+
+    const nonHeadlineWrapper = document.createElement('div');
+    nonHeadlineWrapper.classList.add('tool-bar-non-headline');
+    this.dom.append(nonHeadlineWrapper);
+
+    this.statusContainers = new StatusContainers();
+    nonHeadlineWrapper.append(this.statusContainers.getDOM());
+
+    this.params.statusContainers.forEach((container) => {
+      this.statusContainers.addContainer(container);
+    });
 
     // Buttons
     this.buttonsContainer = document.createElement('div');
     this.buttonsContainer.classList.add('toolbar-buttons');
-    this.dom.append(this.buttonsContainer);
+    nonHeadlineWrapper.append(this.buttonsContainer);
 
     this.params.buttons.forEach((button) => {
       this.addButton(button);
@@ -294,6 +310,31 @@ export default class Toolbar {
 
     focusButton.setAttribute('tabindex', '0');
     focusButton.focus();
+  }
+
+  /**
+   * Status status of container.
+   * @param {string} id Id of container to set status of.
+   * @param {object} params Parameters for status container.
+   */
+  setStatusContainerStatus(id, params = {}) {
+    this.statusContainers.setStatus(id, params);
+  }
+
+  /**
+   * Show status container
+   * @param {string} id Id of container to show.
+   */
+  showStatusContainer(id) {
+    this.statusContainers.showContainer(id);
+  }
+
+  /**
+   * Hide status container
+   * @param {string} id Id of container to show.
+   */
+  hideStatusContainer(id) {
+    this.statusContainers.hideContainer(id);
   }
 
   /**

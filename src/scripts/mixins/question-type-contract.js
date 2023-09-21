@@ -31,7 +31,7 @@ export default class QuestionTypeContract {
    * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-3}
    */
   getMaxScore() {
-    return 1;
+    return this.params.solutions.length;
   }
 
   /**

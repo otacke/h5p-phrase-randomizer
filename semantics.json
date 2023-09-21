@@ -296,6 +296,12 @@
         "type": "text",
         "label": "No message",
         "default": "..."
+      },
+      {
+        "name": "scoreDisplay",
+        "type": "text",
+        "label": "Score display",
+        "default": "@current / @total"
       }
     ]
   },

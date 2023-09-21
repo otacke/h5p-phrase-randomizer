@@ -10,7 +10,6 @@ export default class RandomizerSegment {
    * @param {object} params Parameters.
    * @param {number} params.index This segment's index.
    * @param {number} params.total Total number of segments.
-   * @param {string} params.solution Symbol that is this segment's solution.
    * @param {string[]} params.alphabet This segment's alphabet.
    * @param {number|null} params.position Start position (from previous state).
    * @param {object} callbacks Callbacks.
@@ -228,13 +227,6 @@ export default class RandomizerSegment {
   reset() {
     this.enable();
     this.setPosition(Math.floor(Math.random() * this.params.alphabet.length));
-  }
-
-  /**
-   * Show solutions.
-   */
-  showSolutions() {
-    this.setPosition(this.params.alphabet.indexOf(this.params.solution));
   }
 
   /**

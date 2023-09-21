@@ -1,11 +1,9 @@
 import Util from '@services/util';
 import Dictionary from '@services/dictionary';
 import Jukebox from '@services/jukebox';
-import charRegex from 'char-regex';
 import PhraseRandomizer from '@scripts/h5p-phrase-randomizer';
 import Toolbar from '@components/toolbar/toolbar';
 import Randomizer from '@components/randomizer';
-import he from 'he';
 
 import AudioClick from '@audio/click.mp3';
 
@@ -28,10 +26,11 @@ export default class Initialization {
     // Sanitize parameters
     this.params = Util.extend({
       segments: [],
-      solution: 'H5P',
+      solutions: [],
       audio: {
         useDefaultClickPreviousNext: true
       },
+      mode: 'free',
       behaviour: {
         enforceHorizontalDisplay: false,
         enableRetry: true,
@@ -47,7 +46,8 @@ export default class Initialization {
         lockDisabled: 'No more attempts. Lock disabled.',
         correctCombination: 'This combination opens the lock.',
         wrongCombination: 'This combination does not open the lock.',
-        noMessage: '...'
+        noMessage: '...',
+        scoreDisplay: '@current / @total'
       },
       a11y: {
         check: 'Check whether the combination opens the lock.',
@@ -95,18 +95,32 @@ export default class Initialization {
 
     // TODO: Adjust solution handling
 
-    // Sanitize solution
-    this.params.solution = Util.stripHTML(he.decode(this.params.solution));
-    let symbols = this.params.solution.match(charRegex());
-    if (!symbols || symbols?.length < 1) {
-      symbols = ['H', '5', 'P'];
+    // Sanitize solutions
+    if (this.params.mode === 'free') {
+      this.params.solutions = [];
     }
-    if (symbols.length > PhraseRandomizer.SEGMENTS_MAX) {
-      this.params.solution = symbols
-        .slice(0, PhraseRandomizer.SEGMENTS_MAX)
-        .join('');
+    else {
+      this.params.solutions = this.params.solutions.solutions;
+    }
 
-      console.warn(`${this.getTitle()}: The original solution was truncated because it was longer than ${PhraseRandomizer.SEGMENTS_MAX} symbols that are allowed.`);
+    if (this.params.solutions.length > PhraseRandomizer.MAX_SEGMENTS) {
+      this.params.solutions.splice(PhraseRandomizer.MAX_SEGMENTS);
+    }
+
+    this.params.solutions = this.params.solutions
+      .reduce((validSolutions, solutionsText) => {
+        const solution = solutionsText.split(',')
+          .map((solutionIndex, segmentIndex) => {
+            return this.params.segments[segmentIndex]?.options?.[solutionIndex];
+          });
+
+        return (solution) ?
+          [...validSolutions, solution] :
+          validSolutions;
+      }, []);
+
+    if (!this.params.solutions.length) {
+      this.params.mode === 'free'; // No valid solutions, so enforcing free mode
     }
   }
 
@@ -136,7 +150,8 @@ export default class Initialization {
       {
         dictionary: this.dictionary,
         jukebox: this.jukebox,
-        solution: this.params.solution.match(charRegex()),
+        mode: this.params.mode,
+        solutions: this.params.solutions,
         segments: this.params.segments,
         previousState: this.previousState.lock,
         column: this.params.behaviour.column
@@ -201,13 +216,32 @@ export default class Initialization {
       });
     }
 
+    // Set up toolbar's status containers
+    const toolbarStatusContainers = [
+      { id: 'score', hasMaxValue: true }
+    ];
+
     // Toolbar
     this.toolbar = new Toolbar({
       dictionary: this.dictionary,
       ...(this.params.headline && { headline: this.params.headline }),
-      buttons: buttons
+      buttons: buttons,
+      statusContainers: toolbarStatusContainers
     });
     dom.append(this.toolbar.getDOM());
+
+    // Initialize score
+    this.toolbar.setStatusContainerStatus(
+      'score',
+      {
+        value: this.getScore(),
+        maxValue: this.getMaxScore()
+      }
+    );
+
+    if (this.params.mode !== 'free') {
+      this.toolbar.showStatusContainer('score');
+    }
 
     if (this.params.introduction) {
       const introduction = document.createElement('div');

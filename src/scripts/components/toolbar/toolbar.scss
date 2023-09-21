@@ -7,80 +7,103 @@ $button-pseudo-offset: 0.575rem;
   align-items: center;
   background-color: $color-background;
   box-shadow: 10px 10px 30px $color-shadow-light;
-  box-sizing: border-box;
+  column-gap: 1.25rem;
   display: flex;
   flex-direction: row;
   flex-shrink: 0;
+  flex-wrap: wrap;
   font-size: 1.25rem;
-  gap: 1rem;
+  justify-content: center;
   overflow: hidden;
+  row-gap: 0.25rem;
   padding: 0.5rem;
   width: 100%;
 
-  .toolbar-buttons {
+  .tool-bar-headline {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tool-bar-non-headline {
+    align-items: center;
+    column-gap: 1.25rem;
     display: flex;
     flex-direction: row;
-    flex-grow: 1;
-    flex-shrink: 1;
-    justify-content: flex-end;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.25rem;
 
-    .toolbar-button {
-      color: $color-joubelui-button-hover;
-      position: relative;
-
-      // &.toolbar-button-active {
-      //   color: $color-background;
-      // }
-
-      &.toolbar-button-audio {
+    .status-containers {
+      .status-container-score {
         &::before {
-          // color: $color-joubelui-button-hover;
-          content: "\f026";
+          content: "\f005";
           font-family: "H5PFontAwesome4", sans-serif;
-          font-size: 1.15em;
-          height: 1.15em;
-          left: 50%;
-          margin-left: -0.575em;
-          margin-top: -0.575em;
-          position: absolute;
-          top: 50%;
-          width: 1.15em;
+        }
+      }
+    }
+
+    .toolbar-buttons {
+      display: flex;
+      flex-direction: row;
+      flex-shrink: 1;
+      justify-content: flex-end;
+
+      .toolbar-button {
+        color: $color-joubelui-button-hover;
+        position: relative;
+
+        &.toolbar-button-audio {
+          &::before {
+            // color: $color-joubelui-button-hover;
+            content: "\f026";
+            font-family: "H5PFontAwesome4", sans-serif;
+            font-size: 1.15em;
+            height: 1.15em;
+            left: 50%;
+            margin-left: -0.575em;
+            margin-top: -0.575em;
+            position: absolute;
+            top: 50%;
+            width: 1.15em;
+          }
+
+          &.toolbar-button-active {
+            &:not(.toolbar-button-disabled) {
+              background-color: $color-primary-10;
+            }
+
+            &::before {
+              content: "\f028";
+            }
+          }
+
+          &:active {
+            &:not(.toolbar-button-disabled) {
+              background-color: $color-primary-25;
+            }
+          }
         }
 
-        &.toolbar-button-active {
-          &:not(.toolbar-button-disabled) {
-            background-color: $color-primary-10;
+        &.toolbar-button-randomize {
+          &.toolbar-button-disabled {
+            background-color: $color-background;
+            color: $color-disabled;
           }
 
           &::before {
-            content: "\f028";
+            content: "\f021";
+            font-family: "H5PFontAwesome4", sans-serif;
+            font-size: $button-pseudo-size;
+            height: $button-pseudo-size;
+            left: 50%;
+            margin-left: -$button-pseudo-offset;
+            margin-top: -$button-pseudo-offset;
+            position: absolute;
+            top: 50%;
+            width: $button-pseudo-size;
           }
-        }
-
-        &:active {
-          &:not(.toolbar-button-disabled) {
-            background-color: $color-primary-25;
-          }
-        }
-      }
-
-      &.toolbar-button-randomize {
-        &.toolbar-button-disabled {
-          background-color: $color-background;
-          color: $color-disabled;
-        }
-
-        &::before {
-          content: "\f021";
-          font-family: "H5PFontAwesome4", sans-serif;
-          font-size: $button-pseudo-size;
-          height: $button-pseudo-size;
-          left: 50%;
-          margin-left: -$button-pseudo-offset;
-          margin-top: -$button-pseudo-offset;
-          position: absolute;
-          top: 50%;
-          width: $button-pseudo-size;
         }
       }
     }
