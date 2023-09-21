@@ -131,6 +131,22 @@
     }
   },
   {
+    "name": "mode",
+    "type": "select",
+    "label": "Mode",
+    "options": [
+      {
+        "value": "free",
+        "label": "Free"
+      },
+      {
+        "value": "predetermined",
+        "label": "Predetermined solutions"
+      }
+    ],
+    "default": "free"
+  },
+  {
     "name": "solutions",
     "type": "group",
     "label": "Solutions",
