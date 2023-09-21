@@ -101,10 +101,6 @@ export default class Randomizer {
       this.segmentsDOM.appendChild(segment.getDOM());
     });
 
-    // TODO: Check solution button
-
-    // TODO: Found solutions list
-
     this.messageDisplay = new MessageDisplay();
     this.lockDOM.appendChild(this.messageDisplay.getDOM());
   }
@@ -194,7 +190,7 @@ export default class Randomizer {
    * @returns {string} Response.
    */
   getResponse() {
-    return this.segments.map((segment) => segment.getResponse()).join('');
+    return this.segments.map((segment) => segment.getResponse());
   }
 
   /**
@@ -297,7 +293,7 @@ export default class Randomizer {
   }
 
   /**
-   * Handle animation ended.
+   * Handle animation wrong.
    */
   showAnimationWrongCombination() {
     if (this.isAnimating) {
@@ -311,10 +307,25 @@ export default class Randomizer {
   }
 
   /**
+   * Handle animation correct.
+   */
+  showAnimationCorrectCombination() {
+    if (this.isAnimating) {
+      return;
+    }
+
+    this.isAnimating = true;
+    this.dom.addEventListener('animationend', this.handleAnimationEnded);
+    this.dom.classList.add('correct-combination');
+    this.dom.classList.add('animate');
+  }
+
+  /**
    * Handle animation ended.
    */
   handleAnimationEnded() {
     this.dom.classList.remove('animate');
+    this.dom.classList.remove('correct-combination');
     this.dom.classList.remove('wrong-combination');
     this.dom.addEventListener('animationend', this.handleAnimationEnded);
     this.isAnimating = false;

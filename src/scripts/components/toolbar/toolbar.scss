@@ -36,9 +36,9 @@ $button-pseudo-offset: 0.575rem;
     row-gap: 0.25rem;
 
     .status-containers {
-      .status-container-score {
+      .status-container-found {
         &::before {
-          content: "\f005";
+          content: "\f00c";
           font-family: "H5PFontAwesome4", sans-serif;
         }
       }

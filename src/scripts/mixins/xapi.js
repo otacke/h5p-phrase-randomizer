@@ -1,5 +1,4 @@
 import Util from '@services/util';
-import charRegex from 'char-regex';
 
 /**
  * Mixin containing methods for xapi stuff.
@@ -37,7 +36,7 @@ export default class XAPI {
 
       xAPIEvent.data.statement.result = Util.extend(
         {
-          response: this.randomizer.getResponse().match(charRegex()).join('[,]')
+          response: this.randomizer.getResponse().join('[,]')
         },
         xAPIEvent.data.statement.result || {}
       );
@@ -66,11 +65,8 @@ export default class XAPI {
     definition.type = 'http://adlnet.gov/expapi/activities/cmi.interaction';
     definition.interactionType = 'fill-in';
 
-    definition.correctResponsesPattern = [
-      this.params.solution
-        .match(charRegex())
-        .join('[,]')
-    ];
+    definition.correctResponsesPattern = this.params.solutions
+      .map((solution) => solution.join('[,]'));
 
     return definition;
   }
@@ -95,8 +91,7 @@ export default class XAPI {
     const description = this.params.introduction ||
       `<p>${XAPI.DEFAULT_DESCRIPTION}</p>`;
 
-    const placeholders = this.params.solution
-      .match(charRegex())
+    const placeholders = this.params.solutions[0]
       .map(() => XAPI.RESPONSE_PLACEHOLDER)
       .join(' ');
 

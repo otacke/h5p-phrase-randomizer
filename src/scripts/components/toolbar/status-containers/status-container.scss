@@ -15,7 +15,7 @@
   }
 
   &::before {
-    color: $color-primary;
+    color: $color-joubelui-button-hover;
     margin-right: 0.5rem;
   }
 
@@ -31,7 +31,7 @@
     justify-content: center;
 
     span.value, span.max-value {
-      color: $color-primary;
+      color: $color-joubelui-button-hover;
     }
 
     span.delimiter {

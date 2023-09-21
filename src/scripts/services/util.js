@@ -205,4 +205,22 @@ export default class Util {
 
     return path;
   }
+
+  /**
+   * Shallow compare two arrays.
+   * @param {string[]} a Array of strings 1.
+   * @param {string[]} b Array of strings 2.
+   * @returns {boolean} True, if equal. Else false.
+   */
+  static areArraysEqual(a, b) {
+    if (!Array.isArray(a) || !Array.isArray(b)) {
+      return false;
+    }
+
+    if (a.length !== b.length) {
+      return false;
+    }
+
+    return a.every((c, index) => c === b[index]);
+  }
 }

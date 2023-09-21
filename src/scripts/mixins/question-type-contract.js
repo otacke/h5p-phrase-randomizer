@@ -82,6 +82,11 @@ export default class QuestionTypeContract {
   resetTask() {
     this.setViewState('task');
     this.wasAnswerGiven = false;
+    this.foundSolutions = [];
+    this.toolbar.setStatusContainerStatus('found', {
+      value: this.getFoundScore(),
+      maxValue: this.getMaxScore()
+    });
 
     this.announceMessage({
       text: this.dictionary.get('l10n.noMessage'),
@@ -91,8 +96,11 @@ export default class QuestionTypeContract {
     this.hideButton('show-solution');
     this.hideButton('try-again');
 
-    this.showButton('check-answer');
+    if (this.params.mode !== 'free') {
+      this.showButton('check-answer');
+    }
 
+    this.foundSolutionsList.reset();
     this.randomizer.reset();
   }
 

@@ -47,6 +47,11 @@
       animation: wrong-combination;
       animation-duration: 0.25s;
     }
+
+    &.correct-combination {
+      animation: correct-combination;
+      animation-duration: 0.75s;
+    }
   }
 
   @keyframes wrong-combination {
@@ -70,10 +75,35 @@
       transform: translate3d(0, 0, 0);
     }
   }
+
+  @keyframes correct-combination {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    15%,
+    45%,
+    75% {
+      transform: translate3d(0, -10px, 0);
+    }
+
+    30%,
+    60%,
+    90% {
+      transform: translate3d(0, 10px, 0);
+    }
+
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .h5p-phrase-randomizer-case.animate.wrong-combination {
+    animation-duration: 1ms;
+  }
+  .h5p-phrase-randomizer-case.animate.correct-combination {
     animation-duration: 1ms;
   }
 }

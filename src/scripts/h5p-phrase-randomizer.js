@@ -30,6 +30,8 @@ export default class PhraseRandomizer extends H5P.Question {
     this.contentId = contentId;
     this.extras = extras;
 
+    this.foundSolutions = [];
+
     // Inititialization mixin
     this.sanitize();
     this.initialize();
@@ -47,6 +49,8 @@ export default class PhraseRandomizer extends H5P.Question {
     // Retrieve root h5p container - unfortunately not accessible via H5P core
     Util.callOnceVisible(this.dom, () => {
       this.h5pContainer = this.dom.closest('.h5p-content .h5p-container');
+
+      this.h5pContainer.append(this.foundSolutionsList.getDOM());
 
       this.on('resize', () => {
         this.resize();
@@ -83,7 +87,8 @@ export default class PhraseRandomizer extends H5P.Question {
       wasAnswerGiven: this.wasAnswerGiven,
       viewState: this.viewState,
       message: this.randomizer.getMessage(),
-      randomizer: this.randomizer.getCurrentState()
+      randomizer: this.randomizer.getCurrentState(),
+      foundSolutions: this.foundSolutions
     };
   }
 
@@ -95,14 +100,29 @@ export default class PhraseRandomizer extends H5P.Question {
   checkAnswer(params = {}) {
     this.handleAnswerGiven();
 
-    if (this.randomizer.getResponse() === this.params.solution) {
-      this.handleCorrectResponse(params);
+    const answer = this.randomizer.getResponse();
+
+    const answerIsCorrect = this.params.solutions.some((solution) => {
+      return Util.areArraysEqual(solution, answer);
+    });
+
+    if (answerIsCorrect) {
+      this.handleCorrectResponse({...params, answer: answer });
       return;
     }
 
     this.randomizer.showAnimationWrongCombination();
 
+    // TODO: Should there be a limited number of attempts?
     this.handleFinalWrongResponse(params);
+  }
+
+  /**
+   * Return number of found solutions.
+   * @returns {number} Number of found solutions.
+   */
+  getFoundScore() {
+    return this.foundSolutions.length;
   }
 
   /**
@@ -111,6 +131,27 @@ export default class PhraseRandomizer extends H5P.Question {
    * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
    */
   handleCorrectResponse(params = {}) {
+    this.randomizer.showAnimationCorrectCombination();
+
+    const answerWasAlreadyGiven = this.foundSolutions.some((solution) => {
+      return Util.areArraysEqual(solution, params.answer);
+    });
+
+    if (!answerWasAlreadyGiven) {
+      this.foundSolutions.push(params.answer);
+      this.toolbar.setStatusContainerStatus('found', {
+        value: this.getFoundScore(),
+        maxValue: this.getMaxScore()
+      });
+
+      this.foundSolutionsList.setListItems(this.foundSolutions);
+      this.trigger('resize');
+    }
+
+    if (this.foundSolutions.length !== this.params.solutions.length) {
+      return;
+    }
+
     this.randomizer.disable();
     this.setViewState('results');
 

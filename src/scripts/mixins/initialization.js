@@ -1,9 +1,10 @@
-import Util from '@services/util';
-import Dictionary from '@services/dictionary';
-import Jukebox from '@services/jukebox';
-import PhraseRandomizer from '@scripts/h5p-phrase-randomizer';
-import Toolbar from '@components/toolbar/toolbar';
-import Randomizer from '@components/randomizer';
+import Util from '@services/util.js';
+import Dictionary from '@services/dictionary.js';
+import Jukebox from '@services/jukebox.js';
+import PhraseRandomizer from '@scripts/h5p-phrase-randomizer.js';
+import Toolbar from '@components/toolbar/toolbar.js';
+import Randomizer from '@components/randomizer.js';
+import FoundSolutionsList from '@components/found-solutions-list.js';
 
 import AudioClick from '@audio/click.mp3';
 
@@ -47,7 +48,9 @@ export default class Initialization {
         correctCombination: 'This combination opens the lock.',
         wrongCombination: 'This combination does not open the lock.',
         noMessage: '...',
-        scoreDisplay: '@current / @total'
+        scoreDisplay: '@current / @total',
+        foundSolutionsTitle: 'Found solutions',
+        none: 'None'
       },
       a11y: {
         check: 'Check whether the combination opens the lock.',
@@ -218,7 +221,7 @@ export default class Initialization {
 
     // Set up toolbar's status containers
     const toolbarStatusContainers = [
-      { id: 'score', hasMaxValue: true }
+      { id: 'found', hasMaxValue: true }
     ];
 
     // Toolbar
@@ -230,17 +233,17 @@ export default class Initialization {
     });
     dom.append(this.toolbar.getDOM());
 
-    // Initialize score
+    // Initialize found container
     this.toolbar.setStatusContainerStatus(
-      'score',
+      'found',
       {
-        value: this.getScore(),
+        value: this.getFoundScore(),
         maxValue: this.getMaxScore()
       }
     );
 
     if (this.params.mode !== 'free') {
-      this.toolbar.showStatusContainer('score');
+      this.toolbar.showStatusContainer('found');
     }
 
     if (this.params.introduction) {
@@ -250,12 +253,16 @@ export default class Initialization {
       const content = document.createElement('div');
       content.classList.add('h5p-phrase-randomizer-intro-content');
       content.innerHTML = this.params.introduction;
-      introduction.appendChild(content);
+      introduction.append(content);
 
-      dom.appendChild(introduction);
+      dom.append(introduction);
     }
 
-    dom.appendChild(this.randomizer.getDOM());
+    dom.append(this.randomizer.getDOM());
+
+    this.foundSolutionsList = new FoundSolutionsList({
+      dictionary: this.dictionary
+    });
 
     // Check answer button
     this.addButton(
@@ -264,8 +271,7 @@ export default class Initialization {
       () => {
         this.checkAnswer();
       },
-      false, // TODO: No quiz mode yet, implement it
-      //true,
+      this.params.mode !== 'free',
       { 'aria-label': this.dictionary.get('a11y.check') },
       {
         contentData: this.extras,

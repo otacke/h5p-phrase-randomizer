@@ -1,0 +1,15 @@
+@import '@styles/main';
+
+.h5p-phrase-randomizer-found-solutions {
+  box-shadow: 10px 10px 30px rgba(166, 166, 166, 0.2);
+  margin: 0 1rem 1rem 1rem;
+  padding: 1rem;
+
+  .h5p-phrase-randomizer-found-solutions-title {
+    font-weight: bold;
+  }
+
+  .h5p-phrase-randomizer-found-solutions-list {
+    color: $color-joubelui-button-hover;
+  }
+}

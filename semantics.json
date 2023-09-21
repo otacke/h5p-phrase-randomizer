@@ -299,9 +299,22 @@
       },
       {
         "name": "scoreDisplay",
+        "description": "@current and @total are placeholders and will be replaced by the respective values.",
         "type": "text",
         "label": "Score display",
         "default": "@current / @total"
+      },
+      {
+        "name": "foundSolutionsTitle",
+        "type": "text",
+        "label": "Found solutions",
+        "default": "Found solutions"
+      },
+      {
+        "name": "none",
+        "type": "text",
+        "label": "None",
+        "default": "None"
       }
     ]
   },
