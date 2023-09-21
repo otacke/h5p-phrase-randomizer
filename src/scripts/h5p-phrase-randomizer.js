@@ -114,7 +114,7 @@ export default class PhraseRandomizer extends H5P.Question {
     this.randomizer.showAnimationWrongCombination();
 
     // TODO: Should there be a limited number of attempts?
-    this.handleFinalWrongResponse(params);
+    // this.handleFinalWrongResponse(params);
   }
 
   /**
