@@ -263,6 +263,9 @@ export default class Initialization {
     this.foundSolutionsList = new FoundSolutionsList({
       dictionary: this.dictionary
     });
+    if (this.params.mode !== 'free') {
+      this.foundSolutionsList.show();
+    }
 
     // Check answer button
     this.addButton(

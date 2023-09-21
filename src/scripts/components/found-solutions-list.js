@@ -22,7 +22,23 @@ export default class FoundSolutionsList {
     this.list.classList.add('h5p-phrase-randomizer-found-solutions-list');
     this.dom.append(this.list);
 
+    this.hide();
+
     this.reset();
+  }
+
+  /**
+   * Show.
+   */
+  show() {
+    this.dom.classList.remove('display-none');
+  }
+
+  /**
+   * Hide.
+   */
+  hide() {
+    this.dom.classList.add('display-none');
   }
 
   getDOM() {

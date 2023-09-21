@@ -17,7 +17,8 @@ export default class Toolbar {
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
       buttons: [],
-      hidden: false
+      hidden: false,
+      headline: ''
     }, params);
 
     this.params.hidden = this.params.hidden ||
@@ -43,14 +44,12 @@ export default class Toolbar {
       this.hide();
     }
 
-    if (this.params.headline) {
-      const headlineWrapper = document.createElement('div');
-      headlineWrapper.classList.add('tool-bar-headline');
-      this.dom.append(headlineWrapper);
+    const headlineWrapper = document.createElement('div');
+    headlineWrapper.classList.add('tool-bar-headline');
+    this.dom.append(headlineWrapper);
 
-      const headline = new ToolbarHeadline({ text: this.params.headline });
-      headlineWrapper.append(headline.getDOM());
-    }
+    const headline = new ToolbarHeadline({ text: this.params.headline });
+    headlineWrapper.append(headline.getDOM());
 
     const nonHeadlineWrapper = document.createElement('div');
     nonHeadlineWrapper.classList.add('tool-bar-non-headline');

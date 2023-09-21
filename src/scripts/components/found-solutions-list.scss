@@ -12,4 +12,8 @@
   .h5p-phrase-randomizer-found-solutions-list {
     color: $color-joubelui-button-hover;
   }
+
+  &.display-none {
+    display: none;
+  }
 }
