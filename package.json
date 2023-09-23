@@ -39,7 +39,6 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "char-regex": "^2.0.1",
     "color": "^4.2.3",
     "he": "^1.2.0"
   },
