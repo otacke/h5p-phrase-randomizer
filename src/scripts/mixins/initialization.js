@@ -215,6 +215,7 @@ export default class Initialization {
         },
         onClick: () => {
           this.randomizer.randomize();
+          this.handleLockChanged();
         }
       });
     }

@@ -108,6 +108,7 @@ export default class RandomizerSegment {
       {
         onClicked: () => {
           this.spin();
+          this.callbacks.onChanged();
         }
       }
     );

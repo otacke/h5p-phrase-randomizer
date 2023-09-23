@@ -46,12 +46,15 @@ export default class FoundSolutionsList {
   }
 
   reset() {
-    this.setListItems([[this.params.dictionary.get('l10n.none')]]);
+    this.setListItems([{
+      style: 'none',
+      labels: [this.params.dictionary.get('l10n.none')]
+    }]);
   }
 
   /**
    * Set list items.
-   * @param {(string[])[]} items Items consisting of arrays of strings.
+   * @param {(object[])[]} items Items.
    */
   setListItems(items) {
     while (this.list.firstChild) {
@@ -61,7 +64,8 @@ export default class FoundSolutionsList {
     items.forEach((solutions) => {
       const listItem = document.createElement('li');
       listItem.classList.add('h5p-phrase-randomizer-found-solutions-list-item');
-      listItem.innerText = solutions.join(' | ');
+      listItem.classList.add(solutions.style || 'neutral');
+      listItem.innerText = solutions.labels.join(' | ');
       this.list.append(listItem);
     });
   }

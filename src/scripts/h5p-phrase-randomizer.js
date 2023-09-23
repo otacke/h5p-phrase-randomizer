@@ -144,7 +144,12 @@ export default class PhraseRandomizer extends H5P.Question {
         maxValue: this.getMaxScore()
       });
 
-      this.foundSolutionsList.setListItems(this.foundSolutions);
+      this.foundSolutionsList.setListItems(
+        this.foundSolutions.map((solution) => ({
+          labels: solution,
+          style: 'found'
+        }))
+      );
       this.trigger('resize');
     }
 

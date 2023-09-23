@@ -1,4 +1,4 @@
-import charRegex from 'char-regex';
+import Util from '@services/util.js';
 
 /**
  * Mixin containing methods for H5P Question Type contract.
@@ -20,9 +20,9 @@ export default class QuestionTypeContract {
    * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-2}
    */
   getScore() {
-    return (this.randomizer.getResponse() === this.params.solution) ?
+    return (this.params.mode === 'free') ?
       1 :
-      0;
+      this.foundSolutions?.length; // TODO: This should probably be tied to attempts (?)
   }
 
   /**
@@ -31,7 +31,9 @@ export default class QuestionTypeContract {
    * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-3}
    */
   getMaxScore() {
-    return this.params.solutions.length;
+    return (this.params.mode === 'free') ?
+      1 :
+      this.params.solutions.length;
   }
 
   /**
@@ -41,15 +43,31 @@ export default class QuestionTypeContract {
    * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-4}
    */
   showSolutions(params = {}) {
+    // TODO
     const ariaText = this.dictionary
       .get('a11y.correctCombination')
       .replace(
-        /@combination/g, this.params.solution.match(charRegex()).join(', ')
+        /@combination/g, ''
       );
 
     this.randomizer.disable();
     this.randomizer.showSolutions();
 
+    const resultingItems = this.params.solutions.map((solution) => {
+      const item = { labels: solution };
+
+      const answerWasFound = this.foundSolutions.some((foundSolution) => {
+        return Util.areArraysEqual(foundSolution, solution);
+      });
+
+      item.style = answerWasFound ? 'found' : 'not-found';
+
+      return item;
+    });
+
+    this.foundSolutionsList.setListItems(resultingItems);
+
+    // TODO
     this.announceMessage({
       text: this.dictionary.get('l10n.correctCombination'),
       aria: ariaText
