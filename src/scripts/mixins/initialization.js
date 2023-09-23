@@ -146,7 +146,8 @@ export default class Initialization {
     this.previousState = this.extras?.previousState || {};
     this.viewState = this.previousState.viewState ??
       PhraseRandomizer.VIEW_STATES['task'];
-    this.wasAnswerGiven = this.previousState.wasAnswerGiven ?? false;
+    this.wasAnswerGiven = Object.keys(this.previousState).length > 0;
+    this.foundSolutions = this.previousState.foundSolutions ?? [];
 
     // Randomizer instance
     this.randomizer = new Randomizer(
@@ -264,6 +265,14 @@ export default class Initialization {
     this.foundSolutionsList = new FoundSolutionsList({
       dictionary: this.dictionary
     });
+
+    this.foundSolutionsList.setListItems(
+      this.foundSolutions.map((solution) => ({
+        labels: solution,
+        style: 'found'
+      }))
+    );
+
     if (this.params.mode !== 'free') {
       this.foundSolutionsList.show();
     }

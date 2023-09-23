@@ -30,8 +30,6 @@ export default class PhraseRandomizer extends H5P.Question {
     this.contentId = contentId;
     this.extras = extras;
 
-    this.foundSolutions = [];
-
     // Inititialization mixin
     this.sanitize();
     this.initialize();
@@ -80,11 +78,14 @@ export default class PhraseRandomizer extends H5P.Question {
 
   /**
    * Get current state.
-   * @returns {object} Current state.
+   * @returns {object|undefined} Current state.
    */
   getCurrentState() {
+    if (!this.getAnswerGiven()) {
+      return; // No relevant input that would need to be restored.
+    }
+
     return {
-      wasAnswerGiven: this.wasAnswerGiven,
       viewState: this.viewState,
       message: this.randomizer.getMessage(),
       randomizer: this.randomizer.getCurrentState(),
