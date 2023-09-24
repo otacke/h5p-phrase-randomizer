@@ -1,7 +1,7 @@
 import Util from '@services/util.js';
-import Button from '@components/button';
+import Button from './button.js';
+import Wheel from './wheel.js';
 import './randomizer-segment.scss';
-import Wheel from '@components/wheel';
 
 /** Segment */
 export default class RandomizerSegment {

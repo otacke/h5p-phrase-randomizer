@@ -1,6 +1,6 @@
 import Util from '@services/util.js';
-import RandomizerSegment from '@components/randomizer-segment';
-import MessageDisplay from '@components/message-display';
+import RandomizerSegment from '@components/randomizer-segment/randomizer-segment.js';
+import MessageDisplay from '@components/message-display.js';
 import './randomizer.scss';
 
 /** Segment */
