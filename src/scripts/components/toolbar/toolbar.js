@@ -93,6 +93,24 @@ export default class Toolbar {
   }
 
   /**
+   * Enable.
+   */
+  enable() {
+    Object.keys(this.buttons).forEach((id) => {
+      this.enableButton(id);
+    });
+  }
+
+  /**
+   * Disable.
+   */
+  disable() {
+    Object.keys(this.buttons).forEach((id) => {
+      this.disableButton(id);
+    });
+  }
+
+  /**
    * Add button.
    * @param {object} [button] Button parameters.
    */

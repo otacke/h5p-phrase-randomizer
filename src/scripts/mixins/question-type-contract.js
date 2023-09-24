@@ -60,6 +60,7 @@ export default class QuestionTypeContract {
         /@combination/g, ''
       );
 
+    this.toolbar.disable();
     this.randomizer.disable();
     this.randomizer.showSolutions();
 
@@ -130,6 +131,7 @@ export default class QuestionTypeContract {
       'found',
       { value: this.getFoundScore(), maxValue: this.getFoundMaxScore() }
     );
+    this.toolbar.enable();
 
     this.announceMessage({
       text: this.dictionary.get('l10n.noMessage'),
