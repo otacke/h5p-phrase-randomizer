@@ -1,6 +1,6 @@
 {
   "name": "h5p-phrase-randomizer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generate random phrases with H5P",
   "private": true,
   "scripts": {
