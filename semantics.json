@@ -217,8 +217,25 @@
     "type": "group",
     "importance": "low",
     "label": "Behavioural settings",
-    "widget": "none",
+    "widget": "showWhen",
+    "showWhen": {
+      "rules": [
+        {
+          "field": "mode",
+          "equals": "quiz"
+        }
+      ],
+      "nullWhenHidden": true
+    },
     "fields": [
+      {
+        "name": "maxAttempts",
+        "type": "number",
+        "label": "Maximum attempts",
+        "description": "Enter the maximum number of attempts allowed or leave empty to not limit the number.",
+        "min": 1,
+        "optional": true
+      },
       {
         "name": "enableRetry",
         "type": "boolean",

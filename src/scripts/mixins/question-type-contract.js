@@ -20,9 +20,15 @@ export default class QuestionTypeContract {
    * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-2}
    */
   getScore() {
-    return (this.params.mode === 'free') ?
-      1 :
-      this.foundSolutions?.length; // TODO: This should probably be tied to attempts (?)
+    if (this.params.mode === 'free') {
+      return 1;
+    }
+
+    if (this.attemptsLeft !== Infinity) {
+      return this.attemptsLeft;
+    }
+
+    return this.foundSolutions.length;
   }
 
   /**
@@ -31,9 +37,15 @@ export default class QuestionTypeContract {
    * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-3}
    */
   getMaxScore() {
-    return (this.params.mode === 'free') ?
-      1 :
-      this.params.solutions.length;
+    if (this.params.mode === 'free') {
+      return 1;
+    }
+
+    if (this.params.behaviour.maxAttempts !== Infinity) {
+      return this.params.behaviour.maxAttempts;
+    }
+
+    return this.params.solutions.length;
   }
 
   /**
@@ -82,7 +94,9 @@ export default class QuestionTypeContract {
 
       if (params.showRetry) {
         if (this.params.behaviour.enableRetry) {
-          this.showButton('try-again');
+          window.setTimeout(() => {
+            this.showButton('try-again');
+          }, 50);
         }
         else {
           window.setTimeout(() => {
@@ -99,12 +113,23 @@ export default class QuestionTypeContract {
    */
   resetTask() {
     this.setViewState('task');
+    this.removeFeedback();
+
     this.wasAnswerGiven = false;
     this.foundSolutions = [];
-    this.toolbar.setStatusContainerStatus('found', {
-      value: this.getFoundScore(),
-      maxValue: this.getMaxScore()
-    });
+    this.attemptsLeft = this.params.behaviour.maxAttempts;
+
+    if (this.attemptsLeft !== Infinity) {
+      this.toolbar.setStatusContainerStatus(
+        'attempts',
+        { value: this.attemptsLeft }
+      );
+    }
+
+    this.toolbar.setStatusContainerStatus(
+      'found',
+      { value: this.getFoundScore(), maxValue: this.getMaxFoundScore() }
+    );
 
     this.announceMessage({
       text: this.dictionary.get('l10n.noMessage'),

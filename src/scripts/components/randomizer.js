@@ -275,8 +275,6 @@ export default class Randomizer {
    * Show solutions.
    */
   showSolutions() {
-    // TODO: Extra DOM
-
     this.updateConfigurationAria();
   }
 

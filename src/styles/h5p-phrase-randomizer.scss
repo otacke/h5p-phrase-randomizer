@@ -25,6 +25,18 @@
     }
   }
 
+  .h5p-question-feedback-content.has-content {
+    text-align: center;
+  }
+
+  .h5p-question-scorebar {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   &.h5p-standalone {
     .h5p-question-buttons {
       display: flex;

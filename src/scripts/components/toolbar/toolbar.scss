@@ -36,6 +36,13 @@ $button-pseudo-offset: 0.575rem;
     row-gap: 0.25rem;
 
     .status-containers {
+      .status-container-attempts {
+        &::before {
+          content: "\f004";
+          font-family: "H5PFontAwesome4", sans-serif;
+        }
+      }
+
       .status-container-found {
         &::before {
           content: "\f00c";

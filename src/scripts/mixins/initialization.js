@@ -36,7 +36,8 @@ export default class Initialization {
         enforceHorizontalDisplay: false,
         enableRetry: true,
         enableSolutionsButton: true,
-        enableCheckButton: true
+        enableCheckButton: true,
+        maxAttempts: Infinity
       },
       l10n: {
         check: 'Check',
@@ -125,6 +126,10 @@ export default class Initialization {
     if (!this.params.solutions.length) {
       this.params.mode === 'free'; // No valid solutions, so enforcing free mode
     }
+
+    if (this.params.mode === 'free') {
+      this.params.behaviour.maxAttempts = Infinity;
+    }
   }
 
   /**
@@ -148,6 +153,8 @@ export default class Initialization {
       PhraseRandomizer.VIEW_STATES['task'];
     this.wasAnswerGiven = Object.keys(this.previousState).length > 0;
     this.foundSolutions = this.previousState.foundSolutions ?? [];
+    this.attemptsLeft = this.previousState.attemptsLeft ??
+      this.params.behaviour.maxAttempts;
 
     // Randomizer instance
     this.randomizer = new Randomizer(
@@ -206,7 +213,6 @@ export default class Initialization {
       });
     }
 
-
     if (this.params.behaviour.enableRetry) {
       buttons.push({
         id: 'randomize',
@@ -222,9 +228,10 @@ export default class Initialization {
     }
 
     // Set up toolbar's status containers
-    const toolbarStatusContainers = [
-      { id: 'found', hasMaxValue: true }
-    ];
+    const toolbarStatusContainers = [];
+
+    toolbarStatusContainers.push({ id: 'attempts' });
+    toolbarStatusContainers.push({ id: 'found', hasMaxValue: true });
 
     // Toolbar
     this.toolbar = new Toolbar({
@@ -235,17 +242,28 @@ export default class Initialization {
     });
     dom.append(this.toolbar.getDOM());
 
+    if (this.params.behaviour.maxAttempts === Infinity) {
+      this.toolbar.hideStatusContainer('attempts');
+    }
+
+    // Initialize attempts left
+    this.toolbar.setStatusContainerStatus(
+      'attempts',
+      { value: this.attemptsLeft }
+    );
+
     // Initialize found container
     this.toolbar.setStatusContainerStatus(
       'found',
-      {
-        value: this.getFoundScore(),
-        maxValue: this.getMaxScore()
-      }
+      { value: this.getFoundScore(), maxValue: this.getMaxFoundScore() }
     );
 
     if (this.params.mode !== 'free') {
       this.toolbar.showStatusContainer('found');
+    }
+
+    if (this.params.behaviour.maxAttempts !== Infinity) {
+      this.toolbar.showStatusContainer('attempts');
     }
 
     if (this.params.introduction) {
@@ -266,12 +284,14 @@ export default class Initialization {
       dictionary: this.dictionary
     });
 
-    this.foundSolutionsList.setListItems(
-      this.foundSolutions.map((solution) => ({
-        labels: solution,
-        style: 'found'
-      }))
-    );
+    if (this.foundSolutions.length > 0) {
+      this.foundSolutionsList.setListItems(
+        this.foundSolutions.map((solution) => ({
+          labels: solution,
+          style: 'found'
+        }))
+      );
+    }
 
     if (this.params.mode !== 'free') {
       this.foundSolutionsList.show();
@@ -327,7 +347,8 @@ export default class Initialization {
       });
     }
     else if (this.viewState === PhraseRandomizer.VIEW_STATES['results']) {
-      this.checkAnswer({ skipXAPI: true });
+      this.showResults();
+      this.toggleButtons({ skipFocus: true });
     }
     else if (this.viewState === PhraseRandomizer.VIEW_STATES['solutions']) {
       this.showSolutions({ showRetry: true });

@@ -34,6 +34,7 @@ export default class PhraseRandomizer extends H5P.Question {
     this.sanitize();
     this.initialize();
     this.dom = this.buildDOM();
+
     this.recreateViewState();
   }
 
@@ -86,6 +87,7 @@ export default class PhraseRandomizer extends H5P.Question {
     }
 
     return {
+      attemptsLeft: this.attemptsLeft,
       viewState: this.viewState,
       message: this.randomizer.getMessage(),
       randomizer: this.randomizer.getCurrentState(),
@@ -101,21 +103,29 @@ export default class PhraseRandomizer extends H5P.Question {
   checkAnswer(params = {}) {
     this.handleAnswerGiven();
 
-    const answer = this.randomizer.getResponse();
-
-    const answerIsCorrect = this.params.solutions.some((solution) => {
-      return Util.areArraysEqual(solution, answer);
-    });
-
-    if (answerIsCorrect) {
-      this.handleCorrectResponse({...params, answer: answer });
+    if (params.skipEvaluation) {
       return;
     }
 
-    this.randomizer.showAnimationWrongCombination();
+    if (this.attemptsLeft > 0) {
+      const answer = this.randomizer.getResponse();
 
-    // TODO: Should there be a limited number of attempts?
-    // this.handleFinalWrongResponse(params);
+      const answerIsCorrect = this.params.solutions.some((solution) => {
+        return Util.areArraysEqual(solution, answer);
+      });
+
+      if (answerIsCorrect) {
+        this.handleCorrectResponse({...params, answer: answer });
+        return;
+      }
+      else {
+        this.handleIntermediaryWrongResponse();
+      }
+    }
+
+    if (this.attemptsLeft <= 0) {
+      this.handleFinalWrongResponse(params);
+    }
   }
 
   /**
@@ -124,6 +134,14 @@ export default class PhraseRandomizer extends H5P.Question {
    */
   getFoundScore() {
     return this.foundSolutions.length;
+  }
+
+  /**
+   * Return maximum number of solutions.
+   * @returns {number} Maximum number of solutions.
+   */
+  getMaxFoundScore() {
+    return this.params.solutions.length;
   }
 
   /**
@@ -140,10 +158,10 @@ export default class PhraseRandomizer extends H5P.Question {
 
     if (!answerWasAlreadyGiven) {
       this.foundSolutions.push(params.answer);
-      this.toolbar.setStatusContainerStatus('found', {
-        value: this.getFoundScore(),
-        maxValue: this.getMaxScore()
-      });
+      this.toolbar.setStatusContainerStatus(
+        'found',
+        { value: this.getFoundScore(), maxValue: this.getMaxFoundScore() }
+      );
 
       this.foundSolutionsList.setListItems(
         this.foundSolutions.map((solution) => ({
@@ -159,7 +177,8 @@ export default class PhraseRandomizer extends H5P.Question {
     }
 
     this.randomizer.disable();
-    this.setViewState('results');
+
+    this.showResults();
 
     this.announceMessage({ text: this.dictionary.get('l10n.lockOpen') });
 
@@ -167,19 +186,7 @@ export default class PhraseRandomizer extends H5P.Question {
       this.triggerXAPIEvent('answered');
     }
 
-    window.setTimeout(() => {
-      this.hideButton('check-answer');
-
-      if (this.params.behaviour.enableRetry) {
-        this.showButton('try-again');
-        setTimeout(() => {
-          this.focusButton('try-again'); // Not done by H5P.Question
-        }, 50);
-      }
-      else if (!params.skipXAPI) {
-        this.randomizer.focus(); // No button to focus, focus lock instead
-      }
-    }, 50);
+    this.toggleButtons();
   }
 
   /**
@@ -189,6 +196,13 @@ export default class PhraseRandomizer extends H5P.Question {
     this.announceMessage({
       text: this.dictionary.get('l10n.wrongCombination')
     });
+
+    this.randomizer.showAnimationWrongCombination();
+    this.attemptsLeft = Math.max(0, this.attemptsLeft - 1);
+    this.toolbar.setStatusContainerStatus(
+      'attempts',
+      { value: this.attemptsLeft }
+    );
   }
 
   /**
@@ -197,7 +211,8 @@ export default class PhraseRandomizer extends H5P.Question {
    * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
    */
   handleFinalWrongResponse(params = {}) {
-    this.setViewState('results');
+    this.showResults();
+
     this.randomizer.disable();
 
     if (!params.skipXAPI) {
@@ -206,29 +221,44 @@ export default class PhraseRandomizer extends H5P.Question {
 
     this.announceMessage({ text: this.dictionary.get('l10n.lockDisabled') });
 
-    // Lock disabled message should be read before other element gets focus
+    this.toggleButtons();
+  }
+
+  toggleButtons() {
     window.setTimeout(() => {
       this.hideButton('check-answer');
 
+      let focusButton;
+
       if (this.params.behaviour.enableSolutionsButton) {
+        focusButton = 'show-solution';
         this.showButton('show-solution');
       }
 
       if (this.params.behaviour.enableRetry) {
+        focusButton = 'try-again';
         this.showButton('try-again');
       }
 
-      if (
-        !this.params.behaviour.enableSolutionsButton &&
-        !this.params.behaviour.enableRetry
-      ) {
-        if (!params.skipXAPI) {
-          window.setTimeout(() => {
-            this.randomizer.focus(); // No button to focus, focus lock instead
-          }, 50);
-        }
+      if (focusButton) {
+        setTimeout(() => {
+          this.focusButton('try-again'); // Not done by H5P.Question
+        }, 50);
+      }
+      else {
+        setTimeout(() => {
+          this.randomizer.focus(); // No button to focus, focus lock instead
+        }, 50);
       }
     }, 50);
+  }
+
+  /**
+   * Show results.
+   */
+  showResults() {
+    this.setViewState('results');
+    this.setFeedback('', this.getScore(), this.getMaxScore());
   }
 
   /**
