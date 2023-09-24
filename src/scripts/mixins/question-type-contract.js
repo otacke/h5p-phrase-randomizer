@@ -22,11 +22,8 @@ export default class QuestionTypeContract {
       return 1;
     }
 
-    if (this.attemptsLeft !== Infinity) {
-      return this.attemptsLeft;
-    }
-
-    return this.foundSolutions.length;
+    return this.foundSolutions
+      .filter((solution) => solution.style === 'found').length;
   }
 
   /**
@@ -37,10 +34,6 @@ export default class QuestionTypeContract {
   getMaxScore() {
     if (this.params.mode === 'free') {
       return 1;
-    }
-
-    if (this.params.behaviour.maxAttempts !== Infinity) {
-      return this.params.behaviour.maxAttempts;
     }
 
     return this.params.solutions.length;
