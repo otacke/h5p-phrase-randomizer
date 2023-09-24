@@ -236,7 +236,10 @@ export default class PhraseRandomizer extends H5P.Question {
 
       let focusButton;
 
-      if (this.params.behaviour.enableSolutionsButton) {
+      if (
+        this.params.behaviour.enableSolutionsButton &&
+        this.getFoundScore() !== this.getFoundMaxScore()
+      ) {
         focusButton = 'show-solution';
         this.showButton('show-solution');
       }
