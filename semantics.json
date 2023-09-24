@@ -231,8 +231,8 @@
       {
         "name": "maxAttempts",
         "type": "number",
-        "label": "Maximum attempts",
-        "description": "Enter the maximum number of attempts allowed or leave empty to not limit the number.",
+        "label": "Lives",
+        "description": "Enter the number of lives a user starts with (every wrong answer deduces one down to 0) or leave empty to not limit the number of lives.",
         "min": 1,
         "optional": true
       },
