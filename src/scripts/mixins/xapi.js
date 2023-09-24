@@ -16,28 +16,68 @@ export default class XAPI {
   /**
    * Create an xAPI event.
    * @param {string} verb Short id of the verb we want to trigger.
+   * @param {object} [options] Options.
+   * @param {boolean} [options.addResponse] If true, add response to statement.
+   * @param {boolean} [options.addResult] If true, add result to statement.
+   * @param {boolean} [options.addScore] If true, add score to statement.
    * @returns {H5P.XAPIEvent} Event template.
    */
-  createXAPIEvent(verb) {
+  createXAPIEvent(verb, options = {}) {
     const xAPIEvent = this.createXAPIEventTemplate(verb);
 
     Util.extend(
       xAPIEvent.getVerifiedStatementValue(['object', 'definition']),
-      this.getXAPIDefinition());
+      this.getXAPIDefinition({ addCrp: verb === 'answered' }));
 
     if (verb === 'answered') {
+      options.addResponse = true;
+      options.addScore = true;
+      options.addResult = true;
+    }
+
+    if (verb === 'interacted') {
+      options.addResponse = true;
+      options.addResult = true;
+    }
+
+    if (options.addResult) {
+      // Completed if all attempts used or all solutions found.
+      const completion = this.attemptsLeft === 0 ||
+        this.getFoundScore() === this.getFoundMaxScore();
+
+      // Always true in free mode
+      const success = this.getScore() === this.getMaxScore();
+
       xAPIEvent.setScoredResult(
         this.getScore(), // Question Type Contract mixin
         this.getMaxScore(), // Question Type Contract mixin
         this,
-        true,
-        this.getScore() > 0 // No need to have full score, but lock opened
+        completion,
+        success
       );
 
+      if (!options.addScore) {
+        delete xAPIEvent.data.statement.result.score;
+      }
+    }
+
+    if (options.addResponse) {
+      let response;
+      if (verb === 'interacted') {
+        response = this.randomizer.getResponse().join(' ');
+      }
+      else if (verb === 'answered') {
+        response = this.foundSolutions
+          .map((solution) => {
+            return solution.style === 'found' ?
+              solution.labels.join(' ') :
+              '';
+          })
+          .join('[,]');
+      }
+
       xAPIEvent.data.statement.result = Util.extend(
-        {
-          response: this.randomizer.getResponse().join('[,]')
-        },
+        { response: response },
         xAPIEvent.data.statement.result || {}
       );
     }
@@ -47,9 +87,11 @@ export default class XAPI {
 
   /**
    * Get the xAPI definition for the xAPI object.
+   * @param {object} [options] Options.
+   * @param {boolean} [options.addCrp] If true, add correct responses pattern.
    * @returns {object} XAPI definition.
    */
-  getXAPIDefinition() {
+  getXAPIDefinition(options = {}) {
     const definition = {};
 
     definition.name = {};
@@ -65,8 +107,13 @@ export default class XAPI {
     definition.type = 'http://adlnet.gov/expapi/activities/cmi.interaction';
     definition.interactionType = 'fill-in';
 
-    definition.correctResponsesPattern = this.params.solutions
-      .map((solution) => solution.join('[,]'));
+    if (options.addCrp) {
+      definition.correctResponsesPattern = [
+        this.params.solutions
+          .map((solution) => solution.join(' '))
+          .join('[,]')
+      ];
+    }
 
     return definition;
   }
@@ -91,11 +138,11 @@ export default class XAPI {
     const description = this.params.introduction ||
       `<p>${XAPI.DEFAULT_DESCRIPTION}</p>`;
 
-    const placeholders = this.params.solutions[0]
-      .map(() => XAPI.RESPONSE_PLACEHOLDER)
-      .join(' ');
+    const placeholders = this.params.solutions
+      .map(() => `<li>${XAPI.RESPONSE_PLACEHOLDER}</li>`)
+      .join('');
 
-    return `${description}\n<p>${placeholders}</p>`;
+    return `${description}\n<ol>${placeholders}</ol>`;
   }
 }
 

@@ -18,13 +18,11 @@ export default class FoundSolutionsList {
     title.innerText = this.params.dictionary.get('l10n.foundSolutionsTitle');
     this.dom.append(title);
 
-    this.list = document.createElement('ul');
+    this.list = document.createElement('ol');
     this.list.classList.add('h5p-phrase-randomizer-found-solutions-list');
     this.dom.append(this.list);
 
     this.hide();
-
-    this.reset();
   }
 
   /**
@@ -45,13 +43,6 @@ export default class FoundSolutionsList {
     return this.dom;
   }
 
-  reset() {
-    this.setListItems([{
-      style: 'none',
-      labels: [this.params.dictionary.get('l10n.none')]
-    }]);
-  }
-
   /**
    * Set list items.
    * @param {(object[])[]} items Items.
@@ -61,11 +52,11 @@ export default class FoundSolutionsList {
       this.list.firstChild.remove();
     }
 
-    items.forEach((solutions) => {
+    items.forEach((item) => {
       const listItem = document.createElement('li');
       listItem.classList.add('h5p-phrase-randomizer-found-solutions-list-item');
-      listItem.classList.add(solutions.style || 'neutral');
-      listItem.innerText = solutions.labels.join(' | ');
+      listItem.classList.add(item.style || 'neutral');
+      listItem.innerText = item.labels.join(' ');
       this.list.append(listItem);
     });
   }

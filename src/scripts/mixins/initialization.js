@@ -51,7 +51,7 @@ export default class Initialization {
         noMessage: '...',
         scoreDisplay: '@current / @total',
         foundSolutionsTitle: 'Found solutions',
-        none: 'None'
+        toBeFound: 'To be found'
       },
       a11y: {
         check: 'Check whether the combination opens the lock.',
@@ -152,7 +152,14 @@ export default class Initialization {
     this.viewState = this.previousState.viewState ??
       PhraseRandomizer.VIEW_STATES['task'];
     this.wasAnswerGiven = Object.keys(this.previousState).length > 0;
-    this.foundSolutions = this.previousState.foundSolutions ?? [];
+
+    this.foundSolutions = this.previousState.foundSolutions ??
+      this.params.solutions.map(() => {
+        return ({
+          labels: [this.dictionary.get('l10n.toBeFound')]
+        });
+      });
+
     this.attemptsLeft = this.previousState.attemptsLeft ??
       this.params.behaviour.maxAttempts;
 
@@ -255,7 +262,7 @@ export default class Initialization {
     // Initialize found container
     this.toolbar.setStatusContainerStatus(
       'found',
-      { value: this.getFoundScore(), maxValue: this.getMaxFoundScore() }
+      { value: this.getFoundScore(), maxValue: this.getFoundMaxScore() }
     );
 
     if (this.params.mode !== 'free') {
@@ -286,10 +293,9 @@ export default class Initialization {
 
     if (this.foundSolutions.length > 0) {
       this.foundSolutionsList.setListItems(
-        this.foundSolutions.map((solution) => ({
-          labels: solution,
-          style: 'found'
-        }))
+        this.foundSolutions.map((solution) => {
+          return solution;
+        })
       );
     }
 

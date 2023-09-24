@@ -1,5 +1,3 @@
-import Util from '@services/util.js';
-
 /**
  * Mixin containing methods for H5P Question Type contract.
  */
@@ -65,16 +63,12 @@ export default class QuestionTypeContract {
     this.randomizer.disable();
     this.randomizer.showSolutions();
 
-    const resultingItems = this.params.solutions.map((solution) => {
-      const item = { labels: solution };
-
-      const answerWasFound = this.foundSolutions.some((foundSolution) => {
-        return Util.areArraysEqual(foundSolution, solution);
-      });
-
-      item.style = answerWasFound ? 'found' : 'not-found';
-
-      return item;
+    const resultingItems = this.foundSolutions.map((foundSolution, index) => {
+      if (foundSolution.style !== 'found') {
+        foundSolution.labels = this.params.solutions[index];
+        foundSolution.style = 'not-found';
+      }
+      return foundSolution;
     });
 
     this.foundSolutionsList.setListItems(resultingItems);
@@ -116,8 +110,14 @@ export default class QuestionTypeContract {
     this.removeFeedback();
 
     this.wasAnswerGiven = false;
-    this.foundSolutions = [];
+
+    this.foundSolutions = this.params.solutions.map(() => {
+      return ({
+        labels: [this.dictionary.get('l10n.toBeFound')]
+      });
+    });
     this.attemptsLeft = this.params.behaviour.maxAttempts;
+    this.foundSolutionsList.setListItems(this.foundSolutions);
 
     if (this.attemptsLeft !== Infinity) {
       this.toolbar.setStatusContainerStatus(
@@ -128,7 +128,7 @@ export default class QuestionTypeContract {
 
     this.toolbar.setStatusContainerStatus(
       'found',
-      { value: this.getFoundScore(), maxValue: this.getMaxFoundScore() }
+      { value: this.getFoundScore(), maxValue: this.getFoundMaxScore() }
     );
 
     this.announceMessage({
@@ -143,7 +143,6 @@ export default class QuestionTypeContract {
       this.showButton('check-answer');
     }
 
-    this.foundSolutionsList.reset();
     this.randomizer.reset();
   }
 

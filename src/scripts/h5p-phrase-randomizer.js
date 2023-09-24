@@ -103,10 +103,6 @@ export default class PhraseRandomizer extends H5P.Question {
   checkAnswer(params = {}) {
     this.handleAnswerGiven();
 
-    if (params.skipEvaluation) {
-      return;
-    }
-
     if (this.attemptsLeft > 0) {
       const answer = this.randomizer.getResponse();
 
@@ -133,14 +129,16 @@ export default class PhraseRandomizer extends H5P.Question {
    * @returns {number} Number of found solutions.
    */
   getFoundScore() {
-    return this.foundSolutions.length;
+    return this.foundSolutions.filter(
+      (solution) => solution.style === 'found'
+    ).length;
   }
 
   /**
    * Return maximum number of solutions.
    * @returns {number} Maximum number of solutions.
    */
-  getMaxFoundScore() {
+  getFoundMaxScore() {
     return this.params.solutions.length;
   }
 
@@ -152,27 +150,28 @@ export default class PhraseRandomizer extends H5P.Question {
   handleCorrectResponse(params = {}) {
     this.randomizer.showAnimationCorrectCombination();
 
-    const answerWasAlreadyGiven = this.foundSolutions.some((solution) => {
-      return Util.areArraysEqual(solution, params.answer);
-    });
+    const answerInSolutionIndex = this.params.solutions
+      .findIndex((solution) => Util.areArraysEqual(solution, params.answer));
 
-    if (!answerWasAlreadyGiven) {
-      this.foundSolutions.push(params.answer);
+    if (answerInSolutionIndex !== -1) {
+      this.foundSolutions[answerInSolutionIndex] = {
+        labels: params.answer,
+        style: 'found'
+      };
+
       this.toolbar.setStatusContainerStatus(
         'found',
-        { value: this.getFoundScore(), maxValue: this.getMaxFoundScore() }
+        { value: this.getFoundScore(), maxValue: this.getFoundMaxScore() }
       );
 
-      this.foundSolutionsList.setListItems(
-        this.foundSolutions.map((solution) => ({
-          labels: solution,
-          style: 'found'
-        }))
-      );
+      this.foundSolutionsList.setListItems(this.foundSolutions);
       this.trigger('resize');
     }
 
-    if (this.foundSolutions.length !== this.params.solutions.length) {
+    if (this.getFoundScore() !== this.getFoundMaxScore()) {
+      if (!params.skipXAPI) {
+        this.triggerXAPIEvent('interacted');
+      }
       return;
     }
 
@@ -191,11 +190,18 @@ export default class PhraseRandomizer extends H5P.Question {
 
   /**
    * Handle intermediary wrong response.
+   * @param {object} [params] Parameters.
+   * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
    */
-  handleIntermediaryWrongResponse() {
+  handleIntermediaryWrongResponse(params = {}) {
+    // TODO: Fix, so this doesn't remove focus, if that's possible
     this.announceMessage({
       text: this.dictionary.get('l10n.wrongCombination')
     });
+
+    if (!params.skipXAPI) {
+      this.triggerXAPIEvent('interacted');
+    }
 
     this.randomizer.showAnimationWrongCombination();
     this.attemptsLeft = Math.max(0, this.attemptsLeft - 1);

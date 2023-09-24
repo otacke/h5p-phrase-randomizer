@@ -11,19 +11,17 @@
 
   .h5p-phrase-randomizer-found-solutions-list {
     color: $color-joubelui-button-hover;
-    list-style: none;
-    padding: 0.25rem;
 
     .h5p-phrase-randomizer-found-solutions-list-item {
-      &::before {
+      &::after {
         font-family: "H5PFontAwesome4", sans-serif;
-        margin-right: 0.25rem;
+        margin-left: 0.25rem;
       }
 
       &.found {
         color: $color-correct;
 
-        &::before {
+        &::after {
           content: "\f00c";
         }
       }
@@ -31,7 +29,7 @@
       &.not-found {
         color: $color-incorrect;
 
-        &::before {
+        &::after {
           content: "\f00d";
         }
       }

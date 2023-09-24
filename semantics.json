@@ -328,10 +328,10 @@
         "default": "Found solutions"
       },
       {
-        "name": "none",
+        "name": "ToBeFound",
         "type": "text",
-        "label": "None",
-        "default": "None"
+        "label": "To be found",
+        "default": "To be found"
       }
     ]
   },
