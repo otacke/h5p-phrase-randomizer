@@ -83,7 +83,7 @@ $button-pseudo-offset: 0.575rem;
 
           &.toolbar-button-active {
             &:not(.toolbar-button-disabled) {
-              background-color: $color-primary-10;
+              background-color: $color-primary-5;
             }
 
             &::before {
