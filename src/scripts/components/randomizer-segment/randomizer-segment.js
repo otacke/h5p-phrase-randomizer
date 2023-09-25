@@ -114,10 +114,11 @@ export default class RandomizerSegment {
     );
     this.buttonSpin.setAriaLabel([
       this.params.dictionary
-        .get('a11y.spinSegment'),
+        .get('a11y.spinSegment').replace(/@number/g, this.params.index + 1),
       this.params.dictionary
         .get('a11y.currentText').replace(/@text/g, currentText)
     ]);
+    this.buttonSpin.getDOM().removeAttribute('tabindex');
     this.buttons.append(this.buttonSpin.getDOM());
 
     Util.callOnceVisible(this.dom, () => {

@@ -64,6 +64,7 @@ export default class Initialization {
         currentTexts: 'Current labels: @texts',
         previousSymbol: 'Previous symbol',
         nextSymbol: 'Next symbol',
+        spinSegment: 'Spin segment @number to get random text for it',
         theSolutionsAre: 'These are the solutions (@number in total): @combination',
         notASolution: 'This is not a solution.',
         disabled: 'disabled',

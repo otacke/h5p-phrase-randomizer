@@ -416,8 +416,9 @@
         "name": "spinSegment",
         "type": "text",
         "label": "Assistive technology description for spin button",
+        "description": "@number is a placeholder and will be replaced by the respective value.",
         "importance": "low",
-        "default": "Spin segment"
+        "default": "Spin segment @number to get random text for it"
       },
       {
         "name": "theSolutionsAre",
