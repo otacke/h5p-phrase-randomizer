@@ -242,6 +242,7 @@ export default class RandomizerSegment {
 
     this.wheel.randomize({
       endPosition: endPosition,
+      noFocus: true,
       onDone: () => {
         this.setPosition(endPosition);
         this.enable();

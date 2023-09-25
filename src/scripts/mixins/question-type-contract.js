@@ -46,17 +46,6 @@ export default class QuestionTypeContract {
    * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-4}
    */
   showSolutions(params = {}) {
-    // TODO
-    const ariaText = this.dictionary
-      .get('a11y.correctCombination')
-      .replace(
-        /@combination/g, ''
-      );
-
-    this.toolbar.disable();
-    this.randomizer.disable();
-    this.randomizer.showSolutions();
-
     const resultingItems = this.foundSolutions.map((foundSolution, index) => {
       if (foundSolution.style !== 'found') {
         foundSolution.labels = this.params.solutions[index];
@@ -65,11 +54,30 @@ export default class QuestionTypeContract {
       return foundSolution;
     });
 
+    const combination = resultingItems.map((item, index) => {
+      const identifier = `${this.dictionary.get('a11y.solution')} ${index + 1}`;
+      const text = item.labels.join(' ');
+      const status = item.style === 'found' ?
+        this.dictionary.get('a11y.found') :
+        this.dictionary.get('a11y.notFound');
+
+      return `${identifier}: ${text}: ${status}.`;
+    });
+
+    const ariaText = this.dictionary
+      .get('a11y.theSolutionsAre')
+      .replace(/@number/g, resultingItems.length)
+      .replace(/@combination/g, combination);
+
+    this.toolbar.disable();
+    this.randomizer.disable();
+    this.randomizer.showSolutions();
+
     this.foundSolutionsList.setListItems(resultingItems);
 
     // TODO
     this.announceMessage({
-      text: this.dictionary.get('l10n.correctCombination'),
+      text: this.dictionary.get('l10n.theSolutionsAre'),
       aria: ariaText
     });
 
@@ -124,7 +132,6 @@ export default class QuestionTypeContract {
       'found',
       { value: this.getFoundScore(), maxValue: this.getFoundMaxScore() }
     );
-    this.toolbar.enable();
 
     this.announceMessage({
       text: this.dictionary.get('l10n.noMessage'),
@@ -139,6 +146,7 @@ export default class QuestionTypeContract {
     }
 
     this.randomizer.reset();
+    this.enable();
   }
 
   /**

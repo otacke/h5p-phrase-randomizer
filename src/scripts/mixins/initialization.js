@@ -44,29 +44,35 @@ export default class Initialization {
         submit: 'Submit',
         showSolution: 'Show solution',
         retry: 'Retry',
-        lockOpen: 'Lock open!',
-        lockDisabled: 'No more attempts. Lock disabled.',
-        correctCombination: 'This combination opens the lock.',
-        wrongCombination: 'This combination does not open the lock.',
+        outOfAttempts: 'You ran out of attempts.',
+        theSolutionsAre: 'These are the solutions.',
+        notASolution: 'This is not a solution.',
         noMessage: '...',
         scoreDisplay: '@current / @total',
+        foundASolution: 'You found a solution!',
+        foundAllSolutions: 'You found all the solutions!',
         foundSolutionsTitle: 'Found solutions',
         toBeFound: 'To be found'
       },
       a11y: {
-        check: 'Check whether the combination opens the lock.',
-        submit: 'Check whether the combination opens the lock and submit attempt to server.',
-        showSolution: 'Show the solution. The correct symbols that will open the lock will be displayed.',
-        retry: 'Retry the task. Reset all lock segments and start the task over again.',
-        currentText: 'Current symbol: @text',
-        currentTexts: 'Current symbols: @texts',
+        buttonRandomize: 'Randomize all segments',
+        check: 'Check whether the combination is a solution to be found.',
+        submit: 'Check whether the combination is a solution to be found and submit attempt to server.',
+        showSolution: 'Show the solutions.',
+        retry: 'Retry the task. Reset all segments and start the task over again.',
+        currentText: 'Current label: @text',
+        currentTexts: 'Current labels: @texts',
         previousSymbol: 'Previous symbol',
         nextSymbol: 'Next symbol',
-        correctCombination: 'This combination opens the lock. @combination.',
-        wrongCombination: 'Wrong combination',
+        theSolutionsAre: 'These are the solutions (@number in total): @combination',
+        notASolution: 'This is not a solution.',
         disabled: 'disabled',
-        combinationLock: 'combination lock',
+        randomizer: 'Randomizer',
+        toolbar: 'Toolbar',
         segment: 'Segment @number of @total',
+        solution: 'Solution',
+        found: 'Found',
+        notFound: 'Not found',
         buttonAudioActive: 'Mute audio. Currently unmuted.',
         buttonAudioInactive: 'Unmute audio. Currently muted.'
       }
@@ -96,8 +102,6 @@ export default class Initialization {
 
         return segment;
       });
-
-    // TODO: Adjust solution handling
 
     // Sanitize solutions
     if (this.params.mode === 'free') {
@@ -171,12 +175,12 @@ export default class Initialization {
         mode: this.params.mode,
         solutions: this.params.solutions,
         segments: this.params.segments,
-        previousState: this.previousState.lock,
+        previousState: this.previousState.randomizer,
         column: this.params.behaviour.column
       },
       {
         onChanged: () => {
-          this.handleLockChanged();
+          this.handleAnswerGiven();
         },
         onResized: () => {
           this.trigger('resize');
@@ -187,7 +191,7 @@ export default class Initialization {
       }
     );
 
-    // Relay H5P resize to lock component
+    // Relay H5P resize to randomizer component
     this.on('resize', () => {
       this.randomizer.resize();
     });
@@ -229,7 +233,7 @@ export default class Initialization {
         },
         onClick: () => {
           this.randomizer.randomize();
-          this.handleLockChanged();
+          this.handleAnswerGiven();
         }
       });
     }
@@ -353,7 +357,7 @@ export default class Initialization {
       });
     }
     else if (this.viewState === PhraseRandomizer.VIEW_STATES['results']) {
-      this.showResults();
+      this.handleAllSolutionsFound({ skipXAPI: true });
       this.toggleButtons({ skipFocus: true });
     }
     else if (this.viewState === PhraseRandomizer.VIEW_STATES['solutions']) {

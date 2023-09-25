@@ -78,6 +78,22 @@ export default class PhraseRandomizer extends H5P.Question {
   }
 
   /**
+   * Enable.
+   */
+  enable() {
+    this.toolbar.enable();
+    this.randomizer.enable();
+  }
+
+  /**
+   * Disable.
+   */
+  disable() {
+    this.toolbar.disable();
+    this.randomizer.disable();
+  }
+
+  /**
    * Get current state.
    * @returns {object|undefined} Current state.
    */
@@ -169,23 +185,43 @@ export default class PhraseRandomizer extends H5P.Question {
     }
 
     if (this.getFoundScore() !== this.getFoundMaxScore()) {
+      this.announceMessage(
+        { text: this.dictionary.get('l10n.foundASolution') }
+      );
+
       if (!params.skipXAPI) {
         this.triggerXAPIEvent('interacted');
       }
       return;
     }
+    this.handleAllSolutionsFound(params);
+    this.toggleButtons();
+  }
 
-    this.randomizer.disable();
+  /**
+   * Handle all solutions found.
+   * @param {object} [params] Parameters.
+   * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
+   */
+  handleAllSolutionsFound(params) {
+    this.disable();
+
+    if (this.getFoundScore() === this.getFoundMaxScore()) {
+      this.announceMessage(
+        { text: this.dictionary.get('l10n.foundAllSolutions') }
+      );
+    }
+    else {
+      this.announceMessage(
+        { text: this.dictionary.get('l10n.outOfAttempts') }
+      );
+    }
 
     this.showResults();
-
-    this.announceMessage({ text: this.dictionary.get('l10n.lockOpen') });
 
     if (!params.skipXAPI) {
       this.triggerXAPIEvent('answered');
     }
-
-    this.toggleButtons();
   }
 
   /**
@@ -194,9 +230,8 @@ export default class PhraseRandomizer extends H5P.Question {
    * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
    */
   handleIntermediaryWrongResponse(params = {}) {
-    // TODO: Fix, so this doesn't remove focus, if that's possible
     this.announceMessage({
-      text: this.dictionary.get('l10n.wrongCombination')
+      text: this.dictionary.get('l10n.notASolution')
     });
 
     if (!params.skipXAPI) {
@@ -219,17 +254,20 @@ export default class PhraseRandomizer extends H5P.Question {
   handleFinalWrongResponse(params = {}) {
     this.showResults();
 
-    this.randomizer.disable();
+    this.disable();
 
     if (!params.skipXAPI) {
       this.triggerXAPIEvent('answered');
     }
 
-    this.announceMessage({ text: this.dictionary.get('l10n.lockDisabled') });
+    this.announceMessage({ text: this.dictionary.get('l10n.outOfAttempts') });
 
     this.toggleButtons();
   }
 
+  /**
+   * Toggle buttons, so only required ones are visible.
+   */
   toggleButtons() {
     window.setTimeout(() => {
       this.hideButton('check-answer');
@@ -256,7 +294,7 @@ export default class PhraseRandomizer extends H5P.Question {
       }
       else {
         setTimeout(() => {
-          this.randomizer.focus(); // No button to focus, focus lock instead
+          this.randomizer.focus(); // No button to focus, focus randomizer instead
         }, 50);
       }
     }, 50);
@@ -324,13 +362,6 @@ export default class PhraseRandomizer extends H5P.Question {
   }
 
   /**
-   * Handle lock disabled.
-   */
-  handleLockChanged() {
-    this.handleAnswerGiven();
-  }
-
-  /**
    * Handle lock was checked.
    */
   handleAnswerGiven() {
@@ -346,8 +377,11 @@ export default class PhraseRandomizer extends H5P.Question {
       return;
     }
 
+    this.randomizer.updateConfigurationAria();
+
     if (number === 0) {
       this.toolbar.enableButton('randomize');
+      this.randomizer.focus();
     }
     else {
       this.toolbar.disableButton('randomize');

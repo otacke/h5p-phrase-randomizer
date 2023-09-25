@@ -125,7 +125,9 @@ export default class Wheel {
         this.list.classList.add('transition');
 
         this.oldIndex = targetIndex;
-        this.scrollTo({ index: targetIndex, noAnimation: true });
+        this.scrollTo({
+          index: targetIndex, noAnimation: true, noFocus: params.noFocus
+        });
 
         params.onDone?.();
       }
@@ -246,6 +248,7 @@ export default class Wheel {
    * @param {object} params Parameters.
    * @param {number} params.index Index to scroll to.
    * @param {boolean} params.noAnimation If true, jump instead of scrolling.
+   * @param {boolean} params.noFocus If true, don't set focus when done.
    */
   scrollTo(params = {}) {
     if (typeof params.index !== 'number') {
@@ -279,7 +282,9 @@ export default class Wheel {
 
     window.requestAnimationFrame(() => {
       this.list.style.transform = translation;
-      this.focusSpinbutton();
+      if (!params.noFocus) {
+        this.focusSpinbutton();
+      }
 
       window.requestAnimationFrame(() => {
         this.list.classList.add('transition');

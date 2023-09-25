@@ -26,7 +26,6 @@ export default class Randomizer {
 
     this.spinningSegments = {};
 
-    // TODO: All segment options in one parameter
     this.segments = this.params.segments.map((segment, index) => {
       return new RandomizerSegment(
         {
@@ -87,7 +86,7 @@ export default class Randomizer {
     this.groupLabel.classList.add('h5p-phrase-randomizer-group-label');
     this.groupLabel.setAttribute('id', groupLabelId);
     this.groupLabel.innerText =
-      `${this.params.dictionary.get('a11y.combinationLock')}.`;
+      `${this.params.dictionary.get('a11y.randomizer')}.`;
     this.segmentsDOM.appendChild(this.groupLabel);
 
     // Will announce current combination for all segments
@@ -102,6 +101,11 @@ export default class Randomizer {
     });
 
     this.messageDisplay = new MessageDisplay();
+    this.messageDisplay.setText(this.params.dictionary.get('l10n.noMessage'));
+    if (this.params.mode === 'quiz') {
+      this.messageDisplay.show();
+    }
+
     this.lockDOM.appendChild(this.messageDisplay.getDOM());
   }
 
@@ -181,7 +185,7 @@ export default class Randomizer {
    */
   randomize() {
     this.segments.forEach((segment) => {
-      segment.spin();
+      segment.spin({ noFocus: true });
     });
   }
 
@@ -231,7 +235,7 @@ export default class Randomizer {
    * Focus.
    */
   focus() {
-    this.segments[0].focus();
+    this.segments[this.currentSegmentId].focus();
   }
 
   /**
@@ -259,7 +263,7 @@ export default class Randomizer {
     // TODO: Make work with solutions
     const symbolString = this.segments
       .map((segment) => segment.getResponse())
-      .join(', ');
+      .join(' ');
 
     let text = this.params.dictionary
       .get('a11y.currentTexts')
@@ -282,7 +286,6 @@ export default class Randomizer {
    * Reset.
    */
   reset() {
-    this.enable();
     this.segments.forEach((segment) => {
       segment.reset();
     });
