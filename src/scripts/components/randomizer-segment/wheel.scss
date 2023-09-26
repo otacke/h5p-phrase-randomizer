@@ -64,7 +64,7 @@
   .h5p-phrase-randomizer-wheel-spinbutton {
     grid-column: 1;
     grid-row: 1;
-    height: 6rem;
+    height: inherit;
     z-index: 1;
 
     &:focus {
