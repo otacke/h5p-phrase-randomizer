@@ -3,14 +3,14 @@
     "name": "headline",
     "type": "text",
     "label": "Headline",
-    "description": "Optional headline to show above cards.",
+    "description": "Optional headline to show in the toolbar.",
     "optional": true
   },
   {
     "name": "introduction",
     "type": "text",
     "label": "Introduction",
-    "description": "Optionally set some introduction.",
+    "description": "Optionally set some introduction telling the user what to do.",
     "default": "<p style=\"text-align: center;\"></p>",
     "optional": true,
     "widget": "html",
