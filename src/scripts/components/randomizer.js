@@ -260,7 +260,6 @@ export default class Randomizer {
    * Update combination aria.
    */
   updateConfigurationAria() {
-    // TODO: Make work with solutions
     const symbolString = this.segments
       .map((segment) => segment.getResponse())
       .join(' ');

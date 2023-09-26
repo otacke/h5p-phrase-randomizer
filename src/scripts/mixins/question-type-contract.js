@@ -75,7 +75,6 @@ export default class QuestionTypeContract {
 
     this.foundSolutionsList.setListItems(resultingItems);
 
-    // TODO
     this.announceMessage({
       text: this.dictionary.get('l10n.theSolutionsAre'),
       aria: ariaText
