@@ -362,7 +362,7 @@ export default class PhraseRandomizer extends H5P.Question {
   }
 
   /**
-   * Handle lock was checked.
+   * Handle randomizer was changed.
    */
   handleAnswerGiven() {
     this.wasAnswerGiven = true;

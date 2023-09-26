@@ -173,14 +173,6 @@
     ]
   },
   {
-    "name": "solution",
-    "type": "text",
-    "label": "Solution",
-    "description": "Enter the desired solution for the lock. Please note that using long solutions may be suboptimal on small devices.",
-    "default": "0123",
-    "widget": "none"
-  },
-  {
     "name": "audio",
     "type": "group",
     "importance": "low",

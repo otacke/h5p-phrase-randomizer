@@ -95,7 +95,7 @@ export default class QuestionTypeContract {
         }
         else {
           window.setTimeout(() => {
-            this.randomizer.focus(); // No button to focus, focus lock instead
+            this.randomizer.focus(); // No button to focus, focus randomizer instead
           }, 50);
         }
       }

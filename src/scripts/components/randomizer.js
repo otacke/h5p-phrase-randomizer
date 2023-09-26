@@ -11,8 +11,8 @@ export default class Randomizer {
    * @param {string[]} params.solution Solution symbols.
    * @param {object} [params.previousState] Previously stored state.
    * @param {object} callbacks Callbacks.
-   * @param {function} callbacks.onChanged Called when lock is changed.
-   * @param {function} callbacks.onResized Called when lock is resized.
+   * @param {function} callbacks.onChanged Called when randomizer is changed.
+   * @param {function} callbacks.onResized Called when randomizer is resized.
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
@@ -67,9 +67,9 @@ export default class Randomizer {
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-phrase-randomizer-case');
 
-    this.lockDOM = document.createElement('div');
-    this.lockDOM.classList.add('h5p-phrase-randomizer-elements');
-    this.dom.appendChild(this.lockDOM);
+    this.randomizerDOM = document.createElement('div');
+    this.randomizerDOM.classList.add('h5p-phrase-randomizer-elements');
+    this.dom.appendChild(this.randomizerDOM);
 
     const groupLabelId = H5P.createUUID();
     const configurationId = H5P.createUUID();
@@ -80,7 +80,7 @@ export default class Randomizer {
     this.segmentsDOM.setAttribute(
       'aria-labelledby', `${groupLabelId} ${configurationId}`
     );
-    this.lockDOM.appendChild(this.segmentsDOM);
+    this.randomizerDOM.appendChild(this.segmentsDOM);
 
     this.groupLabel = document.createElement('div');
     this.groupLabel.classList.add('h5p-phrase-randomizer-group-label');
@@ -106,7 +106,7 @@ export default class Randomizer {
       this.messageDisplay.show();
     }
 
-    this.lockDOM.appendChild(this.messageDisplay.getDOM());
+    this.randomizerDOM.appendChild(this.messageDisplay.getDOM());
   }
 
   /**
@@ -162,10 +162,10 @@ export default class Randomizer {
 
     const totalPaddingHorizontal =
       parseFloat(
-        window.getComputedStyle(this.lockDOM).getPropertyValue('padding-left')
+        window.getComputedStyle(this.randomizerDOM).getPropertyValue('padding-left')
       ) +
       parseFloat(
-        window.getComputedStyle(this.lockDOM).getPropertyValue('padding-right')
+        window.getComputedStyle(this.randomizerDOM).getPropertyValue('padding-right')
       ) +
       parseFloat(
         window.getComputedStyle(this.dom).getPropertyValue('padding-left')
@@ -239,7 +239,7 @@ export default class Randomizer {
   }
 
   /**
-   * Enable lock.
+   * Enable.
    */
   enable() {
     this.segments.forEach((segment) => {
@@ -248,7 +248,7 @@ export default class Randomizer {
   }
 
   /**
-   * Disable lock.
+   * Disable.
    */
   disable() {
     this.segments.forEach((segment) => {
