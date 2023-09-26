@@ -44,7 +44,7 @@ export default class Initialization {
         submit: 'Submit',
         showSolution: 'Show solution',
         retry: 'Retry',
-        outOfAttempts: 'You ran out of attempts.',
+        outOfAttempts: 'You ran out of lives.',
         theSolutionsAre: 'These are the solutions.',
         notASolution: 'This is not a solution.',
         noMessage: '...',
@@ -56,7 +56,7 @@ export default class Initialization {
       },
       a11y: {
         buttonRandomize: 'Randomize all segments',
-        check: 'Check whether the combination is a solution to be found.',
+        check: 'Check the answers. The responses will be marked as correct or incorrect.',
         showSolution: 'Show the solutions.',
         retry: 'Retry the task. Reset all segments and start the task over again.',
         currentText: 'Current label: @text',

@@ -112,15 +112,15 @@
           "default": "Retry"
         },
         {
-          "label": "You ran out of attempts",
-          "default": "You ran out of attempts."
+          "label": "You ran out of lives",
+          "default": "You ran out of lives."
         },
         {
           "label": "Solution",
           "default": "These are the solutions."
         },
         {
-          "label": "Wrong combination",
+          "label": "This is not a solution",
           "default": "This is not a solution."
         },
         {
@@ -154,7 +154,7 @@
         },
         {
           "label": "Assistive technology description for \"Check\" button",
-          "default": "Check whether the combination is a solution to be found."
+          "default": "Check the answers. The responses will be marked as correct or incorrect."
         },
         {
           "label": "Assistive technology description for \"Show Solution\" button",
@@ -188,7 +188,7 @@
           "default": "Spin segment @number to get random text for it"
         },
         {
-          "label": "Assistive technology description for announcing correct combination",
+          "label": "Assistive technology description for announcing solution",
           "description": "@number and @combination are placeholders and will be replaced by the respective values.",
           "default": "These are the solutions (@number in total): @combination."
         },

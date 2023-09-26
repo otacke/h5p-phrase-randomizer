@@ -279,8 +279,8 @@
       {
         "name": "outOfAttempts",
         "type": "text",
-        "label": "You ran out of attempts",
-        "default": "You ran out of attempts."
+        "label": "You ran out of lives",
+        "default": "You ran out of lives."
       },
       {
         "name": "theSolutionsAre",
@@ -291,7 +291,7 @@
       {
         "name": "notASolution",
         "type": "text",
-        "label": "Wrong combination",
+        "label": "This is not a solution",
         "default": "This is not a solution."
       },
       {
@@ -344,7 +344,7 @@
         "type": "text",
         "label": "Assistive technology description for \"Check\" button",
         "importance": "low",
-        "default": "Check whether the combination is a solution to be found."
+        "default": "Check the answers. The responses will be marked as correct or incorrect."
       },
       {
         "name": "showSolution",
@@ -401,7 +401,7 @@
       {
         "name": "theSolutionsAre",
         "type": "text",
-        "label": "Assistive technology description for announcing correct combination",
+        "label": "Assistive technology description for announcing solution",
         "description": "@number and @combination are placeholders and will be replaced by the respective values.",
         "importance": "low",
         "default": "These are the solutions (@number in total): @combination."
