@@ -35,6 +35,11 @@ export default class XAPI {
       options.addResult = true;
     }
 
+    /*
+     * 'responded' feels like a good verb. Used for when the user has checked
+     * the answer for correctness, so this should be tracked, but when
+     * 'answered' would trigger other stuff in common H5P integrations.
+     */
     if (verb === 'responded') {
       options.addResponse = true;
       options.addResult = true;
@@ -105,6 +110,7 @@ export default class XAPI {
     definition.description['en-US'] = definition.description[this.languageTag];
 
     definition.type = 'http://adlnet.gov/expapi/activities/cmi.interaction';
+    // Yes. strictly, this is a 'choice' interaction
     definition.interactionType = 'fill-in';
 
     if (options.addCrp) {
