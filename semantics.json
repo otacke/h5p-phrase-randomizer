@@ -301,13 +301,6 @@
         "default": "..."
       },
       {
-        "name": "scoreDisplay",
-        "description": "@current and @total are placeholders and will be replaced by the respective values.",
-        "type": "text",
-        "label": "Score display",
-        "default": "@current / @total"
-      },
-      {
         "name": "foundASolution",
         "type": "text",
         "label": "You found a solution!",
@@ -354,13 +347,6 @@
         "default": "Check whether the combination is a solution to be found."
       },
       {
-        "name": "submit",
-        "type": "text",
-        "label": "Assistive technology description for \"Submit\" button",
-        "importance": "low",
-        "default": "Check whether the combination is a solution to be found and submit attempt to server."
-      },
-      {
         "name": "showSolution",
         "type": "text",
         "label": "Assistive technology description for \"Show Solution\" button",
@@ -391,18 +377,18 @@
         "default": "Current labels: @texts"
       },
       {
-        "name": "previousSymbol",
+        "name": "previousText",
         "type": "text",
-        "label": "Assistive technology description for previous symbol button",
+        "label": "Assistive technology description for \"previous text\" button",
         "importance": "low",
-        "default": "Previous symbol"
+        "default": "Previous text"
       },
       {
-        "name": "nextSymbol",
+        "name": "nextText",
         "type": "text",
-        "label": "Assistive technology description for next symbol button",
+        "label": "Assistive technology description for \"next text\" button",
         "importance": "low",
-        "default": "Next symbol"
+        "default": "Next text"
       },
       {
         "name": "spinSegment",
@@ -419,12 +405,6 @@
         "description": "@number and @combination are placeholders and will be replaced by the respective values.",
         "importance": "low",
         "default": "These are the solutions (@number in total): @combination."
-      },
-      {
-        "name": "notASolution",
-        "type": "text",
-        "label": "Assistive technology description for announcing a wrong combination",
-        "default": "Wrong combination"
       },
       {
         "name": "disabled",

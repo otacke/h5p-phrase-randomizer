@@ -57,13 +57,12 @@ export default class Initialization {
       a11y: {
         buttonRandomize: 'Randomize all segments',
         check: 'Check whether the combination is a solution to be found.',
-        submit: 'Check whether the combination is a solution to be found and submit attempt to server.',
         showSolution: 'Show the solutions.',
         retry: 'Retry the task. Reset all segments and start the task over again.',
         currentText: 'Current label: @text',
         currentTexts: 'Current labels: @texts',
-        previousSymbol: 'Previous symbol',
-        nextSymbol: 'Next symbol',
+        previousText: 'Previous text',
+        nextText: 'Next text',
         spinSegment: 'Spin segment @number to get random text for it',
         theSolutionsAre: 'These are the solutions (@number in total): @combination',
         notASolution: 'This is not a solution.',
@@ -329,7 +328,8 @@ export default class Initialization {
       () => {
         this.showSolutions({ showRetry: true });
       },
-      false
+      false,
+      { 'aria-label': this.dictionary.get('a11y.showSolution') }
     );
 
     // Retry button

@@ -81,7 +81,7 @@ export default class RandomizerSegment {
       }
     );
     this.buttonNext.setAriaLabel([
-      this.params.dictionary.get('a11y.nextSymbol'),
+      this.params.dictionary.get('a11y.nextText'),
       this.params.dictionary.get('a11y.currentText').replace(/@text/g, currentText)
     ]);
     this.buttons.append(this.buttonNext.getDOM());
@@ -97,7 +97,7 @@ export default class RandomizerSegment {
     );
     this.buttonPrevious.setAriaLabel([
       this.params.dictionary
-        .get('a11y.previousSymbol'),
+        .get('a11y.previousText'),
       this.params.dictionary
         .get('a11y.currentText').replace(/@text/g, currentText)
     ]);
@@ -189,13 +189,13 @@ export default class RandomizerSegment {
     const currentText = this.params.alphabet[this.position];
     this.buttonNext.setAriaLabel([
       this.params.dictionary
-        .get('a11y.nextSymbol'),
+        .get('a11y.nextText'),
       this.params.dictionary
         .get('a11y.currentText').replace(/@text/g, currentText)
     ]);
     this.buttonPrevious.setAriaLabel([
       this.params.dictionary
-        .get('a11y.previousSymbol'),
+        .get('a11y.previousText'),
       this.params.dictionary
         .get('a11y.currentText').replace(/@text/g, currentText)
     ]);
@@ -214,11 +214,11 @@ export default class RandomizerSegment {
     this.buttonSpin.disable();
 
     this.buttonNext.setAriaLabel([
-      this.params.dictionary.get('a11y.nextSymbol'),
+      this.params.dictionary.get('a11y.nextText'),
       this.params.dictionary.get('a11y.disabled')
     ]);
     this.buttonNext.setAriaLabel([
-      this.params.dictionary.get('a11y.previousSymbol'),
+      this.params.dictionary.get('a11y.previousText'),
       this.params.dictionary.get('a11y.disabled')
     ]);
   }
@@ -269,12 +269,12 @@ export default class RandomizerSegment {
         .get('a11y.currentText').replace(/@text/g, currentText);
 
     this.buttonNext.setAriaLabel([
-      this.params.dictionary.get('a11y.nextSymbol'),
+      this.params.dictionary.get('a11y.nextText'),
       buttonSymbol
     ]);
 
     this.buttonPrevious.setAriaLabel([
-      this.params.dictionary.get('a11y.previousSymbol'),
+      this.params.dictionary.get('a11y.previousText'),
       buttonSymbol
     ]);
   }
