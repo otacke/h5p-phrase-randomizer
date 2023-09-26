@@ -190,7 +190,7 @@ export default class PhraseRandomizer extends H5P.Question {
       );
 
       if (!params.skipXAPI) {
-        this.triggerXAPIEvent('interacted');
+        this.triggerXAPIEvent('responded');
       }
       return;
     }
@@ -235,7 +235,7 @@ export default class PhraseRandomizer extends H5P.Question {
     });
 
     if (!params.skipXAPI) {
-      this.triggerXAPIEvent('interacted');
+      this.triggerXAPIEvent('responded');
     }
 
     this.randomizer.showAnimationWrongCombination();
@@ -365,6 +365,7 @@ export default class PhraseRandomizer extends H5P.Question {
    * Handle randomizer was changed.
    */
   handleAnswerGiven() {
+    this.triggerXAPIEvent('interacted');
     this.wasAnswerGiven = true;
   }
 

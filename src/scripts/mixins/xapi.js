@@ -35,7 +35,7 @@ export default class XAPI {
       options.addResult = true;
     }
 
-    if (verb === 'interacted') {
+    if (verb === 'responded') {
       options.addResponse = true;
       options.addResult = true;
     }
@@ -63,7 +63,7 @@ export default class XAPI {
 
     if (options.addResponse) {
       let response;
-      if (verb === 'interacted') {
+      if (verb === 'responded') {
         response = this.randomizer.getResponse().join(' ');
       }
       else if (verb === 'answered') {
@@ -135,7 +135,8 @@ export default class XAPI {
    * @returns {string} Description.
    */
   getDescription() {
-    const description = this.params.introduction ||
+    const description = (Util.stripHTML(this.params.introduction) !== '') ?
+      this.params.introduction :
       `<p>${XAPI.DEFAULT_DESCRIPTION}</p>`;
 
     const placeholders = this.params.solutions
