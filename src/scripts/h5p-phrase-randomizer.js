@@ -99,7 +99,7 @@ export default class PhraseRandomizer extends H5P.Question {
    */
   getCurrentState() {
     if (!this.getAnswerGiven()) {
-      return; // No relevant input that would need to be restored.
+      return {}; // No relevant input that would need to be restored. Also resets database.
     }
 
     return {
@@ -107,7 +107,8 @@ export default class PhraseRandomizer extends H5P.Question {
       viewState: this.viewState,
       message: this.randomizer.getMessage(),
       randomizer: this.randomizer.getCurrentState(),
-      foundSolutions: this.foundSolutions
+      foundSolutions: this.foundSolutions,
+      wrongAnswers: this.wrongAnswers
     };
   }
 
@@ -119,24 +120,17 @@ export default class PhraseRandomizer extends H5P.Question {
   checkAnswer(params = {}) {
     this.handleAnswerGiven();
 
-    if (this.attemptsLeft > 0) {
-      const answer = this.randomizer.getResponse();
+    const answer = this.randomizer.getResponse();
 
-      const answerIsCorrect = this.params.solutions.some((solution) => {
-        return Util.areArraysEqual(solution, answer);
-      });
+    const answerIsCorrect = this.params.solutions.some((solution) => {
+      return Util.areArraysEqual(solution, answer);
+    });
 
-      if (answerIsCorrect) {
-        this.handleCorrectResponse({...params, answer: answer });
-        return;
-      }
-      else {
-        this.handleIntermediaryWrongResponse();
-      }
+    if (answerIsCorrect) {
+      this.handleCorrectResponse({...params, answer: answer });
     }
-
-    if (this.attemptsLeft <= 0) {
-      this.handleFinalWrongResponse(params);
+    else {
+      this.handleWrongResponse({...params, answer: answer });
     }
   }
 
@@ -199,6 +193,52 @@ export default class PhraseRandomizer extends H5P.Question {
   }
 
   /**
+   * Handle intermediary wrong response.
+   * @param {object} [params] Parameters.
+   * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
+   */
+  handleWrongResponse(params = {}) {
+    this.randomizer.showAnimationWrongCombination();
+
+    // Keep track of wrong answers (for xAPI)
+    const answer = params.answer.join(' ');
+    if (!this.wrongAnswers.includes(answer)) {
+      this.wrongAnswers.push(answer);
+    }
+
+    if (!params.skipXAPI) {
+      this.triggerXAPIEvent('responded');
+    }
+
+    this.attemptsLeft = Math.max(0, this.attemptsLeft - 1);
+    this.toolbar.setStatusContainerStatus(
+      'attempts',
+      { value: this.attemptsLeft }
+    );
+
+    if (this.attemptsLeft > 0) {
+      this.announceMessage({
+        text: this.dictionary.get('l10n.notASolution')
+      });
+    }
+    else {
+      this.announceMessage({
+        text: this.dictionary.get('l10n.outOfAttempts')
+      });
+
+      this.showResults();
+
+      this.disable();
+
+      if (!params.skipXAPI) {
+        this.triggerXAPIEvent('answered');
+      }
+
+      this.toggleButtons();
+    }
+  }
+
+  /**
    * Handle all solutions found.
    * @param {object} [params] Parameters.
    * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
@@ -222,47 +262,6 @@ export default class PhraseRandomizer extends H5P.Question {
     if (!params.skipXAPI) {
       this.triggerXAPIEvent('answered');
     }
-  }
-
-  /**
-   * Handle intermediary wrong response.
-   * @param {object} [params] Parameters.
-   * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
-   */
-  handleIntermediaryWrongResponse(params = {}) {
-    this.announceMessage({
-      text: this.dictionary.get('l10n.notASolution')
-    });
-
-    if (!params.skipXAPI) {
-      this.triggerXAPIEvent('responded');
-    }
-
-    this.randomizer.showAnimationWrongCombination();
-    this.attemptsLeft = Math.max(0, this.attemptsLeft - 1);
-    this.toolbar.setStatusContainerStatus(
-      'attempts',
-      { value: this.attemptsLeft }
-    );
-  }
-
-  /**
-   * Handle final wrong response.
-   * @param {object} [params] Parameters.
-   * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
-   */
-  handleFinalWrongResponse(params = {}) {
-    this.showResults();
-
-    this.disable();
-
-    if (!params.skipXAPI) {
-      this.triggerXAPIEvent('answered');
-    }
-
-    this.announceMessage({ text: this.dictionary.get('l10n.outOfAttempts') });
-
-    this.toggleButtons();
   }
 
   /**

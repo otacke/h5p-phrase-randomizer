@@ -164,6 +164,8 @@ export default class Initialization {
         });
       });
 
+    this.wrongAnswers = this.previousState.wrongAnswers ?? [];
+
     this.attemptsLeft = this.previousState.attemptsLeft ??
       this.params.behaviour.maxAttempts;
 

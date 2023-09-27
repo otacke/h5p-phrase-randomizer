@@ -72,7 +72,14 @@ export default class XAPI {
         response = this.randomizer.getResponse().join(' ');
       }
       else if (verb === 'answered') {
-        response = this.foundSolutions
+        const wrongAnswers = this.wrongAnswers.map((wrongAnswer) => {
+          return ({
+            style: 'found',
+            labels: [wrongAnswer]
+          });
+        });
+
+        response = [...this.foundSolutions, ...wrongAnswers]
           .map((solution) => {
             return solution.style === 'found' ?
               solution.labels.join(' ') :
@@ -114,8 +121,9 @@ export default class XAPI {
     definition.interactionType = 'fill-in';
 
     if (options.addCrp) {
+      const wrongAnswerSlots = new Array(this.wrongAnswers.length).fill(['']);
       definition.correctResponsesPattern = [
-        this.params.solutions
+        [...this.params.solutions, ...wrongAnswerSlots]
           .map((solution) => solution.join(' '))
           .join('[,]')
       ];

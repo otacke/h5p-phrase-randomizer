@@ -120,6 +120,8 @@ export default class QuestionTypeContract {
     this.attemptsLeft = this.params.behaviour.maxAttempts;
     this.foundSolutionsList.setListItems(this.foundSolutions);
 
+    this.wrongAnswers = [];
+
     if (this.attemptsLeft !== Infinity) {
       this.toolbar.setStatusContainerStatus(
         'attempts',
