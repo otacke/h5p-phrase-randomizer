@@ -319,7 +319,7 @@
         "default": "Found solutions"
       },
       {
-        "name": "ToBeFound",
+        "name": "toBeFound",
         "type": "text",
         "label": "To be found",
         "default": "To be found"
