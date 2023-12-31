@@ -69,7 +69,7 @@
       "label": "Audio",
       "fields": [
         {
-          "label": "Benutze den eingebauten Ton für Klicks auf den \"Vorheriger Text\"-Button oder den \"Nächster Text\"-Button."
+          "label": "Benutze den eingebauten Ton für Klicks auf den \"Vorheriger Text\"-Button oder den \"Nächster Text\"-Button"
         },
         {
           "label": "Klicks auf den \"Vorheriger Text\"-Button oder den \"Nächster Text\"-Button",
