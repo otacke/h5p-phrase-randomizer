@@ -149,7 +149,7 @@
       "label": "Accessibility texts",
       "fields": [
         {
-          "label": "Randomize all segments.",
+          "label": "Randomize all segments",
           "default": "Randomize all segments"
         },
         {
