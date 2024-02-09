@@ -70,7 +70,7 @@ export default class RandomizerSegment {
     main.append(this.buttons);
 
     this.buttonNext = new Button(
-      { id: 'next', label: '\u25b2', classes: ['next'] },
+      { id: 'next', label: '', classes: ['next'] },
       {
         onClicked: () => {
           this.params.jukebox?.play('clickPreviousNext');
@@ -87,7 +87,7 @@ export default class RandomizerSegment {
     this.buttons.append(this.buttonNext.getDOM());
 
     this.buttonPrevious = new Button(
-      { id: 'previous', label: '\u25bc', classes: ['previous'] },
+      { id: 'previous', label: '', classes: ['previous'] },
       {
         onClicked: () => {
           this.params.jukebox?.play('clickPreviousNext');
@@ -104,7 +104,7 @@ export default class RandomizerSegment {
     this.buttons.append(this.buttonPrevious.getDOM());
 
     this.buttonSpin = new Button(
-      { id: 'spin', label: '\uf021', classes: ['spin'] },
+      { id: 'spin', label: '', classes: ['spin'] },
       {
         onClicked: () => {
           this.spin();
