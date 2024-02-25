@@ -19,7 +19,9 @@
     .h5p-phrase-randomizer-segments {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       gap: 1rem;
+      justify-content: center;
 
       .h5p-phrase-randomizer-group-label,
       .h5p-phrase-randomizer-current-combination-aria {
@@ -27,15 +29,16 @@
         left: $offset-offscreen;
       }
 
-      &.column {
-        flex-direction: column;
-        gap: 1.5rem;
+      &.vertical-buttons {
+        .h5p-phrase-randomizer-segment {
+          min-width: calc($minimum-a11y-size * 4 + 0.5rem);
 
-        .h5p-phrase-randomizer-main {
-          flex-direction: row;
+          .h5p-phrase-randomizer-segment-main {
+            flex-direction: row;
 
-          .h5p-phrase-randomizer-segment-buttons {
-            flex-direction: column;
+            .h5p-phrase-randomizer-segment-buttons {
+              flex-direction: column;
+            }
           }
         }
       }

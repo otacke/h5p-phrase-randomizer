@@ -135,8 +135,11 @@ export default class Randomizer {
      * fruit vendor does not support it well ...
      */
     if (typeof containerWidth === 'number') {
+      // Will determine the space that 2 segments need next to each other
+      const minWidthHorizontal = this.getMinWidthHorizontal();
+
       this.segmentsDOM.classList.toggle(
-        'column', containerWidth < this.getMinWidthHorizontal()
+        'vertical-buttons', containerWidth < minWidthHorizontal
       );
     }
   }
@@ -156,9 +159,8 @@ export default class Randomizer {
       window.getComputedStyle(this.segmentsDOM).getPropertyValue('gap')
     );
 
-    const segmentsMinWidthHorizontal =
-      this.segments.length * segmentMinWidthHorizontal +
-      (this.segments.length - 1) * gap;
+    // Space for two segments next to each other
+    const segmentsMinWidthHorizontal = 2 * segmentMinWidthHorizontal + gap;
 
     const totalPaddingHorizontal =
       parseFloat(
