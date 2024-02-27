@@ -33,6 +33,10 @@
         .h5p-phrase-randomizer-segment {
           min-width: calc($minimum-a11y-size * 4 + 0.5rem);
 
+          .h5p-phrase-randomizer-segment-title {
+            margin-right: calc($minimum-a11y-size + 0.5rem);
+          }
+
           .h5p-phrase-randomizer-segment-main {
             flex-direction: row;
 
