@@ -444,7 +444,7 @@ export default class Initialization {
 
 // These values could be fetched from semantics.json automatically.
 
-Initialization.MIN_SEGMENTS = 2;
+Initialization.MIN_SEGMENTS = 1;
 Initialization.MAX_SEGMENTS = 6;
 
 Initialization.MIN_OPTIONS = 2;
