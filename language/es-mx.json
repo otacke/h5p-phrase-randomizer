@@ -148,7 +148,7 @@
     {
       "fields": [
         {
-          "label": "Aleatorizar todos los segmentos.",
+          "label": "Aleatorizar todos los segmentos",
           "default": "Aleatorizar todos los segmentos"
         },
         {
@@ -226,7 +226,7 @@
         },
         {
           "label": "Botón de audio (silenciado)",
-          "default": "Habilitar audio. Actualmente silenciado"
+          "default": "Habilitar audio. Actualmente silenciado."
         }
       ],
       "label": "Pruebas de accesibilidad"
