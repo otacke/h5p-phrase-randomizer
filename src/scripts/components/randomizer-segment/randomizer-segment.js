@@ -124,6 +124,7 @@ export default class RandomizerSegment {
     Util.callOnceVisible(this.dom, () => {
       this.setPosition(this.position);
       this.wheel.uncloak();
+      this.callbacks.onSpinningStateChanged(this.params.index, false);
       this.callbacks.onVisible();
     });
   }
