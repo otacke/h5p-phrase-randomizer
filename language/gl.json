@@ -1,233 +1,233 @@
 {
   "semantics": [
     {
-      "label": "Headline",
-      "description": "Optional headline to show in the toolbar."
+      "label": "Cabeceira",
+      "description": "Título opcional para mostrar na barra de ferramentas."
     },
     {
-      "label": "Introduction",
-      "description": "Optionally set some introduction telling the user what to do.",
+      "label": "Introdución",
+      "description": "Opcionalmente, establecer algunha introdución que lle indique ao usuario o que debe facer.",
       "default": "<p style=\"text-align: center;\"></p>"
     },
     {
-      "label": "Segments",
-      "entity": "segment",
+      "label": "Segmentos",
+      "entity": "segmento",
       "widgets": [
         {
-          "label": "Default"
+          "label": "Por defecto"
         },
         {
           "label": "Textual"
         }
       ],
       "field": {
-        "label": "Segments",
+        "label": "Segmentos",
         "fields": [
           {
-            "label": "Segment title"
+            "label": "Título do segmento"
           },
           {
-            "label": "Options",
-            "entity": "option",
+            "label": "Opcións",
+            "entity": "opción",
             "field": {
-              "label": "Text for option"
+              "label": "Texto para a opción"
             }
           },
           {
-            "label": "Background color"
+            "label": "Cor de fondo"
           }
         ]
       }
     },
     {
-      "label": "Mode",
+      "label": "Modo",
       "options": [
         {
-          "label": "Free"
+          "label": "Libre"
         },
         {
-          "label": "Quiz"
+          "label": "Cuestionario"
         }
       ]
     },
     {
-      "label": "Solutions",
+      "label": "Solucións",
       "fields": [
         {
-          "label": "Solutions",
-          "entity": "solution",
+          "label": "Solucións",
+          "entity": "solución",
           "field": {
-            "label": "Solution"
+            "label": "Solución"
           }
         },
         {
-          "label": "Dummy"
+          "label": "Maniquí"
         }
       ]
     },
     {
-      "label": "Audio settings",
+      "label": "Configuración de son",
       "fields": [
         {
-          "label": "Use inbuilt sound for click on next button or previous button"
+          "label": "Usar o son incorporado para facer clic no botón seguinte ou no botón anterior"
         },
         {
-          "label": "Click on next button or previous button",
-          "description": "Will be played when the user clicks on the previous button or next button."
+          "label": "Fai clic no botón seguinte ou no botón anterior",
+          "description": "Reproducirase cando o usuario prema no botón anterior ou seguinte."
         }
       ]
     },
     {
-      "label": "Behavioural settings",
+      "label": "Configuración do comportamento",
       "fields": [
         {
-          "label": "Lives",
-          "description": "Enter the number of lives a user starts with (every wrong answer deduces one down to 0) or leave empty to not limit the number of lives."
+          "label": "Vidas",
+          "description": "Introduza o número de vidas coas que comeza un usuario (cada resposta incorrecta deduce unha ata 0) ou déixeo baleiro para non limitar o número de vidas."
         },
         {
-          "label": "Enable \"Retry\" button"
+          "label": "Activar o botón \"Tentar de novo\""
         },
         {
-          "label": "Enable \"Show Solution\" button"
+          "label": "Activar o botón \"Amosar Solución\""
         }
       ]
     },
     {
-      "label": "User interface",
+      "label": "Interface de usuario",
       "fields": [
         {
-          "label": "Check",
-          "default": "Check"
+          "label": "Comprobar",
+          "default": "Comprobar"
         },
         {
-          "label": "Submit",
-          "default": "Submit"
+          "label": "Enviar",
+          "default": "Enviar"
         },
         {
-          "label": "Show solution",
-          "default": "Show solution"
+          "label": "Amosar a solución",
+          "default": "Amosar a solución"
         },
         {
-          "label": "Retry",
-          "default": "Retry"
+          "label": "Tentar de novo",
+          "default": "Tentar de novo"
         },
         {
-          "label": "You ran out of lives",
-          "default": "You ran out of lives."
+          "label": "Quedaches sen vidas",
+          "default": "Quedaches sen vidas."
         },
         {
-          "label": "Solution",
-          "default": "These are the solutions."
+          "label": "Solución",
+          "default": "Estas son as solucións."
         },
         {
-          "label": "This is not a solution",
-          "default": "This is not a solution."
+          "label": "Esta non é unha solución",
+          "default": "Esta non é unha solución."
         },
         {
-          "label": "No message",
+          "label": "Sen mensaxes",
           "default": "..."
         },
         {
-          "label": "You found a solution!",
-          "default": "You found a solution!"
+          "label": "Atopaches unha solución!",
+          "default": "Atopaches unha solución!"
         },
         {
-          "label": "You found all the solutions!",
-          "default": "You found all the solutions!"
+          "label": "Atopaches todas as solucións!",
+          "default": "Atopaches todas as solucións!"
         },
         {
-          "label": "Found solutions",
-          "default": "Found solutions"
+          "label": "Solucións atopadas",
+          "default": "Solucións atopadas"
         },
         {
-          "label": "To be found",
-          "default": "To be found"
+          "label": "Por atopar",
+          "default": "Por atopar"
         }
       ]
     },
     {
-      "label": "Accessibility texts",
+      "label": "Textos de accesibilidade",
       "fields": [
         {
-          "label": "Randomize all segments",
-          "default": "Randomize all segments"
+          "label": "Facer aleatorios todos os segmentos",
+          "default": "Facer aleatorios todos os segmentos"
         },
         {
-          "label": "Assistive technology description for \"Check\" button",
-          "default": "Check the answers. The responses will be marked as correct or incorrect."
+          "label": "Descrición para as tecnoloxías de asistencia do botón \"Comprobar\"",
+          "default": "Comprobar as túas respostas. As respostas marcaranse como correctas ou incorrectas."
         },
         {
-          "label": "Assistive technology description for \"Show Solution\" button",
-          "default": "Show the solutions."
+          "label": "Descrición para as tecnoloxías de asistencia do botón \"Amosar solución\"",
+          "default": "Mostrar as solucións."
         },
         {
-          "label": "Assistive technology description for \"Retry\" button",
-          "default": "Retry the task. Reset all segments and start the task over again."
+          "label": "Descrición para as tecnoloxías de asistencia do botón \"Tentar de novo\"",
+          "default": "Tentar de novo a tarefa. Borrar todos os segmentos e comenzar a tarefa de novo."
         },
         {
-          "label": "Assistive technology description for current label",
-          "description": "@text is a placeholder and will be replaced by the respective value.",
-          "default": "Current label: @text"
+          "label": "Descrición para as tecnoloxías de asistencia para a etiqueta actual",
+          "description": "@text é un marcador de posición e substituirase polo valor respectivo.",
+          "default": "Etiqueta actual: @text"
         },
         {
-          "label": "Assistive technology description for current labels",
-          "description": "@texts is a placeholder and will be replaced by the respective value.",
-          "default": "Current labels: @texts"
+          "label": "Descrición para as tecnoloxías de asistencia para as etiquetas actuais",
+          "description": "@texts é un marcador de posición e substituirase polo valor respectivo.",
+          "default": "Etiquetas actuais: @texts"
         },
         {
-          "label": "Assistive technology description for \"previous text\" button",
-          "default": "Previous text"
+          "label": "Descrición para as tecnoloxías de asistencia para o botón \"texto anterior\"",
+          "default": "Texto anterior"
         },
         {
-          "label": "Assistive technology description for \"next text\" button",
-          "default": "Next text"
+          "label": "Descrición para as tecnoloxías de asistencia para o botón \"texto seguinte\"",
+          "default": "Texto seguinte"
         },
         {
-          "label": "Assistive technology description for spin button",
-          "description": "@number is a placeholder and will be replaced by the respective value.",
-          "default": "Spin segment @number to get random text for it."
+          "label": "Descrición para as tecnoloxías de asistencia para o botón de xiro",
+          "description": "@number é un marcador de posición e substituirase polo valor respectivo.",
+          "default": "Xira o segmento @number para obter texto aleatorio para el."
         },
         {
-          "label": "Assistive technology description for announcing solution",
-          "description": "@number and @combination are placeholders and will be replaced by the respective values.",
-          "default": "These are the solutions (@number in total): @combination."
+          "label": "Descrición para as tecnoloxías de asistencia para anunciar a solución",
+          "description": "@number e @combination son marcadores de posición e serán substituídos polos valores respectivos.",
+          "default": "Estas son as solucións (@number en total): @combination."
         },
         {
-          "label": "Assistive technology description for announcing \"disabled\"",
-          "default": "disabled"
+          "label": "Descrición para as tecnoloxías de asistencia para anunciar \"desactivado\"",
+          "default": "desactivado"
         },
         {
-          "label": "Assistive technology description for announcing \"Randomizer\"",
-          "default": "Randomizer"
+          "label": "Descrición da tecnoloxía de asistencia para anunciar \"Facer aleatorio\"",
+          "default": "Facer aleatorio"
         },
         {
-          "label": "Assistive technology description for toolbar",
-          "default": "Toolbar"
+          "label": "Descrición para as tecnoloxías de asistencia para a barra de ferramentas",
+          "default": "Barra de ferramentas"
         },
         {
-          "label": "Assistive technology description for announcing the current segment",
-          "description": "@number and @total are placeholders and will be replaced by the respective values.",
-          "default": "Segment @number of @total"
+          "label": "Descrición para as tecnoloxías de asistencia para anunciar o segmento actual",
+          "description": "@number e @total son marcadores de posición e serán substituídos polos valores respectivos.",
+          "default": "Segmento @number de @total"
         },
         {
-          "label": "Solution",
-          "default": "Solution"
+          "label": "Solución",
+          "default": "Solución"
         },
         {
-          "label": "Found",
-          "default": "Found"
+          "label": "Atopado",
+          "default": "Atopado"
         },
         {
-          "label": "Not found",
-          "default": "Not found"
+          "label": "Non atopado",
+          "default": "Non atopado"
         },
         {
-          "label": "Audio button (unmuted)",
-          "default": "Mute audio. Currently unmuted."
+          "label": "Botón de son (desactivado)",
+          "default": "Silenciar o son, actualmente activado"
         },
         {
-          "label": "Audio button (muted)",
-          "default": "Unmute audio. Currently muted."
+          "label": "Botón de son (silenciado)",
+          "default": "Activar o son, actualmente silenciado."
         }
       ]
     }
