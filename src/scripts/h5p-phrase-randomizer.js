@@ -127,10 +127,10 @@ export default class PhraseRandomizer extends H5P.Question {
     });
 
     if (answerIsCorrect) {
-      this.handleCorrectResponse({...params, answer: answer });
+      this.handleCorrectResponse({ ...params, answer: answer });
     }
     else {
-      this.handleWrongResponse({...params, answer: answer });
+      this.handleWrongResponse({ ...params, answer: answer });
     }
   }
 
