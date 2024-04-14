@@ -1,63 +1,63 @@
 {
   "semantics": [
     {
-      "label": "Headline",
-      "description": "Optional headline to show in the toolbar."
+      "label": "Encabezado",
+      "description": "Encabezado opcional a mostrar en la barra de herramientas."
     },
     {
-      "label": "Introduction",
-      "description": "Optionally set some introduction telling the user what to do.",
+      "label": "Introducción",
+      "description": "Opcionalmente configurar una introducción que le dice al usuario que hacer.",
       "default": "<p style=\"text-align: center;\"></p>"
     },
     {
-      "label": "Segments",
-      "entity": "segment",
+      "label": "Segmentos",
+      "entity": "segmento",
       "widgets": [
         {
-          "label": "Default"
+          "label": "Predeterminado"
         },
         {
           "label": "Textual"
         }
       ],
       "field": {
-        "label": "Segments",
+        "label": "Segmentos",
         "fields": [
           {
-            "label": "Segment title"
+            "label": "Título del segmento"
           },
           {
-            "label": "Options",
-            "entity": "option",
+            "label": "Opciones",
+            "entity": "opción",
             "field": {
-              "label": "Text for option"
+              "label": "Texto para opción"
             }
           },
           {
-            "label": "Background color"
+            "label": "Color del fondo"
           }
         ]
       }
     },
     {
-      "label": "Mode",
+      "label": "Modo",
       "options": [
         {
-          "label": "Free"
+          "label": "Libre"
         },
         {
-          "label": "Quiz"
+          "label": "Examen"
         }
       ]
     },
     {
-      "label": "Solutions",
+      "label": "Soluciones",
       "fields": [
         {
-          "label": "Solutions",
-          "entity": "solution",
+          "label": "Soluciones",
+          "entity": "solución",
           "field": {
-            "label": "Solution"
+            "label": "Solución"
           }
         },
         {
@@ -66,168 +66,168 @@
       ]
     },
     {
-      "label": "Audio settings",
+      "label": "Configuraciones de audio",
       "fields": [
         {
-          "label": "Use inbuilt sound for click on next button or previous button"
+          "label": "Usar sonido incluido para clic en botón siguiente o botón anterior"
         },
         {
-          "label": "Click on next button or previous button",
-          "description": "Will be played when the user clicks on the previous button or next button."
+          "label": "Clic en botón siguiente o botón anterior",
+          "description": "Será reproducido cuando el usuario haga clic en el botón siguiente o botón anterior."
         }
       ]
     },
     {
-      "label": "Behavioural settings",
+      "label": "Configuraciones del comportamiento",
       "fields": [
         {
-          "label": "Lives",
-          "description": "Enter the number of lives a user starts with (every wrong answer deduces one down to 0) or leave empty to not limit the number of lives."
+          "label": "Vidas",
+          "description": "Escriba el número de vidas con las que comienza un usuario (cada respuesta incorrecta disminuye una vida hasta llegar a 0) o deje vacío para no limitar el número de vidas."
         },
         {
-          "label": "Enable \"Retry\" button"
+          "label": "Habilitar botón \"Reintentar\""
         },
         {
-          "label": "Enable \"Show Solution\" button"
+          "label": "Habilitar botón \"Mostrar solución\""
         }
       ]
     },
     {
-      "label": "User interface",
+      "label": "Interfase del usuario",
       "fields": [
         {
-          "label": "Check",
-          "default": "Check"
+          "label": "Comprobar",
+          "default": "Comprobar"
         },
         {
-          "label": "Submit",
-          "default": "Submit"
+          "label": "Enviar",
+          "default": "Enviar"
         },
         {
-          "label": "Show solution",
-          "default": "Show solution"
+          "label": "Mostrar solución",
+          "default": "Mostrar solución"
         },
         {
-          "label": "Retry",
-          "default": "Retry"
+          "label": "Reintentar",
+          "default": "Reintentar"
         },
         {
-          "label": "You ran out of lives",
-          "default": "You ran out of lives."
+          "label": "Se te acabaron las vidas",
+          "default": "Se te acabaron las vidas."
         },
         {
-          "label": "Solution",
-          "default": "These are the solutions."
+          "label": "Solución",
+          "default": "Estas son las soluciones."
         },
         {
-          "label": "This is not a solution",
-          "default": "This is not a solution."
+          "label": "Esta no es una solución",
+          "default": "Esta no es una solución."
         },
         {
-          "label": "No message",
+          "label": "Sin mensaje",
           "default": "..."
         },
         {
-          "label": "You found a solution!",
-          "default": "You found a solution!"
+          "label": "¡Encontraste una solución!",
+          "default": "¡Encontraste una solución!"
         },
         {
-          "label": "You found all the solutions!",
-          "default": "You found all the solutions!"
+          "label": "¡Encontraste todas las soluciones!",
+          "default": "¡Encontraste todas las soluciones!"
         },
         {
-          "label": "Found solutions",
-          "default": "Found solutions"
+          "label": "Encontró soluciones",
+          "default": "Encontró soluciones"
         },
         {
-          "label": "To be found",
-          "default": "To be found"
+          "label": "Por encontrar",
+          "default": "Por encontrar"
         }
       ]
     },
     {
-      "label": "Accessibility texts",
+      "label": "Pruebas de accesibilidad",
       "fields": [
         {
-          "label": "Randomize all segments",
-          "default": "Randomize all segments"
+          "label": "Aleatorizar todos los segmentos",
+          "default": "Aleatorizar todos los segmentos"
         },
         {
-          "label": "Assistive technology description for \"Check\" button",
-          "default": "Check the answers. The responses will be marked as correct or incorrect."
+          "label": "Descripción de tecnología asistiva para botón \"Comprobar\"",
+          "default": "Comprobar las respuestas. Las respuestas serán marcadas como correctas o incorrectas."
         },
         {
-          "label": "Assistive technology description for \"Show Solution\" button",
-          "default": "Show the solutions."
+          "label": "Descripción de tecnología asistiva para botón \"Mostrar solución\"",
+          "default": "Mostrar las soluciones."
         },
         {
-          "label": "Assistive technology description for \"Retry\" button",
-          "default": "Retry the task. Reset all segments and start the task over again."
+          "label": "Descripción de tecnología asistiva para botón \"Reintentar\"",
+          "default": "Reintentar el trabajo. Reiniciar todos los segmentos y comenzar de nuevo el trabajo."
         },
         {
-          "label": "Assistive technology description for current label",
-          "description": "@text is a placeholder and will be replaced by the respective value.",
-          "default": "Current label: @text"
+          "label": "Descripción de tecnología asistiva para etiqueta actual",
+          "description": "@text ies un reemplazable y será reemplazado por el valor respectivo.",
+          "default": "Etiqueta actual: @text"
         },
         {
-          "label": "Assistive technology description for current labels",
-          "description": "@texts is a placeholder and will be replaced by the respective value.",
-          "default": "Current labels: @texts"
+          "label": "Descripción de tecnología asistiva para etiquetas actuales",
+          "description": "@texts es un reemplazable y será reemplazado por el valor respectivo.",
+          "default": "Etiquetas actuales: @texts"
         },
         {
-          "label": "Assistive technology description for \"previous text\" button",
-          "default": "Previous text"
+          "label": "Descripción de tecnología asistiva para botón \"texto anterior\"",
+          "default": "Texto anterior"
         },
         {
-          "label": "Assistive technology description for \"next text\" button",
-          "default": "Next text"
+          "label": "Descripción de tecnología asistiva para botón \"texto siguiente\"",
+          "default": "Texto siguiente"
         },
         {
-          "label": "Assistive technology description for spin button",
-          "description": "@number is a placeholder and will be replaced by the respective value.",
-          "default": "Spin segment @number to get random text for it."
+          "label": "Descripción de tecnología asistiva para botón girar",
+          "description": "@number es un reemplazable y será reemplazado por el valor respectivo.",
+          "default": "Girar segmento @number para obtener texto aleatorio para él."
         },
         {
-          "label": "Assistive technology description for announcing solution",
-          "description": "@number and @combination are placeholders and will be replaced by the respective values.",
-          "default": "These are the solutions (@number in total): @combination."
+          "label": "Descripción de tecnología asistiva para anunciar solución",
+          "description": "@number y @combination son reemplazables y serán reemplazados por los valores respectivos.",
+          "default": "Estas son las soluciones (@number en total): @combination."
         },
         {
-          "label": "Assistive technology description for announcing \"disabled\"",
-          "default": "disabled"
+          "label": "Descripción de tecnología asistiva para anunciar \"deshabilitado\"",
+          "default": "deshabilitado"
         },
         {
-          "label": "Assistive technology description for announcing \"Randomizer\"",
-          "default": "Randomizer"
+          "label": "Descripción de tecnología asistiva para anunciar \"Aleatorizador\"",
+          "default": "Aleatorizador"
         },
         {
-          "label": "Assistive technology description for toolbar",
-          "default": "Toolbar"
+          "label": "Descripción de tecnología asistiva para barra de herramientas",
+          "default": "Barra de herramientas"
         },
         {
-          "label": "Assistive technology description for announcing the current segment",
-          "description": "@number and @total are placeholders and will be replaced by the respective values.",
-          "default": "Segment @number of @total"
+          "label": "Descripción de tecnología asistiva para anunciar el segmento actual",
+          "description": "@number y @total son reemplazables y serán reemplazados por los valores respectivos.",
+          "default": "Segmento @number de @total"
         },
         {
-          "label": "Solution",
-          "default": "Solution"
+          "label": "Solución",
+          "default": "Solución"
         },
         {
-          "label": "Found",
-          "default": "Found"
+          "label": "Encontrado",
+          "default": "Encontrado"
         },
         {
-          "label": "Not found",
-          "default": "Not found"
+          "label": "No encontrado",
+          "default": "No encontrado"
         },
         {
-          "label": "Audio button (unmuted)",
-          "default": "Mute audio. Currently unmuted."
+          "label": "Botón de audio (sonoro)",
+          "default": "Silenciar audio. Actualmente silenciado."
         },
         {
-          "label": "Audio button (muted)",
-          "default": "Unmute audio. Currently muted."
+          "label": "Botón de audio (silenciado)",
+          "default": "Habilitar audio. Actualmente silenciado."
         }
       ]
     }
