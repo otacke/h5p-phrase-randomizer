@@ -1,233 +1,233 @@
 {
   "semantics": [
     {
-      "label": "Headline",
-      "description": "Optional headline to show in the toolbar."
+      "label": "标题",
+      "description": "在工具栏中显示的可选标题。"
     },
     {
-      "label": "Introduction",
-      "description": "Optionally set some introduction telling the user what to do.",
+      "label": "介绍",
+      "description": "可选地设置一些介绍，告诉用户该做什么。",
       "default": "<p style=\"text-align: center;\"></p>"
     },
     {
-      "label": "Segments",
-      "entity": "segment",
+      "label": "片段",
+      "entity": "片段",
       "widgets": [
         {
-          "label": "Default"
+          "label": "默认"
         },
         {
-          "label": "Textual"
+          "label": "文本的"
         }
       ],
       "field": {
-        "label": "Segments",
+        "label": "片段",
         "fields": [
           {
-            "label": "Segment title"
+            "label": "片段标题"
           },
           {
-            "label": "Options",
-            "entity": "option",
+            "label": "选项",
+            "entity": "选项",
             "field": {
-              "label": "Text for option"
+              "label": "选项文本"
             }
           },
           {
-            "label": "Background color"
+            "label": "背景颜色"
           }
         ]
       }
     },
     {
-      "label": "Mode",
+      "label": "模式",
       "options": [
         {
-          "label": "Free"
+          "label": "自由"
         },
         {
-          "label": "Quiz"
+          "label": "测验"
         }
       ]
     },
     {
-      "label": "Solutions",
+      "label": "答案",
       "fields": [
         {
-          "label": "Solutions",
-          "entity": "solution",
+          "label": "答案",
+          "entity": "答案",
           "field": {
-            "label": "Solution"
+            "label": "答案"
           }
         },
         {
-          "label": "Dummy"
+          "label": "预设"
         }
       ]
     },
     {
-      "label": "Audio settings",
+      "label": "音频设置",
       "fields": [
         {
-          "label": "Use inbuilt sound for click on next button or previous button"
+          "label": "利用内置声音提示点击下一个按钮或上一个按钮"
         },
         {
-          "label": "Click on next button or previous button",
-          "description": "Will be played when the user clicks on the previous button or next button."
+          "label": "点击下一个按钮或上一个按钮",
+          "description": "将在用户点击上一个按钮或下一个按钮时播放。"
         }
       ]
     },
     {
-      "label": "Behavioural settings",
+      "label": "行为设置",
       "fields": [
         {
-          "label": "Lives",
-          "description": "Enter the number of lives a user starts with (every wrong answer deduces one down to 0) or leave empty to not limit the number of lives."
+          "label": "生命",
+          "description": "输入用户开始时的生命数(每个错误答案将1减为0)或留空以不限制生命数。"
         },
         {
-          "label": "Enable \"Retry\" button"
+          "label": "启用“重试”按钮"
         },
         {
-          "label": "Enable \"Show Solution\" button"
+          "label": "启用“显示答案”按钮"
         }
       ]
     },
     {
-      "label": "User interface",
+      "label": "用户界面",
       "fields": [
         {
-          "label": "Check",
-          "default": "Check"
+          "label": "检查",
+          "default": "检查"
         },
         {
-          "label": "Submit",
-          "default": "Submit"
+          "label": "提交",
+          "default": "提交"
         },
         {
-          "label": "Show solution",
-          "default": "Show solution"
+          "label": "显示答案",
+          "default": "显示答案"
         },
         {
-          "label": "Retry",
-          "default": "Retry"
+          "label": "重试",
+          "default": "重试"
         },
         {
-          "label": "You ran out of lives",
-          "default": "You ran out of lives."
+          "label": "你耗尽了生命",
+          "default": "您耗尽了生命。"
         },
         {
-          "label": "Solution",
-          "default": "These are the solutions."
+          "label": "答案",
+          "default": "这些是答案。"
         },
         {
-          "label": "This is not a solution",
-          "default": "This is not a solution."
+          "label": "这不是答案",
+          "default": "这不是答案。"
         },
         {
-          "label": "No message",
+          "label": "没有信息",
           "default": "..."
         },
         {
-          "label": "You found a solution!",
-          "default": "You found a solution!"
+          "label": "你找到答案了!",
+          "default": "你找到答案了！"
         },
         {
-          "label": "You found all the solutions!",
-          "default": "You found all the solutions!"
+          "label": "你找到了所有答案！",
+          "default": "你找到了所有答案！"
         },
         {
-          "label": "Found solutions",
-          "default": "Found solutions"
+          "label": "找到答案",
+          "default": "找到答案"
         },
         {
-          "label": "To be found",
-          "default": "To be found"
+          "label": "待发现",
+          "default": "待发现"
         }
       ]
     },
     {
-      "label": "Accessibility texts",
+      "label": "辅助功能文本",
       "fields": [
         {
-          "label": "Randomize all segments",
-          "default": "Randomize all segments"
+          "label": "随机化所有片段",
+          "default": "随机化所有片段"
         },
         {
-          "label": "Assistive technology description for \"Check\" button",
-          "default": "Check the answers. The responses will be marked as correct or incorrect."
+          "label": "“检查”按钮的辅助技术说明",
+          "default": "检查答案。回答将被标记为正确或错误。"
         },
         {
-          "label": "Assistive technology description for \"Show Solution\" button",
-          "default": "Show the solutions."
+          "label": "“显示答案”按钮的辅助技术说明",
+          "default": "显示答案。"
         },
         {
-          "label": "Assistive technology description for \"Retry\" button",
-          "default": "Retry the task. Reset all segments and start the task over again."
+          "label": "“重试”按钮的辅助技术说明",
+          "default": "重试该任务。重置所有片段并重新开始任务。"
         },
         {
-          "label": "Assistive technology description for current label",
-          "description": "@text is a placeholder and will be replaced by the respective value.",
-          "default": "Current label: @text"
+          "label": "当前标签的辅助技术描述",
+          "description": "@text是一个占位符，将被相应的值替换。",
+          "default": "当前标签:@text"
         },
         {
-          "label": "Assistive technology description for current labels",
-          "description": "@texts is a placeholder and will be replaced by the respective value.",
-          "default": "Current labels: @texts"
+          "label": "当前标签的辅助技术描述",
+          "description": "@texts是一个占位符，将被相应的值替换。",
+          "default": "当前标签:@文本"
         },
         {
-          "label": "Assistive technology description for \"previous text\" button",
-          "default": "Previous text"
+          "label": "“上一个文本”按钮的辅助技术说明",
+          "default": "之前的文本"
         },
         {
-          "label": "Assistive technology description for \"next text\" button",
-          "default": "Next text"
+          "label": "“下一个文本”按钮的辅助技术描述",
+          "default": "下一个文本"
         },
         {
-          "label": "Assistive technology description for spin button",
-          "description": "@number is a placeholder and will be replaced by the respective value.",
-          "default": "Spin segment @number to get random text for it."
+          "label": "旋转按钮辅助技术说明",
+          "description": "@number是一个占位符，将被相应的值替换。",
+          "default": "旋转段@number以获得它的随机文本。"
         },
         {
-          "label": "Assistive technology description for announcing solution",
-          "description": "@number and @combination are placeholders and will be replaced by the respective values.",
-          "default": "These are the solutions (@number in total): @combination."
+          "label": "宣布答案的辅助技术描述",
+          "description": "@number和@combination是占位符，将被各自的值替换。",
+          "default": "这些是答案(@总数):@组合。"
         },
         {
-          "label": "Assistive technology description for announcing \"disabled\"",
-          "default": "disabled"
+          "label": "宣布“禁用”的辅助技术说明",
+          "default": "禁用"
         },
         {
-          "label": "Assistive technology description for announcing \"Randomizer\"",
-          "default": "Randomizer"
+          "label": "宣布“随机器”的辅助技术描述",
+          "default": "随机器"
         },
         {
-          "label": "Assistive technology description for toolbar",
-          "default": "Toolbar"
+          "label": "工具栏的辅助技术描述",
+          "default": "工具栏"
         },
         {
-          "label": "Assistive technology description for announcing the current segment",
-          "description": "@number and @total are placeholders and will be replaced by the respective values.",
-          "default": "Segment @number of @total"
+          "label": "宣布当前片段的辅助技术描述",
+          "description": "@number和@total是占位符，将被各自的值替换。",
+          "default": "片段@number @total"
         },
         {
-          "label": "Solution",
-          "default": "Solution"
+          "label": "答案",
+          "default": "答案"
         },
         {
-          "label": "Found",
-          "default": "Found"
+          "label": "找到",
+          "default": "找到"
         },
         {
-          "label": "Not found",
-          "default": "Not found"
+          "label": "没有找到",
+          "default": "未找到"
         },
         {
-          "label": "Audio button (unmuted)",
-          "default": "Mute audio. Currently unmuted."
+          "label": "音频按钮(未静音)",
+          "default": "静音。目前静音状态。"
         },
         {
-          "label": "Audio button (muted)",
-          "default": "Unmute audio. Currently muted."
+          "label": "音频按钮(静音)",
+          "default": "静音音频。目前有限。"
         }
       ]
     }
