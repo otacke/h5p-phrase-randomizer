@@ -71,8 +71,8 @@ export default class Randomizer {
     this.randomizerDOM.classList.add('h5p-phrase-randomizer-elements');
     this.dom.appendChild(this.randomizerDOM);
 
-    const groupLabelId = H5P.createUUID();
-    const configurationId = H5P.createUUID();
+    const groupLabelId = `group-${H5P.createUUID()}`;
+    const configurationId = `configuration-${H5P.createUUID()}`;
 
     this.segmentsDOM = document.createElement('div');
     this.segmentsDOM.classList.add('h5p-phrase-randomizer-segments');
