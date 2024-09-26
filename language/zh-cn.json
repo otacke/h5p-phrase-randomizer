@@ -6,8 +6,7 @@
     },
     {
       "label": "介绍",
-      "description": "可选地设置一些介绍，告诉用户该做什么。",
-      "default": "<p style=\"text-align: center;\"></p>"
+      "description": "可选地设置一些介绍，告诉用户该做什么。"
     },
     {
       "label": "片段",

@@ -5,7 +5,6 @@
       "description": "Optional headline to show in the toolbar."
     },
     {
-      "default": "<p style=\"text-align: center;\"></p>",
       "label": "Introduction",
       "description": "Optionally set some introduction telling the user what to do."
     },

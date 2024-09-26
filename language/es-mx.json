@@ -5,7 +5,6 @@
       "description": "Encabezado opcional a mostrar en la barra de herramientas."
     },
     {
-      "default": "<p style=\"text-align: center;\"></p>",
       "label": "Introducción",
       "description": "Opcionalmente configurar una introducción que le dice al usuario que hacer."
     },

@@ -6,8 +6,7 @@
     },
     {
       "label": "Introducción",
-      "description": "Opcionalmente configurar una introducción que le dice al usuario que hacer.",
-      "default": "<p style=\"text-align: center;\"></p>"
+      "description": "Opcionalmente configurar una introducción que le dice al usuario que hacer."
     },
     {
       "label": "Segmentos",

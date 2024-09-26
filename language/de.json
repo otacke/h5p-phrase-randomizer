@@ -6,8 +6,7 @@
     },
     {
       "label": "Einleitung",
-      "description": "Füge optional eine Einleitung ein, in der die Lernenden erfahren, worum es geht.",
-      "default": "<p style=\"text-align: center;\"></p>"
+      "description": "Füge optional eine Einleitung ein, in der die Lernenden erfahren, worum es geht."
     },
     {
       "label": "Segmente",
