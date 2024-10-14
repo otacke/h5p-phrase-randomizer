@@ -1,4 +1,4 @@
-@import '@styles/main';
+@use "@styles/main";
 
 .status-container {
   align-items: flex-end;
@@ -15,7 +15,7 @@
   }
 
   &::before {
-    color: $color-joubelui-button-hover;
+    color: main.$color-joubelui-button-hover;
     margin-right: 0.5rem;
   }
 
@@ -31,7 +31,7 @@
     justify-content: center;
 
     span.value, span.max-value {
-      color: $color-joubelui-button-hover;
+      color: main.$color-joubelui-button-hover;
     }
 
     span.delimiter {

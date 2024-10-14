@@ -1,12 +1,12 @@
-@import '@styles/main';
+@use "@styles/main";
 
 $button-pseudo-size: 1.15rem;
 $button-pseudo-offset: 0.575rem;
 
 .h5p-phrase-randomizer-toolbar-tool-bar {
   align-items: center;
-  background-color: $color-background;
-  box-shadow: 10px 10px 30px $color-shadow-light;
+  background-color: main.$color-background;
+  box-shadow: 10px 10px 30px main.$color-shadow-light;
   column-gap: 1.25rem;
   display: flex;
   flex-direction: row;
@@ -58,12 +58,12 @@ $button-pseudo-offset: 0.575rem;
       justify-content: flex-end;
 
       .toolbar-button {
-        color: $color-joubelui-button-hover;
+        color: main.$color-joubelui-button-hover;
         position: relative;
 
         &.toolbar-button-audio {
           &::before {
-            // color: $color-joubelui-button-hover;
+            // color: main.$color-joubelui-button-hover;
             content: "\f026";
             font-family: "H5PFontAwesome4", sans-serif;
             font-size: 1.15em;
@@ -77,13 +77,13 @@ $button-pseudo-offset: 0.575rem;
           }
 
           &.toolbar-button-disabled {
-            background-color: $color-background;
-            color: $color-disabled;
+            background-color: main.$color-background;
+            color: main.$color-disabled;
           }
 
           &.toolbar-button-active {
             &:not(.toolbar-button-disabled) {
-              background-color: $color-primary-5;
+              background-color: main.$color-primary-5;
             }
 
             &::before {
@@ -93,15 +93,15 @@ $button-pseudo-offset: 0.575rem;
 
           &:active {
             &:not(.toolbar-button-disabled) {
-              background-color: $color-primary-25;
+              background-color: main.$color-primary-25;
             }
           }
         }
 
         &.toolbar-button-randomize {
           &.toolbar-button-disabled {
-            background-color: $color-background;
-            color: $color-disabled;
+            background-color: main.$color-background;
+            color: main.$color-disabled;
           }
 
           &::before {

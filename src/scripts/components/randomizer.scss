@@ -1,4 +1,4 @@
-@import "@styles/main";
+@use "@styles/main";
 
 .h5p-phrase-randomizer-case {
   background: linear-gradient(#fff, #b3b7c6);
@@ -26,15 +26,15 @@
       .h5p-phrase-randomizer-group-label,
       .h5p-phrase-randomizer-current-combination-aria {
         position: absolute;
-        left: $offset-offscreen;
+        left: main.$offset-offscreen;
       }
 
       &.vertical-buttons {
         .h5p-phrase-randomizer-segment {
-          min-width: calc($minimum-a11y-size * 4 + 0.5rem);
+          min-width: calc(main.$minimum-a11y-size * 4 + 0.5rem);
 
           .h5p-phrase-randomizer-segment-title {
-            margin-right: calc($minimum-a11y-size + 0.5rem);
+            margin-right: calc(main.$minimum-a11y-size + 0.5rem);
           }
 
           .h5p-phrase-randomizer-segment-main {

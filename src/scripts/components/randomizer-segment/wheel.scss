@@ -1,4 +1,4 @@
-@import "@styles/main";
+@use "@styles/main";
 
 .h5p-phrase-randomizer-wheel {
   --wheel-font-size: 1.5rem;
@@ -19,7 +19,7 @@
   box-shadow: 0 0 10px rgb(0 0 0 / 60%);
   color: var(--wheel-color-text, #4c4452);
   font-size: var(--wheel-font-size);
-  height: calc($minimum-a11y-size * 3 + 0.5rem);
+  height: calc(main.$minimum-a11y-size * 3 + 0.5rem);
   overflow: hidden;
   text-align: center;
   width: 100%;

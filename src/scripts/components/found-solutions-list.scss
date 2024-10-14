@@ -1,4 +1,4 @@
-@import '@styles/main';
+@use "@styles/main";
 
 .h5p-phrase-randomizer-found-solutions {
   box-shadow: 10px 10px 30px rgba(166, 166, 166, 0.2);
@@ -10,7 +10,7 @@
   }
 
   .h5p-phrase-randomizer-found-solutions-list {
-    color: $color-joubelui-button-hover;
+    color: main.$color-joubelui-button-hover;
 
     .h5p-phrase-randomizer-found-solutions-list-item {
       &::after {
@@ -19,7 +19,7 @@
       }
 
       &.found {
-        color: $color-correct;
+        color: main.$color-correct;
 
         &::after {
           content: "\f00c";
@@ -27,7 +27,7 @@
       }
 
       &.not-found {
-        color: $color-incorrect;
+        color: main.$color-incorrect;
 
         &::after {
           content: "\f00d";

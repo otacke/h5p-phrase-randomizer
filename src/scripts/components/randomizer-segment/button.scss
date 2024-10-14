@@ -1,15 +1,15 @@
-@import "@styles/main";
+@use "@styles/main";
 
 .h5p-phrase-randomizer-button {
   --border-width: 2px;
   aspect-ratio: 1 / 1;
   background: linear-gradient(#d0d3dc 0%, #fff 50%, #d0d3dc 100%);
   border: var(--border-width) solid transparent;
-  color: $color-text;
+  color: main.$color-text;
   font-family: "H5PFontAwesome4", sans-serif;
   font-size: 1.25rem;
-  height: max($minimum-a11y-size, 1.5rem);
-  line-height: max($minimum-a11y-size, 1.5rem);
+  height: max(main.$minimum-a11y-size, 1.5rem);
+  line-height: max(main.$minimum-a11y-size, 1.5rem);
   padding: 0;
   position: relative;
 
@@ -29,7 +29,7 @@
     }
 
     &:active {
-      border: var(--border-width) solid $color-text;
+      border: var(--border-width) solid main.$color-text;
       filter: brightness(0.9);
     }
   }

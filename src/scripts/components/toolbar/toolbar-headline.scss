@@ -1,7 +1,7 @@
-@import '@styles/main';
+@use "@styles/main";
 
 .h5p-phrase-randomizer-headline {
-  color: $color-text;
+  color: main.$color-text;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
