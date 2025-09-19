@@ -58,7 +58,7 @@ export default class XAPI {
         this.getMaxScore(), // Question Type Contract mixin
         this,
         completion,
-        success
+        success,
       );
 
       if (!options.addScore) {
@@ -75,7 +75,7 @@ export default class XAPI {
         const wrongAnswers = this.wrongAnswers.map((wrongAnswer) => {
           return ({
             style: 'found',
-            labels: [wrongAnswer]
+            labels: [wrongAnswer],
           });
         });
 
@@ -90,7 +90,7 @@ export default class XAPI {
 
       xAPIEvent.data.statement.result = Util.extend(
         { response: response },
-        xAPIEvent.data.statement.result || {}
+        xAPIEvent.data.statement.result || {},
       );
     }
 
@@ -125,7 +125,7 @@ export default class XAPI {
       definition.correctResponsesPattern = [
         [...this.params.solutions, ...wrongAnswerSlots]
           .map((solution) => solution.join(' '))
-          .join('[,]')
+          .join('[,]'),
       ];
     }
 
@@ -139,7 +139,7 @@ export default class XAPI {
   getTitle() {
     // H5P Core function: createTitle
     return H5P.createTitle(
-      this.extras?.metadata?.title || XAPI.DEFAULT_DESCRIPTION
+      this.extras?.metadata?.title || XAPI.DEFAULT_DESCRIPTION,
     );
   }
 

@@ -18,7 +18,7 @@ export default class Toolbar {
     this.params = Util.extend({
       buttons: [],
       hidden: false,
-      headline: ''
+      headline: '',
     }, params);
 
     this.params.hidden = this.params.hidden ||
@@ -34,7 +34,7 @@ export default class Toolbar {
     this.dom.classList.add('h5p-phrase-randomizer-toolbar-tool-bar');
     this.dom.setAttribute('role', 'toolbar');
     this.dom.setAttribute(
-      'aria-label', this.params.dictionary.get('a11y.toolbar')
+      'aria-label', this.params.dictionary.get('a11y.toolbar'),
     );
     this.dom.addEventListener('keydown', (event) => {
       this.handleKeydown(event);
@@ -125,20 +125,20 @@ export default class Toolbar {
         ...(button.a11y && { a11y: button.a11y }),
         classes: ['toolbar-button', `toolbar-button-${button.id}`],
         ...(typeof button.disabled === 'boolean' && {
-          disabled: button.disabled
+          disabled: button.disabled,
         }),
         ...(button.active && { active: button.active }),
         ...(button.type && { type: button.type }),
         ...(button.pulseStates && { pulseStates: button.pulseStates }),
-        ...(button.pulseIndex && { pulseIndex: button.pulseIndex })
+        ...(button.pulseIndex && { pulseIndex: button.pulseIndex }),
       },
       {
         ...(typeof button.onClick === 'function' && {
           onClick: (event, params) => {
             button.onClick(event, params);
-          }
-        })
-      }
+          },
+        }),
+      },
     );
     this.buttonsContainer.appendChild(this.buttons[button.id].getDOM());
   }
@@ -370,7 +370,7 @@ export default class Toolbar {
     }
     else if (event.code === 'End') {
       this.moveButtonFocus(
-        Object.keys(this.buttons).length - 1 - this.currentButtonIndex
+        Object.keys(this.buttons).length - 1 - this.currentButtonIndex,
       );
     }
     else {

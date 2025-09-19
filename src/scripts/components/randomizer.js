@@ -16,12 +16,12 @@ export default class Randomizer {
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
-      previousState: {}
+      previousState: {},
     }, params);
 
     this.callbacks = Util.extend({
       onChanged: () => {},
-      onResized: () => {}
+      onResized: () => {},
     }, callbacks);
 
     this.spinningSegments = {};
@@ -36,7 +36,7 @@ export default class Randomizer {
           alphabet: segment.options,
           position: this.params.previousState?.positions[index] ?? null,
           colorBackground: segment.colorBackground,
-          title: segment.title
+          title: segment.title,
         },
         {
           onChanged: () => {
@@ -47,8 +47,8 @@ export default class Randomizer {
           },
           onVisible: () => {
             this.callbacks.onResized();
-          }
-        }
+          },
+        },
       );
     });
 
@@ -78,7 +78,7 @@ export default class Randomizer {
     this.segmentsDOM.classList.add('h5p-phrase-randomizer-segments');
     this.segmentsDOM.setAttribute('role', 'group');
     this.segmentsDOM.setAttribute(
-      'aria-labelledby', `${groupLabelId} ${configurationId}`
+      'aria-labelledby', `${groupLabelId} ${configurationId}`,
     );
     this.randomizerDOM.appendChild(this.segmentsDOM);
 
@@ -123,7 +123,7 @@ export default class Randomizer {
    */
   resize(containerWidth) {
     this.messageDisplay.setWidth(
-      this.segmentsDOM.getBoundingClientRect().width
+      this.segmentsDOM.getBoundingClientRect().width,
     );
 
     if (!containerWidth) {
@@ -139,7 +139,7 @@ export default class Randomizer {
       const minWidthHorizontal = this.getMinWidthHorizontal();
 
       this.segmentsDOM.classList.toggle(
-        'vertical-buttons', containerWidth < minWidthHorizontal
+        'vertical-buttons', containerWidth < minWidthHorizontal,
       );
     }
   }
@@ -156,24 +156,25 @@ export default class Randomizer {
     const segmentMinWidthHorizontal = this.segments[0].getMinWidthHorizontal();
 
     const gap = parseFloat(
-      window.getComputedStyle(this.segmentsDOM).getPropertyValue('gap')
+      window.getComputedStyle(this.segmentsDOM).getPropertyValue('gap'),
     );
 
     // Space for two segments next to each other
+    // eslint-disable-next-line no-magic-numbers
     const segmentsMinWidthHorizontal = 2 * segmentMinWidthHorizontal + gap;
 
     const totalPaddingHorizontal =
       parseFloat(
-        window.getComputedStyle(this.randomizerDOM).getPropertyValue('padding-left')
+        window.getComputedStyle(this.randomizerDOM).getPropertyValue('padding-left'),
       ) +
       parseFloat(
-        window.getComputedStyle(this.randomizerDOM).getPropertyValue('padding-right')
+        window.getComputedStyle(this.randomizerDOM).getPropertyValue('padding-right'),
       ) +
       parseFloat(
-        window.getComputedStyle(this.dom).getPropertyValue('padding-left')
+        window.getComputedStyle(this.dom).getPropertyValue('padding-left'),
       ) +
       parseFloat(
-        window.getComputedStyle(this.dom).getPropertyValue('padding-right')
+        window.getComputedStyle(this.dom).getPropertyValue('padding-right'),
       );
 
     this.minWidthHorizontal =
@@ -213,7 +214,7 @@ export default class Randomizer {
    */
   getCurrentState() {
     return {
-      positions: this.getPositions()
+      positions: this.getPositions(),
     };
   }
 
@@ -395,7 +396,7 @@ export default class Randomizer {
     }
 
     this.callbacks.onSpinningNumberChanged(
-      Object.keys(this.spinningSegments).length
+      Object.keys(this.spinningSegments).length,
     );
   }
 }

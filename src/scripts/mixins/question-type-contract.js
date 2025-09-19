@@ -1,3 +1,6 @@
+/** @constant {number} DOM_TIMEOUT_MS Timeout for DOM updates. */
+const DOM_TIMEOUT_MS = 50;
+
 /**
  * Mixin containing methods for H5P Question Type contract.
  */
@@ -77,7 +80,7 @@ export default class QuestionTypeContract {
 
     this.announceMessage({
       text: this.dictionary.get('l10n.theSolutionsAre'),
-      aria: ariaText
+      aria: ariaText,
     });
 
     // Announce message before some other element gets focus
@@ -91,15 +94,15 @@ export default class QuestionTypeContract {
         if (this.params.behaviour.enableRetry) {
           window.setTimeout(() => {
             this.showButton('try-again');
-          }, 50);
+          }, DOM_TIMEOUT_MS);
         }
         else {
           window.setTimeout(() => {
             this.randomizer.focus(); // No button to focus, focus randomizer instead
-          }, 50);
+          }, DOM_TIMEOUT_MS);
         }
       }
-    }, 50);
+    }, DOM_TIMEOUT_MS);
   }
 
   /**
@@ -114,7 +117,7 @@ export default class QuestionTypeContract {
 
     this.foundSolutions = this.params.solutions.map(() => {
       return ({
-        labels: [this.dictionary.get('l10n.toBeFound')]
+        labels: [this.dictionary.get('l10n.toBeFound')],
       });
     });
     this.attemptsLeft = this.params.behaviour.maxAttempts;
@@ -125,18 +128,18 @@ export default class QuestionTypeContract {
     if (this.attemptsLeft !== Infinity) {
       this.toolbar.setStatusContainerStatus(
         'attempts',
-        { value: this.attemptsLeft }
+        { value: this.attemptsLeft },
       );
     }
 
     this.toolbar.setStatusContainerStatus(
       'found',
-      { value: this.getFoundScore(), maxValue: this.getFoundMaxScore() }
+      { value: this.getFoundScore(), maxValue: this.getFoundMaxScore() },
     );
 
     this.announceMessage({
       text: this.dictionary.get('l10n.noMessage'),
-      aria: ''
+      aria: '',
     });
 
     this.hideButton('show-solution');
@@ -158,7 +161,7 @@ export default class QuestionTypeContract {
   getXAPIData() {
     const xAPIEvent = this.createXAPIEvent('answered');
     return {
-      statement: xAPIEvent.data.statement
+      statement: xAPIEvent.data.statement,
     };
   }
 }

@@ -29,7 +29,7 @@ export default class Initialization {
       segments: [],
       solutions: [],
       audio: {
-        useDefaultClickPreviousNext: true
+        useDefaultClickPreviousNext: true,
       },
       mode: 'free',
       behaviour: {
@@ -37,7 +37,7 @@ export default class Initialization {
         enableRetry: true,
         enableSolutionsButton: true,
         enableCheckButton: true,
-        maxAttempts: Infinity
+        maxAttempts: Infinity,
       },
       l10n: {
         check: 'Check',
@@ -52,7 +52,7 @@ export default class Initialization {
         foundASolution: 'You found a solution!',
         foundAllSolutions: 'You found all the solutions!',
         foundSolutionsTitle: 'Found solutions',
-        toBeFound: 'To be found'
+        toBeFound: 'To be found',
       },
       a11y: {
         buttonRandomize: 'Randomize all segments',
@@ -74,8 +74,8 @@ export default class Initialization {
         found: 'Found',
         notFound: 'Not found',
         buttonAudioActive: 'Mute audio. Currently unmuted.',
-        buttonAudioInactive: 'Unmute audio. Currently muted.'
-      }
+        buttonAudioInactive: 'Unmute audio. Currently muted.',
+      },
     }, this.params);
 
     // Sanitize segments
@@ -91,7 +91,7 @@ export default class Initialization {
 
         while (segment.options.length < Initialization.MIN_OPTIONS) {
           segment.options.push(
-            segment.options?.[0] ?? Initialization.PLACEHOLDER_OPTION
+            segment.options?.[0] ?? Initialization.PLACEHOLDER_OPTION,
           );
         }
 
@@ -154,13 +154,13 @@ export default class Initialization {
     // Retrieve previous state
     this.previousState = this.extras?.previousState || {};
     this.viewState = this.previousState.viewState ??
-      PhraseRandomizer.VIEW_STATES['task'];
+      PhraseRandomizer.VIEW_STATES.task;
     this.wasAnswerGiven = Object.keys(this.previousState).length > 0;
 
     this.foundSolutions = this.previousState.foundSolutions ??
       this.params.solutions.map(() => {
         return ({
-          labels: [this.dictionary.get('l10n.toBeFound')]
+          labels: [this.dictionary.get('l10n.toBeFound')],
         });
       });
 
@@ -178,7 +178,7 @@ export default class Initialization {
         solutions: this.params.solutions,
         segments: this.params.segments,
         previousState: this.previousState.randomizer,
-        column: this.params.behaviour.column
+        column: this.params.behaviour.column,
       },
       {
         onChanged: () => {
@@ -189,8 +189,8 @@ export default class Initialization {
         },
         onSpinningNumberChanged: (number) => {
           this.handleSpinningNumberChanged(number);
-        }
-      }
+        },
+      },
     );
 
     // Relay H5P resize to randomizer component
@@ -218,11 +218,11 @@ export default class Initialization {
         type: 'toggle',
         a11y: {
           active: this.dictionary.get('a11y.buttonAudioActive'),
-          inactive: this.dictionary.get('a11y.buttonAudioInactive')
+          inactive: this.dictionary.get('a11y.buttonAudioInactive'),
         },
         onClick: (ignore, params) => {
           this.toggleAudio(params.active);
-        }
+        },
       });
     }
 
@@ -236,7 +236,7 @@ export default class Initialization {
         onClick: () => {
           this.randomizer.randomize();
           this.handleAnswerGiven();
-        }
+        },
       });
     }
 
@@ -251,7 +251,7 @@ export default class Initialization {
       dictionary: this.dictionary,
       ...(this.params.headline && { headline: this.params.headline }),
       buttons: buttons,
-      statusContainers: toolbarStatusContainers
+      statusContainers: toolbarStatusContainers,
     });
     dom.append(this.toolbar.getDOM());
 
@@ -262,13 +262,13 @@ export default class Initialization {
     // Initialize attempts left
     this.toolbar.setStatusContainerStatus(
       'attempts',
-      { value: this.attemptsLeft }
+      { value: this.attemptsLeft },
     );
 
     // Initialize found container
     this.toolbar.setStatusContainerStatus(
       'found',
-      { value: this.getFoundScore(), maxValue: this.getFoundMaxScore() }
+      { value: this.getFoundScore(), maxValue: this.getFoundMaxScore() },
     );
 
     if (this.params.mode !== 'free') {
@@ -294,14 +294,14 @@ export default class Initialization {
     dom.append(this.randomizer.getDOM());
 
     this.foundSolutionsList = new FoundSolutionsList({
-      dictionary: this.dictionary
+      dictionary: this.dictionary,
     });
 
     if (this.foundSolutions.length > 0) {
       this.foundSolutionsList.setListItems(
         this.foundSolutions.map((solution) => {
           return solution;
-        })
+        }),
       );
     }
 
@@ -320,7 +320,7 @@ export default class Initialization {
       { 'aria-label': this.dictionary.get('a11y.check') },
       {
         contentData: this.extras,
-        textIfSubmitting: this.dictionary.get('l10n.submit')
+        textIfSubmitting: this.dictionary.get('l10n.submit'),
       });
 
     // Show solution button
@@ -331,7 +331,7 @@ export default class Initialization {
         this.showSolutions({ showRetry: true });
       },
       false,
-      { 'aria-label': this.dictionary.get('a11y.showSolution') }
+      { 'aria-label': this.dictionary.get('a11y.showSolution') },
     );
 
     // Retry button
@@ -343,7 +343,7 @@ export default class Initialization {
         this.randomizer.focus();
       },
       false,
-      { 'aria-label': this.dictionary.get('a11y.retry') }
+      { 'aria-label': this.dictionary.get('a11y.retry') },
     );
 
     return dom;
@@ -353,17 +353,17 @@ export default class Initialization {
    * Recreate the view state from previous state.
    */
   recreateViewState() {
-    if (this.viewState === PhraseRandomizer.VIEW_STATES['task']) {
+    if (this.viewState === PhraseRandomizer.VIEW_STATES.task) {
       this.announceMessage({
         text: this.dictionary.get('l10n.noMessage'),
-        aria: ''
+        aria: '',
       });
     }
-    else if (this.viewState === PhraseRandomizer.VIEW_STATES['results']) {
+    else if (this.viewState === PhraseRandomizer.VIEW_STATES.results) {
       this.handleAllSolutionsFound({ skipXAPI: true });
       this.toggleButtons({ skipFocus: true });
     }
-    else if (this.viewState === PhraseRandomizer.VIEW_STATES['solutions']) {
+    else if (this.viewState === PhraseRandomizer.VIEW_STATES.solutions) {
       this.showSolutions({ showRetry: true });
     }
   }
@@ -376,19 +376,19 @@ export default class Initialization {
       author: 'Oliver Tacke',
       license: 'PD',
       version: 'CC0 1.0',
-      year: '2023'
+      year: '2023',
     };
 
     const mimeTypes = {
       webm: ['webm'],
       mpeg: ['mp3', 'mp4'],
       ogg: ['ogg'],
-      wav: ['wav']
+      wav: ['wav'],
     };
 
     if (this.params.audio.useDefaultClickPreviousNext) {
       const audioClickPath = Util.getAssetPath(
-        AudioClick, this.contentId, 'H5P.PhraseRandomizer'
+        AudioClick, this.contentId, 'H5P.PhraseRandomizer',
       );
 
       if (audioClickPath) {
@@ -407,7 +407,7 @@ export default class Initialization {
         this.params.audio.clickPreviousNext = [{
           path: audioClickPath,
           ...(mime && { mime: mime }),
-          copyright: { ...copyright, title: 'Click' }
+          copyright: { ...copyright, title: 'Click' },
         }];
       }
     }
@@ -425,7 +425,7 @@ export default class Initialization {
       }
 
       const src = H5P.getPath(
-        this.params.audio[key][0].path, this.contentId
+        this.params.audio[key][0].path, this.contentId,
       );
 
       const crossOrigin =
@@ -434,7 +434,7 @@ export default class Initialization {
 
       audios[key] = {
         src: src,
-        crossOrigin: crossOrigin
+        crossOrigin: crossOrigin,
       };
     }
 

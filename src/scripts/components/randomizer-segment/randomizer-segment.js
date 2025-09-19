@@ -22,7 +22,7 @@ export default class RandomizerSegment {
     this.callbacks = Util.extend({
       onChanged: () => {},
       onSpinningStateChanged: () => {},
-      onVisible: () => {}
+      onVisible: () => {},
     }, callbacks);
 
     this.position = this.params.position ??
@@ -52,7 +52,7 @@ export default class RandomizerSegment {
         position: this.position,
         index: this.params.index,
         total: this.params.total,
-        colorBackground: this.params.colorBackground
+        colorBackground: this.params.colorBackground,
       },
       {
         onChanged: (key) => {
@@ -60,8 +60,8 @@ export default class RandomizerSegment {
         },
         onFocusChanged: (focusOn) => {
           this.dom.classList.toggle('focus', focusOn);
-        }
-      }
+        },
+      },
     );
     main.appendChild(this.wheel.getDOM());
 
@@ -75,14 +75,14 @@ export default class RandomizerSegment {
         onClicked: () => {
           this.params.jukebox?.play('clickPreviousNext');
           this.changeSymbol((this.position + this.params.alphabet.length - 1) %
-            this.params.alphabet.length
+            this.params.alphabet.length,
           );
-        }
-      }
+        },
+      },
     );
     this.buttonNext.setAriaLabel([
       this.params.dictionary.get('a11y.nextText'),
-      this.params.dictionary.get('a11y.currentText').replace(/@text/g, currentText)
+      this.params.dictionary.get('a11y.currentText').replace(/@text/g, currentText),
     ]);
     this.buttons.append(this.buttonNext.getDOM());
 
@@ -92,14 +92,14 @@ export default class RandomizerSegment {
         onClicked: () => {
           this.params.jukebox?.play('clickPreviousNext');
           this.changeSymbol((this.position + 1) % this.params.alphabet.length);
-        }
-      }
+        },
+      },
     );
     this.buttonPrevious.setAriaLabel([
       this.params.dictionary
         .get('a11y.previousText'),
       this.params.dictionary
-        .get('a11y.currentText').replace(/@text/g, currentText)
+        .get('a11y.currentText').replace(/@text/g, currentText),
     ]);
     this.buttons.append(this.buttonPrevious.getDOM());
 
@@ -109,14 +109,14 @@ export default class RandomizerSegment {
         onClicked: () => {
           this.spin();
           this.callbacks.onChanged();
-        }
-      }
+        },
+      },
     );
     this.buttonSpin.setAriaLabel([
       this.params.dictionary
         .get('a11y.spinSegment').replace(/@number/g, this.params.index + 1),
       this.params.dictionary
-        .get('a11y.currentText').replace(/@text/g, currentText)
+        .get('a11y.currentText').replace(/@text/g, currentText),
     ]);
     this.buttonSpin.getDOM().removeAttribute('tabindex');
     this.buttons.append(this.buttonSpin.getDOM());
@@ -145,7 +145,7 @@ export default class RandomizerSegment {
     const buttons = [this.buttonNext, this.buttonPrevious, this.buttonSpin];
 
     const gap = parseFloat(
-      window.getComputedStyle(this.buttons).getPropertyValue('gap')
+      window.getComputedStyle(this.buttons).getPropertyValue('gap'),
     );
 
     return (
@@ -192,13 +192,13 @@ export default class RandomizerSegment {
       this.params.dictionary
         .get('a11y.nextText'),
       this.params.dictionary
-        .get('a11y.currentText').replace(/@text/g, currentText)
+        .get('a11y.currentText').replace(/@text/g, currentText),
     ]);
     this.buttonPrevious.setAriaLabel([
       this.params.dictionary
         .get('a11y.previousText'),
       this.params.dictionary
-        .get('a11y.currentText').replace(/@text/g, currentText)
+        .get('a11y.currentText').replace(/@text/g, currentText),
     ]);
   }
 
@@ -216,11 +216,11 @@ export default class RandomizerSegment {
 
     this.buttonNext.setAriaLabel([
       this.params.dictionary.get('a11y.nextText'),
-      this.params.dictionary.get('a11y.disabled')
+      this.params.dictionary.get('a11y.disabled'),
     ]);
     this.buttonNext.setAriaLabel([
       this.params.dictionary.get('a11y.previousText'),
-      this.params.dictionary.get('a11y.disabled')
+      this.params.dictionary.get('a11y.disabled'),
     ]);
   }
 
@@ -250,7 +250,7 @@ export default class RandomizerSegment {
         this.enable();
 
         this.callbacks.onSpinningStateChanged(this.params.index, false);
-      }
+      },
     });
   }
 
@@ -271,12 +271,12 @@ export default class RandomizerSegment {
 
     this.buttonNext.setAriaLabel([
       this.params.dictionary.get('a11y.nextText'),
-      buttonSymbol
+      buttonSymbol,
     ]);
 
     this.buttonPrevious.setAriaLabel([
       this.params.dictionary.get('a11y.previousText'),
-      buttonSymbol
+      buttonSymbol,
     ]);
   }
 

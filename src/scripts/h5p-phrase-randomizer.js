@@ -4,6 +4,9 @@ import Initialization from '@mixins/initialization';
 import XAPI from '@mixins/xapi';
 import '@styles/h5p-phrase-randomizer.scss';
 
+/** @constant {number} DOM_TIMEOUT_MS Timeout for DOM updates. */
+const DOM_TIMEOUT_MS = 50;
+
 export default class PhraseRandomizer extends H5P.Question {
   /**
    * @class
@@ -15,7 +18,7 @@ export default class PhraseRandomizer extends H5P.Question {
     super('phrase-randomizer');
 
     Util.addMixins(
-      PhraseRandomizer, [QuestionTypeContract, Initialization, XAPI]
+      PhraseRandomizer, [QuestionTypeContract, Initialization, XAPI],
     );
 
     /*
@@ -73,7 +76,7 @@ export default class PhraseRandomizer extends H5P.Question {
     );
 
     this.randomizer.resize(
-      this.h5pContainer.getBoundingClientRect().width - this.horizontalMargin
+      this.h5pContainer.getBoundingClientRect().width - this.horizontalMargin,
     );
   }
 
@@ -108,7 +111,7 @@ export default class PhraseRandomizer extends H5P.Question {
       message: this.randomizer.getMessage(),
       randomizer: this.randomizer.getCurrentState(),
       foundSolutions: this.foundSolutions,
-      wrongAnswers: this.wrongAnswers
+      wrongAnswers: this.wrongAnswers,
     };
   }
 
@@ -140,7 +143,7 @@ export default class PhraseRandomizer extends H5P.Question {
    */
   getFoundScore() {
     return this.foundSolutions.filter(
-      (solution) => solution.style === 'found'
+      (solution) => solution.style === 'found',
     ).length;
   }
 
@@ -166,12 +169,12 @@ export default class PhraseRandomizer extends H5P.Question {
     if (answerInSolutionIndex !== -1) {
       this.foundSolutions[answerInSolutionIndex] = {
         labels: params.answer,
-        style: 'found'
+        style: 'found',
       };
 
       this.toolbar.setStatusContainerStatus(
         'found',
-        { value: this.getFoundScore(), maxValue: this.getFoundMaxScore() }
+        { value: this.getFoundScore(), maxValue: this.getFoundMaxScore() },
       );
 
       this.foundSolutionsList.setListItems(this.foundSolutions);
@@ -180,7 +183,7 @@ export default class PhraseRandomizer extends H5P.Question {
 
     if (this.getFoundScore() !== this.getFoundMaxScore()) {
       this.announceMessage(
-        { text: this.dictionary.get('l10n.foundASolution') }
+        { text: this.dictionary.get('l10n.foundASolution') },
       );
 
       if (!params.skipXAPI) {
@@ -213,17 +216,17 @@ export default class PhraseRandomizer extends H5P.Question {
     this.attemptsLeft = Math.max(0, this.attemptsLeft - 1);
     this.toolbar.setStatusContainerStatus(
       'attempts',
-      { value: this.attemptsLeft }
+      { value: this.attemptsLeft },
     );
 
     if (this.attemptsLeft > 0) {
       this.announceMessage({
-        text: this.dictionary.get('l10n.notASolution')
+        text: this.dictionary.get('l10n.notASolution'),
       });
     }
     else {
       this.announceMessage({
-        text: this.dictionary.get('l10n.outOfAttempts')
+        text: this.dictionary.get('l10n.outOfAttempts'),
       });
 
       this.showResults();
@@ -248,12 +251,12 @@ export default class PhraseRandomizer extends H5P.Question {
 
     if (this.getFoundScore() === this.getFoundMaxScore()) {
       this.announceMessage(
-        { text: this.dictionary.get('l10n.foundAllSolutions') }
+        { text: this.dictionary.get('l10n.foundAllSolutions') },
       );
     }
     else {
       this.announceMessage(
-        { text: this.dictionary.get('l10n.outOfAttempts') }
+        { text: this.dictionary.get('l10n.outOfAttempts') },
       );
     }
 
@@ -289,14 +292,14 @@ export default class PhraseRandomizer extends H5P.Question {
       if (focusButton) {
         setTimeout(() => {
           this.focusButton('try-again'); // Not done by H5P.Question
-        }, 50);
+        }, DOM_TIMEOUT_MS);
       }
       else {
         setTimeout(() => {
           this.randomizer.focus(); // No button to focus, focus randomizer instead
-        }, 50);
+        }, DOM_TIMEOUT_MS);
       }
-    }, 50);
+    }, DOM_TIMEOUT_MS);
   }
 
   /**
@@ -339,7 +342,7 @@ export default class PhraseRandomizer extends H5P.Question {
       this.viewState = state;
 
       this.content.setViewState(
-        PhraseRandomizer.VIEW_STATES.find((value) => value === state).keys[0]
+        PhraseRandomizer.VIEW_STATES.find((value) => value === state).keys[0],
       );
     }
   }

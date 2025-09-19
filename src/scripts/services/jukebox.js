@@ -1,3 +1,21 @@
+/** @constant {number} TIMER_INTERVAL_MIN_MS Minimum timer interval. */
+const TIMER_INTERVAL_MIN_MS = 50;
+
+/** @constant {number} DEFAULT_TIMER_INTERVAL_MS Default timer interval. */
+const DEFAULT_TIMER_INTERVAL_MS = 100;
+
+/** @constant {number} DEFAULT_FADE_TIME_MS Default fade time. */
+const DEFAULT_FADE_TIME_MS = 1000;
+
+/** @constant {object} STATES Stated of audios in jukebox. */
+const STATES = {
+  buffering: 0,
+  stopped: 1,
+  queued: 2,
+  playing: 3,
+  paused: 4,
+};
+
 /* Service to handle sounds via WebAudio */
 export default class Jukebox {
 
@@ -44,7 +62,7 @@ export default class Jukebox {
       this.add({
         id: key,
         src: params[key].src,
-        options: params[key].options ?? {}
+        options: params[key].options ?? {},
       });
     }
   }
@@ -67,7 +85,7 @@ export default class Jukebox {
     this.audios[params.id] = {
       loop: params.options.loop || false,
       isMuted: params.options.muted || false,
-      groupId: params.options.groupId || 'default'
+      groupId: params.options.groupId || 'default',
     };
 
     this.bufferSound({ id: params.id, url: params.src });
@@ -93,12 +111,12 @@ export default class Jukebox {
    */
   setState(id, newState) {
     if (typeof newState === 'string') {
-      newState = Jukebox.STATES[newState];
+      newState = STATES[newState];
     }
 
     if (
       typeof newState !== 'number' ||
-      Object.values(Jukebox.STATES).indexOf(newState) === -1
+      Object.values(STATES).indexOf(newState) === -1
     ) {
       return; // Not a valid state
     }
@@ -109,7 +127,7 @@ export default class Jukebox {
 
     this.audios[id].state = newState;
     this.dispatcher.dispatchEvent(
-      new CustomEvent('stateChanged', { detail: { id: id, state: newState } })
+      new CustomEvent('stateChanged', { detail: { id: id, state: newState } }),
     );
   }
 
@@ -125,7 +143,7 @@ export default class Jukebox {
     }
 
     this.audios[params.id].buffer = params.buffer;
-    this.setState(params.id, Jukebox.STATES['stopped']);
+    this.setState(params.id, STATES.stopped);
   }
 
   /**
@@ -139,7 +157,7 @@ export default class Jukebox {
       return;
     }
 
-    this.setState(params.id, Jukebox.STATES['buffering']);
+    this.setState(params.id, STATES.buffering);
 
     var request = new XMLHttpRequest();
     request.open('GET', params.url, true);
@@ -149,7 +167,7 @@ export default class Jukebox {
     request.onload = () => {
       this.audioContext.decodeAudioData(request.response, (buffer) => {
         const event = new CustomEvent(
-          'bufferloaded', { detail: { id: params.id, buffer: buffer } }
+          'bufferloaded', { detail: { id: params.id, buffer: buffer } },
         );
         this.dispatcher.dispatchEvent(event);
       });
@@ -178,7 +196,7 @@ export default class Jukebox {
       return false; // Muted
     }
 
-    if (this.getState(id) === Jukebox.STATES['playing']) {
+    if (this.getState(id) === STATES.playing) {
       return false; // Already playing
     }
 
@@ -190,7 +208,7 @@ export default class Jukebox {
       }
     }
 
-    if (this.getState(id) === Jukebox.STATES['buffering']) {
+    if (this.getState(id) === STATES.buffering) {
       this.addToQueue(id);
       return false;
     }
@@ -217,7 +235,7 @@ export default class Jukebox {
     };
 
     audio.source.start();
-    this.setState(id, Jukebox.STATES['playing']);
+    this.setState(id, STATES.playing);
 
     return true;
   }
@@ -251,12 +269,12 @@ export default class Jukebox {
 
     this.removeFromQueue(id);
 
-    if (this.getState(id) !== Jukebox.STATES['playing']) {
+    if (this.getState(id) !== STATES.playing) {
       return;
     }
 
     this.audios[id].source?.stop();
-    this.setState(id, Jukebox.STATES['stopped']);
+    this.setState(id, STATES.stopped);
   }
 
   /**
@@ -294,7 +312,7 @@ export default class Jukebox {
       return false;
     }
 
-    return this.getState(id) === Jukebox.STATES['playing'];
+    return this.getState(id) === STATES.playing;
   }
 
   /**
@@ -325,17 +343,17 @@ export default class Jukebox {
 
     // Sanitize time
     if (typeof params.time !== 'number') {
-      params.time = Jukebox.DEFAULT_FADE_TIME_MS;
+      params.time = DEFAULT_FADE_TIME_MS;
     }
     params.time = Math.max(
-      Jukebox.DEFAULT_TIMER_INTERVAL_MS, params.time
+      DEFAULT_TIMER_INTERVAL_MS, params.time,
     );
 
     // Sanitize interval
     if (typeof params.interval !== 'number') {
-      params.interval = Jukebox.DEFAULT_TIMER_INTERVAL_MS;
+      params.interval = DEFAULT_TIMER_INTERVAL_MS;
     }
-    params.interval = Math.max(50, params.interval);
+    params.interval = Math.max(TIMER_INTERVAL_MIN_MS, params.interval);
 
     // Set gain delta for each interval
     if (typeof params.gainDelta !== 'number' || params.gainDelta <= 0) {
@@ -365,7 +383,7 @@ export default class Jukebox {
     }
     else {
       this.audios[id].gainNode.gain.value =
-      Math.max(0, this.audios[id].gainNode.gain.value -= params.gainDelta);
+        Math.max(0, this.audios[id].gainNode.gain.value -= params.gainDelta);
     }
 
     this.audios[id].fadeTimeout = window.setTimeout(() => {
@@ -374,8 +392,8 @@ export default class Jukebox {
         {
           time: params.time - params.interval,
           gainDelta: params.gainDelta,
-          type: params.type
-        }
+          type: params.type,
+        },
       );
     }, params.interval);
   }
@@ -457,18 +475,3 @@ export default class Jukebox {
     return this.audios[id].isMuted;
   }
 }
-
-/** @constant {number} DEFAULT_TIMER_INTERVAL_MS Default timer interval. */
-Jukebox.DEFAULT_TIMER_INTERVAL_MS = 100;
-
-/** @constant {number} DEFAULT_FADE_TIME_MS Default fade time. */
-Jukebox.DEFAULT_FADE_TIME_MS = 1000;
-
-/** @constant {object} STATES Stated of audios in jukebox. */
-Jukebox.STATES = {
-  buffering: 0,
-  stopped: 1,
-  queued: 2,
-  playing: 3,
-  paused: 4
-};

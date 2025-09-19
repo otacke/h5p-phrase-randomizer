@@ -2,6 +2,9 @@ import UtilColor from '@services/util-color.js';
 import Util from '@services/util.js';
 import './wheel.scss';
 
+/** @constant {number} MAGIC_TWO Magic number for two. Dunno for what exactly. */
+const MAGIC_TWO = 2;
+
 /** Wheel */
 export default class Wheel {
   /**
@@ -20,13 +23,13 @@ export default class Wheel {
 
     this.callbacks = Util.extend({
       onChanged: () => {},
-      onFocusChanged: () => {}
+      onFocusChanged: () => {},
     }, callbacks);
 
     this.oldIndex = this.params.position ?? 0;
 
     const colorBackground = UtilColor.createColorGradient(
-      this.params.colorBackground
+      this.params.colorBackground,
     );
 
     const colorText = UtilColor.getColorText(this.params.colorBackground);
@@ -56,7 +59,7 @@ export default class Wheel {
     const alphabetPlus = [
       this.params.alphabet[this.params.alphabet.length - 1],
       ...this.params.alphabet,
-      this.params.alphabet[0]
+      this.params.alphabet[0],
     ];
 
     this.items = alphabetPlus.map((symbol) => {
@@ -86,7 +89,7 @@ export default class Wheel {
       'aria-label',
       this.params.dictionary.get('a11y.segment')
         .replace(/@number/g, this.params.index + 1)
-        .replace(/@total/g, this.params.total)
+        .replace(/@total/g, this.params.total),
     );
 
     this.spinbutton.addEventListener('keydown', (event) => {
@@ -126,11 +129,11 @@ export default class Wheel {
 
         this.oldIndex = targetIndex;
         this.scrollTo({
-          index: targetIndex, noAnimation: true, noFocus: params.noFocus
+          index: targetIndex, noAnimation: true, noFocus: params.noFocus,
         });
 
         params.onDone?.();
-      }
+      },
     });
   }
 
@@ -155,11 +158,10 @@ export default class Wheel {
       targetIndex: 0,
       totalItemsHeight: this.itemHeight * this.params.alphabet.length,
       intervalMs: 20,
-      onDone: () => {}
+      onDone: () => {},
     }, params);
 
-    params.duration = params.duration ??
-      params.rounds / 2; // Default duration if not set.
+    params.duration = params.duration ?? params.rounds / MAGIC_TWO; // Default duration if not set.
 
     // total height * rounds + difference to hit target index item
     params.targetOffset = params.targetOffset ??
@@ -179,8 +181,9 @@ export default class Wheel {
     this.list.style.transform = `translateY(${translation}px)`;
 
     params.currentOffset = this.easeInOutQuad(
-      params.elapsedTime, 0, params.targetOffset, params.duration
+      params.elapsedTime, 0, params.targetOffset, params.duration,
     );
+    // eslint-disable-next-line no-magic-numbers
     params.elapsedTime += params.intervalMs / 1000;
 
     window.setTimeout(() => {
@@ -197,10 +200,13 @@ export default class Wheel {
    * @returns {number} Eased value.
    */
   easeInOutQuad(timeS, start, delta, durationS) {
+    // eslint-disable-next-line no-magic-numbers
     if ((timeS /= durationS / 2) < 1) {
+      // eslint-disable-next-line no-magic-numbers
       return delta / 2 * timeS * timeS + start;
     }
 
+    // eslint-disable-next-line no-magic-numbers
     return -delta / 2 * ((--timeS) * (timeS - 2) - 1) + start;
   }
 
@@ -260,7 +266,7 @@ export default class Wheel {
 
     this.spinbutton.setAttribute('aria-valuenow', `${alphabetIndex}`);
     this.spinbutton.setAttribute(
-      'aria-valuetext', this.params.alphabet[alphabetIndex]
+      'aria-valuetext', this.params.alphabet[alphabetIndex],
     );
 
     // Compute correct translation
@@ -268,6 +274,7 @@ export default class Wheel {
       this.dom.getBoundingClientRect().height;
     this.itemHeight = this.itemHeight ||
       this.list.childNodes[0].getBoundingClientRect().height;
+    // eslint-disable-next-line no-magic-numbers
     this.itemOffset = (this.wheelHeight - this.itemHeight) / 2;
 
     const translation =

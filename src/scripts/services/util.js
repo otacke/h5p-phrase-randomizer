@@ -126,7 +126,7 @@ export default class Util {
           callback();
         }
       }, {
-        threshold: 0
+        threshold: 0,
       });
       observer.observe(dom);
     });
@@ -141,7 +141,7 @@ export default class Util {
    * @returns {string|null} Path that H5P can use. Null if some problem.
    */
   static getAssetPath(
-    truePath, contentId, machineName, distPath = 'dist/'
+    truePath, contentId, machineName, distPath = 'dist/',
   ) {
     /*
      * One could fetch() the path here, but even when catching, the error
